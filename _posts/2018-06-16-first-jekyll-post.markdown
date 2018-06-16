@@ -7,11 +7,11 @@ categories: jekyll update
 
 This is a first jekyll post.
 
-```Java
+{% highlight ruby %}
 for &i = 100 to 1 step -1
   WinMessage(&i || " bottles of beer on the wall...");
 end-for;
-```
+{% endhighlight %}
 
 How's that?
 
