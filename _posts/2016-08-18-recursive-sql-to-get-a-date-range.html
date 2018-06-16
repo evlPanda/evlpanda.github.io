@@ -1,0 +1,35 @@
+---
+layout: post
+title: Recursive SQL to get a Date Range
+date: 2016-08-18 23:38:36.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '25924660015'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>This returns all dates for the past year and is an example of a simple SQL recursive CTE or sub-query refactoring, or as I call it a "with statement".</p>
+<pre><code>
+WITH daterange(dt) AS (
+   SELECT CURRENT_DATE - 1 YEAR  
+   FROM sysibm.sysdummy1  
+   UNION ALL
+   SELECT dt + 1 DAY  
+   FROM daterange
+   WHERE dt &lt; CURRENT_DATE
+)
+
+select * from daterange;
+</code></pre>

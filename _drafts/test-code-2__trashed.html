@@ -1,0 +1,52 @@
+---
+layout: post
+title: Test Code
+date: 
+type: post
+parent_id: '0'
+published: false
+password: ''
+status: trash
+categories: []
+tags: []
+meta:
+  timeline_notification: '1526889144'
+  _rest_api_published: '1'
+  _rest_api_client_id: '23361'
+  _publicize_job_id: '18080328105'
+  _wp_trash_meta_status: publish
+  _wp_trash_meta_time: '1526889273'
+  _wp_desired_post_slug: test-code-2
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>Testing out [stack edit](http://stackedit.io)</p>
+<p>```java<br />
+Class DoStuff<br />
+	Method DoStuff(&amp;someVar as boolean out);<br />
+End-Class;</p>
+<p>Method DoStuff()<br />
+	/* &amp;someVar */<br />
+	&amp;someVar = (1+1=2);<br />
+End-DoStuff;</p>
+<p>Then to use it:</p>
+<p>import STUFF:DOSTUFF;<br />
+&amp;doStuff = Create STUFF:DOSTUFF(&amp;myVar);<br />
+WinMessage(&amp;myVar);<br />
+```<br />
+Would display 'true'<br />
+```java<br />
+import STUFF:DOSTUFF;<br />
+Class DoDynamicStuff extends STUFF:DOSTUFF;<br />
+ Method DoDynamicStuff(&amp;var as boolean);<br />
+End-Class</p>
+<p>Method DoDynamicStuff<br />
+	%super = create STUFF:DOSTUFF();<br />
+end-method;<br />
+```<br />
+end code</p>
+<p>&gt; Written with [StackEdit](https://stackedit.io/).</p>

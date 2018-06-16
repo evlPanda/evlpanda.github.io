@@ -1,0 +1,41 @@
+---
+layout: post
+title: Getting Crystal To Work
+date: 2009-03-16 02:41:00.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Crystal
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '465140954214146398'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>Oh Crystal, when will you be <span class="blsp-spelling-corrected" id="SPELLING_ERROR_0">decommissioned</span>?</p>
+<p>Sometimes Crystal just doesn't want to play ball.  Here's what I recently found:</p>
+<ol>
+<li>If the report was using my <span style="font-style:italic;">local ODBC connection</span> for its Database Connection it didn't work on the Server.  Of course.</p>
+<p>I was receiving the following error message:
+<pre>Crystal Reports Print Engine error text: Error in File e:\psoft\s90dev\crw\eng\usqsf3p.rpt:<br />Unable to connect: .rpt:<br />Unable to connect: incorrect log on parameters. %6 %7 %8 %9 (65,30)<br />Message Set Number: 65<br />Message Number: 30<br />Message Reason: Crystal Reports Print Engine error text: Error in File e:\psoft\s90dev\crw\eng\usqsf3p.rpt:<br />Unable to connect: .rpt:<br />Unable to connect: incorrect log on parameters. %6 %7 %8 %9 (65,30)<br /></pre>
+<p>This can be simply corrected by using the following steps:</p>
+<p>- Go to 'Database/Set Datasource Location...'<br />- Create a new connection.</p>
+<p><a href="https://thepeoplesoftexperience.files.wordpress.com/2009/03/330d5-screenhunter_01mar-1612-48.gif"><img src="{{ site.baseurl }}/assets/330d5-screenhunter_01mar-1612-48.gif?w=300" alt="" id="BLOGGER_PHOTO_ID_5313624307058174930" border="0" /></a></p>
+<p>- Select both Current Data Source in top pane and new one in bottom, click 'Update'.<br />- Verify the database.<br />- Save and perhaps even open and close to ...do something.</p>
+<p>... or just never using a local ODBC connection (duh?).</p>
+</li>
+<li>Which user to use for the connection prior to migrating out of DEV and eventually into PROD?
+</li>
+<li>Subreport links.
+<p>If found I had to use the following ("sameish" for run control id):</p>
+<p><a href="https://thepeoplesoftexperience.files.wordpress.com/2009/03/401d1-screenhunter_02mar-1613-37.gif"><img src="{{ site.baseurl }}/assets/401d1-screenhunter_02mar-1613-37.gif?w=300" alt="" id="BLOGGER_PHOTO_ID_5313624689658667282" border="0" /></a></li>
+</ol>

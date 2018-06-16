@@ -1,0 +1,26 @@
+---
+layout: post
+title: User has no access to Component Interface - Security
+date: 2012-02-16 01:23:00.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '1035543323830129061'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>Use the following to compare a user that does have access to a user that doesn't. Provide the user that does, the user that doesn't, and the CI name.</p>
+<p>Will return the Role, Permission List that is missing.</p>
+<p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>select * from (<br />select<br />  r.rolename<br />, c.oprclass<br />, ci.bcname<br />from<br />  PSOPRCLS c<br />, PSROLECLASS r<br />, PSAUTHBUSCOMP ci<br />where c.oprid = 'E87637'  -- User that DOES have access.<br />and r.classid = c.oprclass<br />and ci.classid = c.oprclass<br /><br />minus<br /><br />select<br />  r.rolename<br />, c.oprclass<br />, ci.bcname<br />from<br />  PSOPRCLS c<br />, PSROLECLASS r<br />, PSAUTHBUSCOMP ci<br />where c.oprid = 'S3286436' -- User that is missing access<br />and r.classid = c.oprclass<br />and ci.classid = c.oprclass<br /><br />--) where bcname like 'HCR_PERSONAL_DATA_SRV'<br />) where bcname like 'AMS_CI_CHESSN_DATA'<br /></code></pre>

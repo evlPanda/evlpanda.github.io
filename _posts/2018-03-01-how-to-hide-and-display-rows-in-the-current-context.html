@@ -1,0 +1,37 @@
+---
+layout: post
+title: How to Hide and Display Rows in the Current Context
+date: 2018-03-01 14:17:01.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  timeline_notification: '1519885023'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '15257302056'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>Surprise, you <strong>can</strong> hide rows in the current context of the executing program.</p>
+<p>What you need to do is trigger code on a higher level, but how can you do that? The answer is the SetDefault() method.</p>
+<p><strong>Basically: Put a Field on Level 0 and call its <em>.SetDefault()</em> method to trigger its .FieldDefault() PeopleCode.</strong></p>
+<p>Here's a simple example. This is a dummy page containing a grid on level 1 that has a 'hide' button against each row. The important pieces to the puzzle are circled; a derived field on level 0 to hold the row_number we want to hide, and another to trigger the code to hide it... <em>from level 0.</em></p>
+<p><img class="alignnone size-full wp-image-469" src="{{ site.baseurl }}/assets/capture15.png" alt="Capture1" width="513" height="241" /></p>
+<p>The code under the 'Hide' button:</p>
+<p><img class="alignnone size-full wp-image-470" src="{{ site.baseurl }}/assets/capture16.png" alt="Capture1" width="562" height="79" /></p>
+<p>The call to .SetDefault() triggers code up on level 0. Outside the current context, from the current context : )</p>
+<p><img class="alignnone size-full wp-image-471" src="{{ site.baseurl }}/assets/capture17.png" alt="Capture1" width="584" height="111" /></p>
+<p>We've stored the CurrentRowNumber() of the row where we clicked the 'Hide' button, so the code simply hides that row in level 1.</p>
+<p>Here it is working:</p>
+<p><img class="alignnone size-full wp-image-472" src="{{ site.baseurl }}/assets/capture18.png" alt="Capture1" width="534" height="327" /></p>
+<p>And now we hide rows 1, 3 and 4:</p>
+<p><img class="alignnone size-full wp-image-473" src="{{ site.baseurl }}/assets/capture19.png" alt="Capture1" width="527" height="245" /></p>

@@ -1,0 +1,38 @@
+---
+layout: post
+title: VBA example - Handling Import and Export Files
+date: 2008-08-26 01:45:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- VBA file open close read interface
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '2730193926292738444'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>Because sometimes you have to use VBA.  This example was for a 3rd party's interface.</p>
+<p><!-- code formatted by http://manoli.net/csharpformat/ --></p>
+<p>.csharpcode, .csharpcode pre<br />{<br /> font-size: small;<br /> color: black;<br /> font-family: Consolas, "Courier New", Courier, Monospace;<br /> background-color: #ffffff;<br /> /*white-space: pre;*/<br />}</p>
+<p>.csharpcode pre { margin: 0em; }</p>
+<p>.csharpcode .rem { color: #008000; }</p>
+<p>.csharpcode .kwrd { color: #0000ff; }</p>
+<p>.csharpcode .str { color: #006080; }</p>
+<p>.csharpcode .op { color: #0000c0; }</p>
+<p>.csharpcode .preproc { color: #cc6633; }</p>
+<p>.csharpcode .asp { background-color: #ffff00; }</p>
+<p>.csharpcode .html { color: #800000; }</p>
+<p>.csharpcode .attr { color: #ff0000; }</p>
+<p>.csharpcode .alt <br />{<br /> background-color: #f4f4f4;<br /> width: 100%;<br /> margin: 0em;<br />}</p>
+<p>.csharpcode .lnum { color: #606060; }</p>
+<pre class="csharpcode"><br /><span class="kwrd">Option</span> Compare Database<br /><br /><span class="kwrd">Public</span> <span class="kwrd">Sub</span> ifcHR185GL_Actuals()<br />    <br />    DoCmd.SetWarnings <span class="kwrd">False</span><br />    stAurion = CheckEnviron()             <span class="rem">' Get &amp; set Env</span><br />    <br />    locIn = <span class="str">"C:\Temp\"</span><br />    locOut = <span class="str">"C:\Temp\"</span><br />    <br />    stFilePathIn = locIn &amp; <span class="str">"gl_actuals.txt"</span><br />    stFilePathOutHdr = locOut &amp; <span class="str">"JACT"</span> &amp; Format(<span class="kwrd">Date</span>, <span class="str">"YYMMDD"</span>) &amp; <span class="str">"_H.txt"</span><br />    stFilePathOutLn = locOut &amp; <span class="str">"JACT"</span> &amp; Format(<span class="kwrd">Date</span>, <span class="str">"YYMMDD"</span>) &amp; <span class="str">"_L.txt"</span><br />    stFilePathOut = locOut &amp; <span class="str">"JACT"</span> &amp; Format(<span class="kwrd">Date</span>, <span class="str">"YYMMDD"</span>) &amp; <span class="str">".txt"</span><br />    <br /><span class="rem">'    stFilePathIn = "U:\INTERFACE\CURRENT\IN\gl_interface_"</span><br /><span class="rem">'    stFilePathOut = "U:\INTERFACE\CURRENT\OUT\JACT" &amp; Format(Date, "YYMMDD") &amp; ".txt"</span><br />    <br />    <span class="rem">'Delete the existing records</span><br />    DoCmd.OpenQuery <span class="str">"qryHR185Actuals_Aurion_Del"</span>, acNormal, acEdit<br />    DoCmd.OpenQuery <span class="str">"qryHR185Journal_Line_Actuals_Del"</span>, , acEdit<br />    <br />    <span class="rem">'Import the Aurion text file and create a new table</span><br />    DoCmd.TransferText acImportDelim, <span class="str">"HR185Gl_actuals Import Specification"</span>, <span class="str">"tblHR185Actuals_Aurion"</span>, _<br />    stFilePathIn, <span class="kwrd">False</span>, <span class="str">""</span><br />        <br />    <span class="rem">'Update header record with system date and PPEDN date to be used for journal lines</span><br />    <span class="rem">'may be commented out when the file has a PPEND</span><br />    <span class="rem">'but it requires import spec changes and qry_App changes</span><br />    DoCmd.OpenQuery <span class="str">"qryHR185HeaderRecord_Upd"</span>, acNormal, acEdit<br />    <br />    <span class="rem">'Create output table</span><br />    <span class="rem">''DoCmd.OpenQuery "qryHR185Journal_Header_Actuals_App", acNormal, acEdit</span><br />    DoCmd.OpenQuery <span class="str">"qryHR185Journal_Line_Actuals_App"</span>, acNormal, acEdit<br />    DoCmd.OpenQuery <span class="str">"qryHR185Journal_Line_Actuals_UpdPPEND"</span>, acNormal, acEdit<br /><br />    <span class="rem">' Delete old copy of output files if found</span><br />    stScratch = Dir(stFilePathOutHdr)<br />    <span class="kwrd">If</span> stScratch  <span class="str">""</span> <span class="kwrd">Then</span><br />     Kill stFilePathOutHdr<br />    <span class="kwrd">End</span> <span class="kwrd">If</span><br />    stScratch = Dir(stFilePathOutLn)<br />    <span class="kwrd">If</span> stScratch  <span class="str">""</span> <span class="kwrd">Then</span><br />     Kill stFilePathOutLn<br />    <span class="kwrd">End</span> <span class="kwrd">If</span><br />    stScratch = Dir(stFilePathOut)<br />    <span class="kwrd">If</span> stScratch  <span class="str">""</span> <span class="kwrd">Then</span><br />     Kill stFilePathOut<br />    <span class="kwrd">End</span> <span class="kwrd">If</span><br />    <br />    <span class="rem">'Export the Header and Line tables</span><br />    DoCmd.TransferText acExportFixed, <span class="str">"tblHR185Journal_Header_Actuals Export Specification"</span>, _<br />    <span class="str">"tblHR185Journal_Header_Actuals"</span>, stFilePathOutHdr<br />    DoCmd.TransferText acExportFixed, <span class="str">"tblHR185Journal_Line_Actuals Export Specification"</span>, _<br />    <span class="str">"qryHR185Journal_Line_Actuals_Export"</span>, stFilePathOutLn<br />            <br />    <span class="rem">' Merge Header and Line files into final export file.</span><br />    <span class="kwrd">Set</span> fso = CreateObject(<span class="str">"Scripting.FileSystemObject"</span>)<br />    <span class="kwrd">Set</span> fStrmH = fso.OpenTextFile(stFilePathOutHdr)<br />    <span class="kwrd">Set</span> fStrmL = fso.OpenTextFile(stFilePathOutLn)<br />    <span class="kwrd">Set</span> fStrmM = fso.CreateTextFile(stFilePathOut, <span class="kwrd">True</span>)<br />    <span class="kwrd">Do</span> <span class="kwrd">Until</span> fStrmH.AtEndOfStream<br />        strLine = fStrmH.ReadLine<br />        fStrmM.writeline strLine<br />    <span class="kwrd">Loop</span><br />    <span class="kwrd">Do</span> <span class="kwrd">Until</span> fStrmL.AtEndOfStream<br />        strLine = fStrmL.ReadLine<br />        fStrmM.writeline strLine<br />    <span class="kwrd">Loop</span><br />    <br />    fStrmH.Close<br />    fStrmL.Close<br />    fStrmM.Close<br />    <br />    <span class="rem">' Cleanup Header and Line files.</span><br />    Kill stFilePathOutHdr<br />    Kill stFilePathOutLn<br />    DoCmd.SetWarnings <span class="kwrd">True</span><br />    <br />    <span class="rem">'!!!   COMMENT OUT THE LINE BELOW LATER</span><br />    MsgBox <span class="str">"completed"</span><br />    <br /><span class="kwrd">End</span> <span class="kwrd">Sub</span><br /></pre>

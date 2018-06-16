@@ -1,0 +1,59 @@
+---
+layout: post
+title: Test Code
+date: 
+type: post
+parent_id: '0'
+published: false
+password: ''
+status: draft
+categories: []
+tags: []
+meta:
+  _wp_trash_meta_status: publish
+  _rest_api_published: '1'
+  _rest_api_client_id: '23361'
+  timeline_notification: '1526625203'
+  _publicize_job_id: '17979139778'
+  _wp_trash_meta_time: '1526625330'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+
+<p>  Test Code</p>
+<div class="stackedit__html">
+<p>Testing out <a href="http://stackedit.io">stack edit</a></p>
+<pre class=" language-java"><code class="prism  language-java">Class <span class="token class-name">DoStuff</span>
+	Method <span class="token function">DoStuff</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>someVar as <span class="token keyword">boolean</span> out<span class="token punctuation">)</span><span class="token punctuation">;</span>
+End<span class="token operator">-</span>Class<span class="token punctuation">;</span>
+
+Method <span class="token function">DoStuff</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token comment">/* &amp;someVar */</span>
+	<span class="token operator">&amp;</span>someVar <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">+</span><span class="token number">1</span><span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+End<span class="token operator">-</span>DoStuff<span class="token punctuation">;</span>
+
+Then to use it<span class="token operator">:</span>
+
+<span class="token keyword">import</span> STUFF<span class="token operator">:</span>DOSTUFF<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>doStuff <span class="token operator">=</span> Create STUFF<span class="token operator">:</span><span class="token function">DOSTUFF</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>myVar<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">WinMessage</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>myVar<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Would display ‘true’</p>
+<pre class=" language-java"><code class="prism  language-java"><span class="token keyword">import</span> STUFF<span class="token operator">:</span>DOSTUFF<span class="token punctuation">;</span>
+Class <span class="token class-name">DoDynamicStuff</span> <span class="token keyword">extends</span> <span class="token class-name">STUFF</span><span class="token operator">:</span>DOSTUFF<span class="token punctuation">;</span>
+ Method <span class="token function">DoDynamicStuff</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>var as <span class="token keyword">boolean</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+End<span class="token operator">-</span>Class
+
+<span class="token class-name">Method</span> DoDynamicStuff
+	<span class="token operator">%</span><span class="token keyword">super</span> <span class="token operator">=</span> create STUFF<span class="token operator">:</span><span class="token function">DOSTUFF</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+end<span class="token operator">-</span>method<span class="token punctuation">;</span>
+</code></pre>
+<p>end code</p>
+<blockquote>
+<p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
+</blockquote>
+</div>

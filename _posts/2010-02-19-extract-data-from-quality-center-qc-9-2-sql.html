@@ -1,0 +1,418 @@
+---
+layout: post
+title: Extract Data from Quality Center (QC) 9.2 - SQL
+date: 2010-02-19 03:11:00.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- SQL QC UAT
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '3617700664970903604'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>Quality Center is a testing suite used at a few installations. It comes with a collection of reports, including its own report generator.</p>
+<p>Nonetheless it is nice to be able to get the RAW data and do with it what you will.</p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>-- Extract ALL Test Plan Data:<br />SELECT<br />Replace(A.PATH, ' \Subject\System Tests\SA System Test
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>/*<br />Built for Jira 26921<br />Michael Nitschke 30/03/2010<br /><br />Examples:<br />define testPlanRoot = 'SA Master'<br />define testLabRoot = 'System Testing\SYS1 SA'<br /><br />define testPlanRoot = 'MTP Testing'<br />define testLabRoot = 'MTP Testing\MTP 13'<br /><br />Hint: you can optionally add a trailing back-slash on the testLabRoot variable if you<br />need to clearly define it as seperate from and similarly named folder,<br />e.g. 'SYSTEM' and 'SYSTEM1'.<br />*/<br /><br />/* notes:<br />Test Lab runs do not neccessarily line up in the same folders in Test Lab as the folders that are in Test Plan ...if that makes sense.<br />Joined by TEST_ID but the Test Lab folder Name can be changed, so the lab results for a given test plan may be in a test lab folder that has a different name to the plan.<br />hard to explain.<br />*/<br /><br />select * from (<br /><br />SELECT<br />  substr(path, 2, instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,2) - 2) as lev1<br />, substr(path, instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,2) + 1, instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,3) - instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,2) - 1) as lev2<br />, substr(path, instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,3) + 1, instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,4) - instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,3) - 1) as lev3<br />, substr(path, instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,4) + 1, instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,5) - instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,4) - 1) as lev4<br />, substr(path, instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,5) + 1, instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,6) - instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,5) - 1) as lev5<br />, substr(path, instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,6) + 1, instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,7) - instr(path,'
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,6) - 1) as lev6<br />, nvl(users.full_name, 'anon.') || ' (' || test.ts_responsible || ')' as sweet_fa<br />, test.ts_name as test_script_name<br />, test.ts_status<br />, run.rn_status<br /><br />, test.ts_user_06 as Business_Owner<br />, test.ts_user_07 as Technical_Owner<br />, test.ts_user_04 as HR_Func_Area<br />, test.ts_user_05 as Tester<br />, test.ts_user_09 as Date_Time<br />, test.ts_user_08 as Location<br />, test.ts_user_02 as CBS_Test_Effort<br />, test.ts_user_01 as Summary<br />, test.ts_user_03 as CR_ID<br /><br />from (<br /> select<br /> al_father_id, al_item_id, sys_connect_by_path(al_description, '
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) || '
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+ as path<br /> FROM (SELECT * from all_lists where al_father_id  2329) -- 2329 is a 'bad', invisible folder. Yes really.<br /> connect by prior al_item_id = al_father_id<br />) path<br />, test<br />, users<br />,<br /> (select run.rn_test_id, run.rn_status<br /> from run<br /> where exists<br />  (select 1<br />  from cycle<br />  where cycle.cy_cycle_id = run.rn_cycle_id<br />  and cycle.cy_folder_id in<br />   (select cf_item_id from<br />    (select cf_item_id, sys_connect_by_path(cf_item_name, '
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) as path<br />    from cycl_fold a<br />    connect by prior cf_item_id = cf_father_id)<br />   where path like '
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+ || &amp;testLabRoot || '%'))<br /> and run.rn_execution_date =<br />  (select max(r.rn_execution_date)<br />  from run r<br />  where r.rn_test_id = run.rn_test_id)<br /> and run.rn_execution_time =<br />  (select max(rn_execution_time)<br />  from run r<br />  where r.rn_test_id = run.rn_test_id<br />  and r.rn_execution_date = run.rn_execution_date)) run<br /><br /><br />where path.path like '
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+ || &amp;testPlanRoot || '%'<br /><br />and test.ts_subject (+) = path.al_item_id<br />and users.user_name (+) = test.ts_responsible<br /><br />and run.rn_test_id (+) = test.ts_test_id<br /><br />)<br />where lev1 = &amp;testPlanRoot -- Removes data where same folder name exists on another branch.<br />and not lev2 is null -- Don't need base folder only in data (blanks).<br />and not lev3 is null<br />order by 1, 2, 3, 4, 5, 6, 8<br />;<br /><br /><br /></code></pre>
+, '') AS PATH<br />, B.TS_NAME<br />, C.DS_STEP_NAME<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_DESCRIPTION, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_DESCRIPTION<br />, REPLACE(REPLACE(REPLACE(REGEXP_REPLACE(REPLACE(C.DS_EXPECTED, '<br />', Chr(13)), '', ''), '&lt;&#039;, &#039;', '&gt;'), '"', Chr(34)) AS DS_EXPECTED<br />FROM<br />(SELECT AL_ITEM_ID, LPAD(' ', 2 * LEVEL-1) || SYS_CONNECT_BY_PATH(AL_DESCRIPTION, '
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>/*<br />Built for Jira 26921<br />Michael Nitschke 30/03/2010<br /><br />Examples:<br />define testPlanRoot = 'SA Master'<br />define testLabRoot = 'System Testing\SYS1 SA'<br /><br />define testPlanRoot = 'MTP Testing'<br />define testLabRoot = 'MTP Testing\MTP 13'<br /><br />Hint: you can optionally add a trailing back-slash on the testLabRoot variable if you<br />need to clearly define it as seperate from and similarly named folder,<br />e.g. 'SYSTEM' and 'SYSTEM1'.<br />*/<br /><br />/* notes:<br />Test Lab runs do not neccessarily line up in the same folders in Test Lab as the folders that are in Test Plan ...if that makes sense.<br />Joined by TEST_ID but the Test Lab folder Name can be changed, so the lab results for a given test plan may be in a test lab folder that has a different name to the plan.<br />hard to explain.<br />*/<br /><br />select * from (<br /><br />SELECT<br />  substr(path, 2, instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,2) - 2) as lev1<br />, substr(path, instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,2) + 1, instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,3) - instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,2) - 1) as lev2<br />, substr(path, instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,3) + 1, instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,4) - instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,3) - 1) as lev3<br />, substr(path, instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,4) + 1, instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,5) - instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,4) - 1) as lev4<br />, substr(path, instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,5) + 1, instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,6) - instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,5) - 1) as lev5<br />, substr(path, instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,6) + 1, instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,7) - instr(path,'
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+,1,6) - 1) as lev6<br />, nvl(users.full_name, 'anon.') || ' (' || test.ts_responsible || ')' as sweet_fa<br />, test.ts_name as test_script_name<br />, test.ts_status<br />, run.rn_status<br /><br />, test.ts_user_06 as Business_Owner<br />, test.ts_user_07 as Technical_Owner<br />, test.ts_user_04 as HR_Func_Area<br />, test.ts_user_05 as Tester<br />, test.ts_user_09 as Date_Time<br />, test.ts_user_08 as Location<br />, test.ts_user_02 as CBS_Test_Effort<br />, test.ts_user_01 as Summary<br />, test.ts_user_03 as CR_ID<br /><br />from (<br /> select<br /> al_father_id, al_item_id, sys_connect_by_path(al_description, '
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) || '
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+ as path<br /> FROM (SELECT * from all_lists where al_father_id  2329) -- 2329 is a 'bad', invisible folder. Yes really.<br /> connect by prior al_item_id = al_father_id<br />) path<br />, test<br />, users<br />,<br /> (select run.rn_test_id, run.rn_status<br /> from run<br /> where exists<br />  (select 1<br />  from cycle<br />  where cycle.cy_cycle_id = run.rn_cycle_id<br />  and cycle.cy_folder_id in<br />   (select cf_item_id from<br />    (select cf_item_id, sys_connect_by_path(cf_item_name, '
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+) as path<br />    from cycl_fold a<br />    connect by prior cf_item_id = cf_father_id)<br />   where path like '
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+ || &amp;testLabRoot || '%'))<br /> and run.rn_execution_date =<br />  (select max(r.rn_execution_date)<br />  from run r<br />  where r.rn_test_id = run.rn_test_id)<br /> and run.rn_execution_time =<br />  (select max(rn_execution_time)<br />  from run r<br />  where r.rn_test_id = run.rn_test_id<br />  and r.rn_execution_date = run.rn_execution_date)) run<br /><br /><br />where path.path like '
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre wp-pre-tag-1></pre>
+ || &amp;testPlanRoot || '%'<br /><br />and test.ts_subject (+) = path.al_item_id<br />and users.user_name (+) = test.ts_responsible<br /><br />and run.rn_test_id (+) = test.ts_test_id<br /><br />)<br />where lev1 = &amp;testPlanRoot -- Removes data where same folder name exists on another branch.<br />and not lev2 is null -- Don't need base folder only in data (blanks).<br />and not lev3 is null<br />order by 1, 2, 3, 4, 5, 6, 8<br />;<br /><br /><br /></code></pre>
+) AS PATH<br />FROM ALL_LISTS<br />CONNECT BY PRIOR AL_ITEM_ID = AL_FATHER_ID) A<br />, TEST B<br />, DESSTEPS C<br />WHERE A.PATH LIKE '%\Subject\System Tests\SA System Test\GRADUATIONS%'<br />AND B.TS_SUBJECT = A.AL_ITEM_ID<br />AND C.DS_TEST_ID = B.TS_TEST_ID<br />ORDER BY A.PATH, B.TS_NAME, C.DS_STEP_ORDER<br />;<br /></code></pre>
+<p>Note I've done some stripping of HTML tags using a combination of Replace() and a regular expression.</p>
+<p>We dumped a larger set of the above results into a spreadsheet, connected to it through Access and wrote out all our UAT scripts as a report.</p>
+<p>You can also join to the Test Lab to get the Test Results out. Note that it is joined by TEST_ID so the Lab folders may not line up with the Plan folders, you can change folder names etc.</p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>/*<br />Built for Jira 26921<br />Michael Nitschke 30/03/2010<br /><br />Examples:<br />define testPlanRoot = 'SA Master'<br />define testLabRoot = 'System Testing\SYS1 SA'<br /><br />define testPlanRoot = 'MTP Testing'<br />define testLabRoot = 'MTP Testing\MTP 13'<br /><br />Hint: you can optionally add a trailing back-slash on the testLabRoot variable if you<br />need to clearly define it as seperate from and similarly named folder,<br />e.g. 'SYSTEM' and 'SYSTEM1'.<br />*/<br /><br />/* notes:<br />Test Lab runs do not neccessarily line up in the same folders in Test Lab as the folders that are in Test Plan ...if that makes sense.<br />Joined by TEST_ID but the Test Lab folder Name can be changed, so the lab results for a given test plan may be in a test lab folder that has a different name to the plan.<br />hard to explain.<br />*/<br /><br />select * from (<br /><br />SELECT<br />  substr(path, 2, instr(path,'
+,1,2) - 2) as lev1<br />, substr(path, instr(path,'
+,1,2) + 1, instr(path,'
+,1,3) - instr(path,'
+,1,2) - 1) as lev2<br />, substr(path, instr(path,'
+,1,3) + 1, instr(path,'
+,1,4) - instr(path,'
+,1,3) - 1) as lev3<br />, substr(path, instr(path,'
+,1,4) + 1, instr(path,'
+,1,5) - instr(path,'
+,1,4) - 1) as lev4<br />, substr(path, instr(path,'
+,1,5) + 1, instr(path,'
+,1,6) - instr(path,'
+,1,5) - 1) as lev5<br />, substr(path, instr(path,'
+,1,6) + 1, instr(path,'
+,1,7) - instr(path,'
+,1,6) - 1) as lev6<br />, nvl(users.full_name, 'anon.') || ' (' || test.ts_responsible || ')' as sweet_fa<br />, test.ts_name as test_script_name<br />, test.ts_status<br />, run.rn_status<br /><br />, test.ts_user_06 as Business_Owner<br />, test.ts_user_07 as Technical_Owner<br />, test.ts_user_04 as HR_Func_Area<br />, test.ts_user_05 as Tester<br />, test.ts_user_09 as Date_Time<br />, test.ts_user_08 as Location<br />, test.ts_user_02 as CBS_Test_Effort<br />, test.ts_user_01 as Summary<br />, test.ts_user_03 as CR_ID<br /><br />from (<br /> select<br /> al_father_id, al_item_id, sys_connect_by_path(al_description, '
+) || '
+ as path<br /> FROM (SELECT * from all_lists where al_father_id  2329) -- 2329 is a 'bad', invisible folder. Yes really.<br /> connect by prior al_item_id = al_father_id<br />) path<br />, test<br />, users<br />,<br /> (select run.rn_test_id, run.rn_status<br /> from run<br /> where exists<br />  (select 1<br />  from cycle<br />  where cycle.cy_cycle_id = run.rn_cycle_id<br />  and cycle.cy_folder_id in<br />   (select cf_item_id from<br />    (select cf_item_id, sys_connect_by_path(cf_item_name, '
+) as path<br />    from cycl_fold a<br />    connect by prior cf_item_id = cf_father_id)<br />   where path like '
+ || &amp;testLabRoot || '%'))<br /> and run.rn_execution_date =<br />  (select max(r.rn_execution_date)<br />  from run r<br />  where r.rn_test_id = run.rn_test_id)<br /> and run.rn_execution_time =<br />  (select max(rn_execution_time)<br />  from run r<br />  where r.rn_test_id = run.rn_test_id<br />  and r.rn_execution_date = run.rn_execution_date)) run<br /><br /><br />where path.path like '
+ || &amp;testPlanRoot || '%'<br /><br />and test.ts_subject (+) = path.al_item_id<br />and users.user_name (+) = test.ts_responsible<br /><br />and run.rn_test_id (+) = test.ts_test_id<br /><br />)<br />where lev1 = &amp;testPlanRoot -- Removes data where same folder name exists on another branch.<br />and not lev2 is null -- Don't need base folder only in data (blanks).<br />and not lev3 is null<br />order by 1, 2, 3, 4, 5, 6, 8<br />;<br /><br /><br /></code></pre>

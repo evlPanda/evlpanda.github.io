@@ -1,0 +1,30 @@
+---
+layout: post
+title: Component Arrays - Caching
+date: 2010-07-22 07:31:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- cache array PeopleCode
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '4824566864013856750'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>One Application Engine performance tip I found was to place the results of commonly used queries into Component level arrays that could be searched through on the Application Server instead of making a call to the database. Some code was triggered that many times the DB calls numberd in millions and all the round-trips were expensive.</p>
+<p>The following creates component arrays that store the results for a common query, in this case PIN_NUM and PIN_NM from the GP_PIN table.</p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>/* Create a set of global look-up arrays. <br />   This will remove the need to call the db many, many times. <br /><br />  See CC_FUNCLIB_UOA.LOOKUP.FieldFormula for how to call/use. */<br /><br />Component array of string &amp;arrPinNumIndex;<br />Component array of number &amp;arrPinNumVal;<br /><br />Component array of number &amp;arrPinNmIndex;<br />Component array of string &amp;arrPinNmVal;<br /><br />Local SQL &amp;sql;<br />Local string &amp;pinNm;<br />Local integer &amp;pinNum, &amp;i;<br /><br />/* PIN_NUM Lookup: */<br />&amp;arrPinNumIndex = CreateArrayRept("", 0);<br />&amp;arrPinNumVal = CreateArrayRept(0, 0);<br /><br />&amp;sql = CreateSQL("SELECT PIN_NM, PIN_NUM FROM %Table(GP_PIN) ORDER BY 1");<br />&amp;i = 1;<br />While &amp;sql.Fetch(&amp;pinNm, &amp;pinNum)<br />   &amp;arrPinNumIndex [&amp;i] = &amp;pinNm;<br />   &amp;arrPinNumVal [&amp;i] = &amp;pinNum;<br />   &amp;i = &amp;i + 1;<br />End-While;<br /><br /><br />/* PIN_NM Lookup: */<br />&amp;arrPinNmIndex = CreateArrayRept(0, 0);<br />&amp;arrPinNmVal = CreateArrayRept("", 0);<br /><br />&amp;sql = CreateSQL("SELECT PIN_NUM, PIN_NM FROM %Table(GP_PIN) ORDER BY 1");<br />&amp;i = 1;<br />While &amp;sql.Fetch(&amp;pinNum, &amp;pinNm)<br />   &amp;arrPinNmIndex [&amp;i] = &amp;pinNum;<br />   &amp;arrPinNmVal [&amp;i] = &amp;pinNm;<br />   &amp;i = &amp;i + 1;<br />End-While;<br /></code></pre>
+<p>There is a Function that can be called to interrogate the arrays for the value you are searching for:</p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>&lt;* Search the global array that stores cached lookup values from database.<br />   This removes (a lot of) roundtrips between app server and db server. <br /><br />   Example of use:<br /><br />     /* previously populated arrays - index and value. */<br />     Component array of string &amp;arrPinNumIndex;<br />     Component array of number &amp;arrPinNumVal;<br /><br />     Declare Function GetCached PeopleCode CC_FUNCLIB_UOA.LOOKUP FieldFormula;<br />     &amp;x = GetCached("ZACC ALA", &amp;arrPinNumIndex, &amp;arrPinNumVal);<br /><br />   i.e. Pass it a pin name and two, synchronised arrays.<br />   The first array contains the index, the second contains values that are returned.<br />   Obviously only works on "2 dimensional arrays"<br /><br />*&gt;<br /><br /><br /><br />Function BinarySearch(&amp;arr, &amp;srchVal, &amp;low As integer, &amp;high As integer) Returns integer<br />   <br />   If (&amp;high &lt; &amp;low) Then<br />      Return - 1; /* not found */<br />   End-If;<br />   <br />   &amp;mid = &amp;low + ((&amp;high - &amp;low) / 2);<br />   If &amp;arr [&amp;mid] &gt; &amp;srchVal Then<br />      Return BinarySearch(&amp;arr, &amp;srchVal, &amp;low, &amp;mid - 1);<br />   Else<br />      If &amp;arr [&amp;mid] &lt; &amp;srchVal Then<br />         Return BinarySearch(&amp;arr, &amp;srchVal, &amp;mid + 1, &amp;high);<br />      Else<br />         Return &amp;mid; /* found */<br />      End-If;<br />   End-If;<br />   <br />End-Function;<br /><br />Function GetCached(&amp;srch, &amp;arrIndex, &amp;arrVal) Returns any<br />   <br />   &amp;i = BinarySearch(&amp;arrIndex, &amp;srch, 1, &amp;arrIndex.len);<br />   If &amp;i = - 1 Then<br />      Return 0; /* not found */<br />   Else<br />      Return &amp;arrVal [&amp;i];<br />   End-If;<br />   <br />End-Function;<br /><br /><br /></code></pre>
+<p>To use them try the following code:</p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>/* Lookup array arrays: */<br />Component array of string &amp;arrPinNumIndex;<br />Component array of number &amp;arrPinNumVal;<br /><br />&amp;x = GetCached("BASE PAY", &amp;arrPinNumIndex, &amp;arrPinNumVal);<br /></code></pre>

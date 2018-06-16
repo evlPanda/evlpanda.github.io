@@ -1,0 +1,64 @@
+---
+layout: post
+title: FizzBuzz in Python
+date: 2017-09-28 13:31:30.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  _oembed_30eb4282660618d1db13563b073d010c: "{{unknown}}"
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '9745386297'
+  _oembed_ab7b75f2f676c5e89ee3a4932d91d909: "{{unknown}}"
+  _oembed_8757c39bdc585978df5841c8f94dc3a1: "{{unknown}}"
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>FizzBuzz is a simple exercise and a nice illustration of how to refactor.</p>
+<p><strong>Version 1</strong></p>
+<pre><code>
+def fizzbuzz(fizz, buzz, r):
+
+    for i in range(0, r+1):
+        result= ''
+        if i % fizz == 0:
+            result = 'Fizz'
+        if i % buzz == 0:
+            result += 'Buzz'
+
+    print(str(i) + ': ' + result)
+
+
+fizzbuzz( 3, 5, 100 )
+</code></pre>
+<p><strong>Version 2</strong></p>
+<p>And after the mandatory "What if I want to buzz on 7, and also wizz on 9, etc.?". The function is now refactored to take a dictionary of any number of fizz, buzz, wizz, whatevers to look for.</p>
+<pre><code>
+def fizzbuzz2(searchDict, r):
+
+    for i in range(1, r+1):
+        result= ''
+        for j in range(0, len(searchDict)):
+            if i % searchDict[j]['Number'] == 0:
+            result += searchDict[j]['Reply']
+
+        print(str(i) + ': ' + result)
+
+
+arrDict = [
+    {'Number': 3, 'Reply': 'Fizz'},
+    {'Number': 5, 'Reply': 'Buzz'},
+    {'Number': 9, 'Reply': 'Wizz'}]
+
+fizzbuzz2(arrDict, 100 )
+</code></pre>
+<p> </p>

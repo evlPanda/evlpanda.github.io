@@ -1,0 +1,37 @@
+---
+layout: post
+title: Merging PDFs Produces Blank Pages
+date: 2013-08-14 05:45:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '5390953036467149864'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>So you're creating a number of individual PDFs, doing something with them, and then you want to merge them all into one, nice, long PDF at the end.</p>
+<p>Something like this:<br /> 
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>/* Merge! */<br />Local boolean &amp;booMergeSuccess = &amp;objMergeTool.mergePDFs(&amp;arrFiles, &amp;sNSMergedFileDestination | &amp;sDirSep | "merged.pdf", &amp;sError);<br /></code></pre>
+<p>You can see this in Communication Generation for example.</p>
+<p>But when you open the PDF only the first page has data, the rest are blank. What's going on?</p>
+<p>I <i>finally</i> reduced this down to being something "wrong" with the individual PDFs that were being created, before they were merged. It wasn't the templates. It was something specific to the PDF files themselves.</p>
+<p>Comparing them to an environment where (luckily) the merge did work showed that the PDFs that did merge had no security, while the ones that didn't merge did have security. <i>File &gt; Properties &gt; Security</i>.</p>
+<p><i>xdo.cfg</i> was the same in both environments. So where was this coming from?</p>
+<p>I noticed that, in 8.53 at least, there are some new parameters for BI Publisher Report Definitions, namely <i>PDF Security</i>. The default for <i>pdf-security</i> was T<i>rue.</i></p>
+<p>I changed this to <i>False</i> and the merge worked. Finally.</p>
+<p>This is overriding the global value at the report level. The global value is set at:<br /><i>Reporting Tools &gt; BI Publisher &gt; Setup &gt; Global Properties </i>
+<div dir="ltr" id="imcontent"><span dir="ltr" style="color:black;direction:ltr;font-family:'Segoe UI';font-size:10pt;word-wrap:break-word;"></span></div>
+<p><b>tl;dr solution:</b></p>
+<p><tt>update PSXPGLBPROP</tt><br /><tt>set propvalue = 'False'</tt><br /><tt>where proplname = 'pdf-security';</tt></p>
+<p></p>

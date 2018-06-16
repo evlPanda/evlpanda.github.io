@@ -1,0 +1,28 @@
+---
+layout: post
+title: Style Sheet Gotchas
+date: 2010-12-03 21:22:00.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '7188856218190371816'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>So, you've created your own style sheet class to change the border colour of a Frame or Group Box to red. But, when you view the page rather than a red border you get no border. What is going wrong?<br />If you look at the HTML source you'll see your frame, which is actually a HTML Table, written there with your new class. Something like:</p>
+<p>[table class="REDBORDER" style="border:none"]</p>
+<p>Why is it hiding your borders?<br />Look above and you'll see another table:</p>
+<p>[table class="REDBORDERWBO"...</p>
+<p>What is this?</p>
+<p>On the page definition in Application Designer you can turn a Frame's border on/off. It is in the properties for each Frame object. PeopleSoft adds another Table around your Frame's Table that is used to handle the on/off (hidden) state of the border. If the Frame border is on you'll see the wrapper table with class xxxWBO (with border) and if off you'll see the wraper table with class xxxNBO (no border).<br />Your custom class definition, in this example, also needs the classes REDBORDERWBO and REDBORDERNBO to handle the on/off state of the Frame border. Same goes for Group Boxes.</p>

@@ -1,0 +1,28 @@
+---
+layout: post
+title: 'Using DateTime Fields in SQR - Gotcha #343'
+date: 2011-08-12 05:31:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- SQR Date DateTime
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '1701624311476199306'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>This will return unexpected results:</p>
+<blockquote><p>AND A.CLASS_PRICE_DTTM &lt;= $RC_FromDate</p></blockquote>
+<p>This will return expected results:</p>
+<blockquote><p>AND A.CLASS_PRICE_DTTM &lt;= to_date($RC_FromDate, &#039;DD-MON-YYYY&#039;)</p></blockquote>
+<p>Where $RC_FromDate is a variable populated from a Date field on your Run Control page.</p>

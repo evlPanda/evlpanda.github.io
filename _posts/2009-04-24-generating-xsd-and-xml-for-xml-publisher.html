@@ -1,0 +1,40 @@
+---
+layout: post
+title: Generating XSD and XML for XML Publisher
+date: 2009-04-24 04:53:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- XML Publisher XSD Generate Output
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '8025834144195520678'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>During design phase of an XML Publisher Report it is usefule to be able to rapidly update your XSD files for the data source template.  I found some delivered code that does it very nicely.  The run control includes a flag to swith this on/off.</p>
+<p>See SSF_PRNT_INV.CALLXMLP.Step02</p>
+<p><span style="font-weight:bold;">&amp;MainChunk</span> is/are the final rowset/s generated prior to publishg to XML Publisher.</p>
+<p>You'll need to include:<br />import PSXP_XMLGEN:*;</p>
+<p>.csharpcode, .csharpcode pre<br />{<br /> font-size: small;<br /> color: black;<br /> font-family: Consolas, "Courier New", Courier, Monospace;<br /> background-color: #ffffff;<br /> /*white-space: pre;*/<br />}</p>
+<p>.csharpcode pre { margin: 0em; }</p>
+<p>.csharpcode .rem { color: #008000; }</p>
+<p>.csharpcode .kwrd { color: #0000ff; }</p>
+<p>.csharpcode .str { color: #006080; }</p>
+<p>.csharpcode .op { color: #0000c0; }</p>
+<p>.csharpcode .preproc { color: #cc6633; }</p>
+<p>.csharpcode .asp { background-color: #ffff00; }</p>
+<p>.csharpcode .html { color: #800000; }</p>
+<p>.csharpcode .attr { color: #ff0000; }</p>
+<p>.csharpcode .alt <br />{<br /> background-color: #f4f4f4;<br /> width: 100%;<br /> margin: 0em;<br />}</p>
+<p>.csharpcode .lnum { color: #606060; }</p>
+<pre class="csharpcode"><br />  <span class="rem">REM - Use this code to output both XSD and XML files;</span><br />  <span class="rem">REM - for use in the design phase;</span><br />  <span class="kwrd">If</span> SSF_INVP_AET.SSF_OUTPUT_XML = <span class="str">"X"</span> <span class="kwrd">Or</span><br />        SSF_INVP_AET.SSF_OUTPUT_XML = <span class="str">"B"</span> <span class="kwrd">Then</span><br />     &amp;oDS = create PSXP_XMLGEN:RowSetDS();<br />     &amp;MYFILE = GetFile(RTrim(SSF_INVP_AET.JF_FILE_DIR) | SSF_INVP_AET.PROCESS_INSTANCE | <span class="str">"_*"</span> | <span class="str">".xsd"</span>, <span class="str">"N"</span>, <span class="str">"UTF8"</span>, %FilePath_Absolute);<br />     <span class="kwrd">If</span> &amp;MYFILE.IsOpen <span class="kwrd">Then</span><br />        &amp;sResult = &amp;oDS.getXSDSchema(&amp;MainChunk);<br />        &amp;MYFILE.WriteLine(&amp;sResult);<br />        &amp;MYFILE.Close();<br />     <span class="kwrd">End</span>-<span class="kwrd">If</span>;<br />     &amp;MYFILE = GetFile(RTrim(SSF_INVP_AET.JF_FILE_DIR) | SSF_INVP_AET.PROCESS_INSTANCE | <span class="str">"_*"</span> | <span class="str">".xml"</span>, <span class="str">"N"</span>, <span class="str">"UTF8"</span>, %FilePath_Absolute);<br />     <span class="kwrd">If</span> &amp;MYFILE.IsOpen <span class="kwrd">Then</span><br />        &amp;sResult = &amp;oDS.getXMLData(&amp;MainChunk, <span class="str">""</span>);<br />        &amp;MYFILE.WriteLine(&amp;sResult);<br />        &amp;MYFILE.Close();<br />     <span class="kwrd">End</span>-<span class="kwrd">If</span>;<br />  <span class="kwrd">End</span>-<span class="kwrd">If</span>;<br />  <span class="rem">REM - End of design phase code ;</span><br /></pre>

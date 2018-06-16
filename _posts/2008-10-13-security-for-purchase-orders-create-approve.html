@@ -1,0 +1,29 @@
+---
+layout: post
+title: Security for Purchase Orders, Create & Approve.
+date: 2008-10-13 01:28:00.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- security purchase approve order
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '4338792264756680325'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>Security for Purchase Orders, Create &amp; Approve.</p>
+<p><span style="font-weight:bold;">Requestor:</span><br />Peopletools &gt; Security &gt; User Profiles<br />  Role: '<span style="font-style:italic;">xx </span>C PO Officer'<br />  Route Control: <span style="font-style:italic;">(same as the approver)</span></p>
+<p>Set Up Financials/Supply Chain &gt; Common Definitions &gt; User Preferences &gt; Define User Preferences &gt; (Procurement Link)<br />  Operational Unit: <span style="font-style:italic;">(same as the approver)</span><br />  Requester: 'userA'</p>
+<p>  &gt; (Purchase Order Authorisations)<br />  Tick everything (if appropriate for environment)<br />  Buyers User Authorised For: 'userA'</p>
+<p><span style="font-weight:bold;">Approver:</span><br />Peopletools &gt; Security &gt; User Profiles<br />  Role: '<span style="font-style:italic;">xx </span>W Approver - Fin Lvl 1'<br />  Route Control: <span style="font-style:italic;">(same as the requester)</span></p>
+<p>Set Up Financials/Supply Chain &gt; Common Definitions &gt; User Preferences &gt; Define User Preferences &gt; (Procurement Link)<br />  Operational Unit: <span style="font-style:italic;">(same as the requester)</span><br />  &gt; (Purchase Order Authorisations)<br />  Tick everything (if appropriate for environment)</p>

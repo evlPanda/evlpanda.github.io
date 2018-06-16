@@ -1,0 +1,60 @@
+---
+layout: post
+title: Barcode PeopleCode for code128
+date: 2009-05-19 04:05:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Peoplecode Barcode bar code code128
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '4947496183572879301'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>/* This class provides methods to :<br /> * Assist in development of XML/IB Publisher documents.<br /> */<br />class XML_Publisher<br />   method XML_Publisher();<br />   method getCode128BarCode(&amp;strDataToFormat As string) Returns string;<br />end-class;</p>
+<p>/* Method :- Config_Data<br /> * Constructor<br /> * Arguments :- None.<br /> * Returns :- None.<br /> */<br />method XML_Publisher<br />end-method;</p>
+<p>/* USQSF023, Michael Nitschke 06.05.2009<br /> * Method :- GetFieldValues<br /> * Arguments :- &amp;strDataToFormat = string to format to code128 format..<br /> * Returns :- Formatted string.<br /> */<br />/**<br /> * getCode128BarCode<br /> * <br /> * This function generates Code128 barcode for the given string. It uses subsets B and C when generating barcode <br /> * string (not subset A). <br /> * @param In &amp;strDataToFormat - string to format into the barcode.<br /> * Returns: ASCII characters needed to represent the barcode.<br /> *<br /> * ASSUMPTIONS: The &amp;strDataToFormat string does not contain any invalid characters. Only ASCII characters 32 to 126 are<br /> * allowed - if there are invalid characters, an empty string is returned. The function itself appends the necessary special <br /> * ASCII characters to generate the barcode.<br /> *<br /> * The algorithm for creating barcodes is based upon the sample code provided on this site, with slight modifications:<br /> * http://grandzebu.net/index.php?page=/informatique/codbar-en/code128.htm<br />**/<br />method getCode128BarCode<br />   /+ &amp;strDataToFormat as String +/<br />   /+ Returns String +/</p>
+<p>   Local boolean &amp;boolSubsetB = True;<br />   Local boolean &amp;boolIsDigits;<br />   Local string &amp;strBarcode = "";<br />   Local integer &amp;i;<br />   Local integer &amp;intCharNum, &amp;charsToCheck, &amp;intCheckSum;</p>
+<p>   /* While developing... */<br />   rem &amp;strDataToFormat = "123456789012345678901234567890";</p>
+<p>   /* No need to process an empty string - simply return what was put in */<br />   If Len(&amp;strDataToFormat) = 0 Then<br />      Return &amp;strBarcode;<br />   End-If;</p>
+<p>   /* Check for valid characters */<br />   For &amp;i = 1 To Len(&amp;strDataToFormat)<br />      &amp;intCharNum = Code(Substring(&amp;strDataToFormat, &amp;i, 1));<br />      If &amp;intCharNum &gt;= 32 And<br />            &amp;intCharNum &lt;= 126 Then<br />      Else<br />         /* invalid characters found - return empty string */<br />         Return "";<br />      End-If;<br />   End-For;</p>
+<p>   &amp;i = 1;</p>
+<p>   While &amp;i &lt;= Len(&amp;strDataToFormat)</p>
+<p>      If &amp;boolSubsetB Then<br />         /* see if it's worth it to switch to subset C */<br />         /* yes for 4 digits at start or end, else if 6 digits */<br />         If (&amp;i = 1) Or<br />               (&amp;i + 3) = Len(&amp;strDataToFormat) Then<br />            &amp;charsToCheck = 4;<br />         Else<br />            &amp;charsToCheck = 6;<br />         End-If;</p>
+<p>         &amp;boolIsDigits = False;<br />         If IsDigits(Substring(&amp;strDataToFormat, &amp;i, &amp;charsToCheck)) And<br />               (Len(Substring(&amp;strDataToFormat, &amp;i, &amp;charsToCheck)) = &amp;charsToCheck) Then<br />            &amp;boolIsDigits = True;<br />         End-If;</p>
+<p>         If &amp;boolIsDigits Then</p>
+<p>            If &amp;i = 1 Then<br />               /* Put Start C character, to indicate barcode starts with subset C */<br />               &amp;strBarcode = Char(210);<br />            Else<br />               /* Put Code C character, to indicate switch to subset C */<br />               &amp;strBarcode = &amp;strBarcode | Char(204);<br />            End-If;<br />            &amp;boolSubsetB = False;</p>
+<p>         Else</p>
+<p>            If &amp;i = 1 Then<br />               /* Put Start B character, to indicate barcode starts with subset B */<br />               &amp;strBarcode = Char(209);<br />            End-If;</p>
+<p>         End-If;</p>
+<p>      End-If;</p>
+<p>      If Not &amp;boolSubsetB Then</p>
+<p>         /* We are on subset C, try to process 2 digits */<br />         &amp;boolIsDigits = False;</p>
+<p>         If IsDigits(Substring(&amp;strDataToFormat, &amp;i, 2)) And<br />               (Len(Substring(&amp;strDataToFormat, &amp;i, 2)) = 2) Then<br />            &amp;boolIsDigits = True;<br />         End-If;</p>
+<p>         If &amp;boolIsDigits Then<br />            /* 2 digits - process using subset C */<br />            &amp;intCharNum = Value(Substring(&amp;strDataToFormat, &amp;i, 2));<br />            If &amp;intCharNum = 0 Then<br />               &amp;intCharNum = 212;<br />            Else<br />               If &amp;intCharNum &lt; 95 Then<br />                  &amp;intCharNum = &amp;intCharNum + 32;<br />               Else<br />                  &amp;intCharNum = &amp;intCharNum + 105;<br />               End-If;<br />            End-If;</p>
+<p>            &amp;strBarcode = &amp;strBarcode | Char(&amp;intCharNum);<br />            &amp;i = &amp;i + 2;</p>
+<p>         Else<br />            /* revert back to subset B */<br />            &amp;strBarcode = &amp;strBarcode | Char(205);<br />            &amp;boolSubsetB = True;</p>
+<p>         End-If;</p>
+<p>      End-If;</p>
+<p>      If &amp;boolSubsetB Then</p>
+<p>         /* Process 1 digit with subset B */<br />         &amp;strBarcode = &amp;strBarcode | Substring(&amp;strDataToFormat, &amp;i, 1);<br />         &amp;i = &amp;i + 1<br />      End-If;</p>
+<p>   End-While;</p>
+<p>   /* Calculation of the checksum */<br />   For &amp;i = 1 To Len(&amp;strBarcode)</p>
+<p>      &amp;intCharNum = Code(Substring(&amp;strBarcode, &amp;i, 1));<br />      If &amp;intCharNum = 212 Then<br />         &amp;intCharNum = 0;<br />      Else<br />         If &amp;intCharNum &lt; 127 Then<br />            &amp;intCharNum = &amp;intCharNum - 32;<br />         Else<br />            &amp;intCharNum = &amp;intCharNum - 105;<br />         End-If;<br />      End-If;</p>
+<p>      If &amp;i = 1 Then<br />         &amp;intCheckSum = &amp;intCharNum;<br />      Else<br />         &amp;intCheckSum = &amp;intCheckSum + (&amp;intCharNum * (&amp;i - 1));<br />      End-If;</p>
+<p>   End-For;</p>
+<p>   /* Apply modulo 103 to the weighted total to get the checksum */<br />   &amp;intCheckSum = Mod(&amp;intCheckSum, 103);</p>
+<p>   /* Calculate checksum ASCII code */<br />   If &amp;intCheckSum &lt; 95 Then<br />      &amp;intCheckSum = &amp;intCheckSum + 32;<br />   Else<br />      &amp;intCheckSum = &amp;intCheckSum + 105;<br />   End-If;</p>
+<p>   /* Add the checksum and the STOP */<br />   &amp;strBarcode = &amp;strBarcode | Char(&amp;intCheckSum) | Char(211);</p>
+<p>   Return &amp;strBarcode;</p>
+<p>end-method;</p>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Tetris SQL | The PeopleSoft Experience</title>
+<meta name="generator" content="Jekyll v3.8.3" />
+<meta property="og:title" content="Tetris SQL" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This is a DB2 solution. Oracle will be different for the &#39;daterange&#39; WITH clause (subquery factoring) -- Two step process:-- Delete rows in Target that don&#39;t exist in Results, -- Insert rows from Result that don&#39;t exist in Target.-- Tricky bit: -- Don&#39;t overwrite any manually added rows in the Target.-- Instead block *around* them; Tetris.-- DELETEdelete from TARGET_TBL dwhere d.source = &#39;ee&#39;and (processing_range.start_dt between d.start_dt and d.end_dt or processing_range.end_dt between d.start_dt and d.end_dt or d.start_dt between processing_range.start_dt and processing_range.end_dt)and not exists (select 1 from RESULTS_TBL a where a.pin_num = d.pin_num and a.start_dt = d.start_Dt and a.end_dt = d.end_dt)-- INSERTwith daterange(level,dt) as ( select 1, current date - 1 year from sysibm.sysdummy1 union all select level + 1, dt + 1 day from daterange where level &lt; 1000 and dt &lt; current date + 1 year)select &#39;1. Result&#39; as thing, pin_num, start_dt, end_dt, &#39;ee&#39; as source from RESULTS_TBLunionselect &#39;2. Existing&#39; as thing, pin_num, start_dt, end_dt, source from TARGET_TBLunionselect &#39;3. Answer&#39; as thing, a.pin_num-- For PI/EA, greatest(a.start_dt, (select coalesce(max(s.end_dt) + 1 day, a.start_dt) from TARGET_TBL s where s.pin_num = a.pin_num and s.end_dt between a.start_dt and d.dt)) as start_dt-- For PI/EA, least(a.end_dt, (select coalesce(min(s.start_dt) - 1 day, a.end_dt) from TARGET_TBL s where s.pin_num = a.pin_num and s.start_dt between d.dt and s.end_dt)) as end_dt, &#39;ee&#39; as sourcefrom RESULTS_TBL a, daterange dwhere d.dt between a.start_dt and a.end_dtand not exists (select 1 from TARGET_TBL x where x.pin_num = a.pin_num and d.dt between x.start_dt and x.end_dt)" />
+<meta property="og:description" content="This is a DB2 solution. Oracle will be different for the &#39;daterange&#39; WITH clause (subquery factoring) -- Two step process:-- Delete rows in Target that don&#39;t exist in Results, -- Insert rows from Result that don&#39;t exist in Target.-- Tricky bit: -- Don&#39;t overwrite any manually added rows in the Target.-- Instead block *around* them; Tetris.-- DELETEdelete from TARGET_TBL dwhere d.source = &#39;ee&#39;and (processing_range.start_dt between d.start_dt and d.end_dt or processing_range.end_dt between d.start_dt and d.end_dt or d.start_dt between processing_range.start_dt and processing_range.end_dt)and not exists (select 1 from RESULTS_TBL a where a.pin_num = d.pin_num and a.start_dt = d.start_Dt and a.end_dt = d.end_dt)-- INSERTwith daterange(level,dt) as ( select 1, current date - 1 year from sysibm.sysdummy1 union all select level + 1, dt + 1 day from daterange where level &lt; 1000 and dt &lt; current date + 1 year)select &#39;1. Result&#39; as thing, pin_num, start_dt, end_dt, &#39;ee&#39; as source from RESULTS_TBLunionselect &#39;2. Existing&#39; as thing, pin_num, start_dt, end_dt, source from TARGET_TBLunionselect &#39;3. Answer&#39; as thing, a.pin_num-- For PI/EA, greatest(a.start_dt, (select coalesce(max(s.end_dt) + 1 day, a.start_dt) from TARGET_TBL s where s.pin_num = a.pin_num and s.end_dt between a.start_dt and d.dt)) as start_dt-- For PI/EA, least(a.end_dt, (select coalesce(min(s.start_dt) - 1 day, a.end_dt) from TARGET_TBL s where s.pin_num = a.pin_num and s.start_dt between d.dt and s.end_dt)) as end_dt, &#39;ee&#39; as sourcefrom RESULTS_TBL a, daterange dwhere d.dt between a.start_dt and a.end_dtand not exists (select 1 from TARGET_TBL x where x.pin_num = a.pin_num and d.dt between x.start_dt and x.end_dt)" />
+<link rel="canonical" href="http://localhost:4000/2014/08/14/tetris-sql.html" />
+<meta property="og:url" content="http://localhost:4000/2014/08/14/tetris-sql.html" />
+<meta property="og:site_name" content="The PeopleSoft Experience" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-08-14T07:15:00+10:00" />
+<script type="application/ld+json">
+{"description":"This is a DB2 solution. Oracle will be different for the &#39;daterange&#39; WITH clause (subquery factoring) -- Two step process:-- Delete rows in Target that don&#39;t exist in Results, -- Insert rows from Result that don&#39;t exist in Target.-- Tricky bit: -- Don&#39;t overwrite any manually added rows in the Target.-- Instead block *around* them; Tetris.-- DELETEdelete from TARGET_TBL dwhere d.source = &#39;ee&#39;and (processing_range.start_dt between d.start_dt and d.end_dt or processing_range.end_dt between d.start_dt and d.end_dt or d.start_dt between processing_range.start_dt and processing_range.end_dt)and not exists (select 1 from RESULTS_TBL a where a.pin_num = d.pin_num and a.start_dt = d.start_Dt and a.end_dt = d.end_dt)-- INSERTwith daterange(level,dt) as ( select 1, current date - 1 year from sysibm.sysdummy1 union all select level + 1, dt + 1 day from daterange where level &lt; 1000 and dt &lt; current date + 1 year)select &#39;1. Result&#39; as thing, pin_num, start_dt, end_dt, &#39;ee&#39; as source from RESULTS_TBLunionselect &#39;2. Existing&#39; as thing, pin_num, start_dt, end_dt, source from TARGET_TBLunionselect &#39;3. Answer&#39; as thing, a.pin_num-- For PI/EA, greatest(a.start_dt, (select coalesce(max(s.end_dt) + 1 day, a.start_dt) from TARGET_TBL s where s.pin_num = a.pin_num and s.end_dt between a.start_dt and d.dt)) as start_dt-- For PI/EA, least(a.end_dt, (select coalesce(min(s.start_dt) - 1 day, a.end_dt) from TARGET_TBL s where s.pin_num = a.pin_num and s.start_dt between d.dt and s.end_dt)) as end_dt, &#39;ee&#39; as sourcefrom RESULTS_TBL a, daterange dwhere d.dt between a.start_dt and a.end_dtand not exists (select 1 from TARGET_TBL x where x.pin_num = a.pin_num and d.dt between x.start_dt and x.end_dt)","@type":"BlogPosting","url":"http://localhost:4000/2014/08/14/tetris-sql.html","headline":"Tetris SQL","dateModified":"2014-08-14T07:15:00+10:00","datePublished":"2014-08-14T07:15:00+10:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2014/08/14/tetris-sql.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="The PeopleSoft Experience" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">The PeopleSoft Experience</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Tetris SQL</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2014-08-14T07:15:00+10:00" itemprop="datePublished">Aug 14, 2014
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{"login"=>"evlpanda", "email"=>"m.nitschke@gmail.com", "display_name"=>"Michael Nitschke", "first_name"=>"", "last_name"=>""}</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>This is a DB2 solution.  Oracle will be different for the 'daterange' WITH clause (subquery factoring)
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>-- Two step process:<br />-- Delete rows in Target that don't exist in Results, <br />-- Insert rows from Result that don't exist in Target.<br /><br />-- Tricky bit: <br />-- Don't overwrite any manually added rows in the Target.<br />-- Instead block *around* them; <b>Tetris</b>.<br /><br /><br />-- DELETE<br />delete from TARGET_TBL d<br />where d.source = 'ee'<br />and <br />    (processing_range.start_dt between d.start_dt and d.end_dt<br />    or processing_range.end_dt between d.start_dt and d.end_dt<br />    or d.start_dt between processing_range.start_dt and processing_range.end_dt)<br />and not exists<br />    (select 1<br />    from RESULTS_TBL a<br />    where a.pin_num = d.pin_num<br />    and a.start_dt = d.start_Dt<br />    and a.end_dt = d.end_dt)<br /><br /><br /><br />-- INSERT<br />with daterange(level,dt) as (<br />    select 1, current date - 1 year<br />    from sysibm.sysdummy1<br />    union all select level + 1, dt + 1 day<br />    from daterange<br />    where level &lt; 1000 and dt &lt; current date + 1 year<br />)<br /><br />select '1. Result' as thing, pin_num, start_dt, end_dt, 'ee' as source from RESULTS_TBL<br />union<br />select '2. Existing' as thing, pin_num, start_dt, end_dt, source from TARGET_TBL<br /><br />union<br />select <br />  '3. Answer' as thing<br />, a.pin_num<br /><br />-- For PI/EA<br />, greatest(a.start_dt, <br />    (select coalesce(max(s.end_dt) + 1 day, a.start_dt)<br />    from TARGET_TBL s<br />    where s.pin_num = a.pin_num<br />    and s.end_dt between a.start_dt and d.dt)) as start_dt<br /><br />-- For PI/EA<br />, least(a.end_dt, <br />    (select coalesce(min(s.start_dt) - 1 day, a.end_dt)<br />    from TARGET_TBL s<br />    where s.pin_num = a.pin_num<br />    and s.start_dt between d.dt and s.end_dt)) as end_dt<br /><br />, 'ee' as source<br />from <br />  RESULTS_TBL a<br />, daterange d<br />where d.dt between a.start_dt and a.end_dt<br />and not exists<br />    (select 1<br />    from TARGET_TBL x<br />    where x.pin_num = a.pin_num<br />    and d.dt between x.start_dt and x.end_dt)<br /><br /></code></pre>
+
+  </div><a class="u-url" href="/2014/08/14/tetris-sql.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">The PeopleSoft Experience</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">The PeopleSoft Experience</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evlPanda"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evlPanda</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Musings, chit-chat, and sometimes useful stuff related to PeopleSoft, especially PeopleCode.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

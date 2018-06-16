@@ -1,0 +1,29 @@
+---
+layout: post
+title: Last Process Instance Number in PeopleSoft
+date: 2011-07-27 07:56:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Last Max Process Instance
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '6767564150400396900'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>Lifted from Praj's most excellent Wiki:<br /><a href="http://peoplesoft.wikidot.com">http://peoplesoft.wikidot.com</a></p>
+<p>The table PS_PRCSSEQUENCE stores the last sequence numbers for the Process Scheduler and Report Manager. In PeopleTools 8.48.15 there are 5 process sequence keys (PRCSSEQKEY) which you can view yourself by looking at the translates on this field:</p>
+<blockquote><p>0 = Process Instance<br />1 = Report Instance<br />2 = Transfer Instance<br />3 = Report ID<br />4 = Folder ID</p></blockquote>
+<p>It's probably a good health check to ensure that the numbers in PS_PRCSSEQUENCE match those in the relevant tables:</p>
+<blockquote><p>select max(PRCSINSTANCE) as PRCSSEQKEY0 from PSPRCSRQST;<br />select max(CONTENTID) PRCSSEQKEY1 from PS_CDM_AUTH;<br />select max(TRANSFERINSTANCE) PRCSSEQKEY2 from PS_CDM_LIST;<br />select max(PSRF_REPORT_ID) PRCSSEQKEY3 from PSRF_RINFO_TBL;<br />select max(PSRF_FOLDER_ID) PRCSSEQKEY4 from PSRF_FINFO_TBL;</p></blockquote>
+<p>Especially if you happen to be clearing out data from these tables manually. I guess if you do clear out processes/reports you'll want to update the PS_PRCSSEQUENCE accordingly.</p>

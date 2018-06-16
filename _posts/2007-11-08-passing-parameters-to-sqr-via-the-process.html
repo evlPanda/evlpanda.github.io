@@ -1,0 +1,30 @@
+---
+layout: post
+title: Passing Parameters to SQR via the Process
+date: 2007-11-08 00:09:00.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- SQR Parameters Process
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '8946776337233636420'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p><span style="font-style:italic;">10.01.2008, update: seems Blogger has lost the uplaoded images for this post.  Perhaps they will come back?</span></p>
+<p>Update the Parameter List of your process definition.  I this case I have used a Record.Field value.</p>
+<p><img src="{{ site.baseurl }}/assets/1.gif" alt="" id="BLOGGER_PHOTO_ID_5130258143377796066" border="0" /></p>
+<p>PeopleCode to set the value of the Field (GU_GRDLPS_RC_WK.DESCR).</p>
+<p><img src="{{ site.baseurl }}/assets/2.gif" alt="" id="BLOGGER_PHOTO_ID_5130259715335826418" border="0" /></p>
+<p>In your SQR you pick up the parameter by using the Input statement:</p>
+<p><span style="font-size:85%;"><span style="font-family:courier new;">input $procAcadOrg 'Academic Organisation to distribute report to: (Optional, Press ENTER to continue)'</span></span></p>

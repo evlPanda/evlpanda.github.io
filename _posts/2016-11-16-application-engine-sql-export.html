@@ -1,0 +1,40 @@
+---
+layout: post
+title: Application Engine SQL Export
+date: 2016-11-16 03:06:48.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '28960669803'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>To export Application Engine SQL steps as plain text you can find the SQL stored in the pssqltextdefn table.</p>
+<pre><code>select 
+  d.sqlid, d.descr
+, s.sqltext
+from 
+  psaestmtdefn d
+, pssqltextdefn s
+where d.ae_applid = 'YOUR_APP_ENGINE_NAME'
+and d.ae_stmt_type = 'S'
+and s.sqlid = d.sqlid
+;
+</code></pre>
+<p>You can then use something like a combination of <a href="http://www.sublimetext.com">Sublime Text</a> and the <a href="https://packagecontrol.io/packages/SqlBeautifier" target="new">SQL Beautifier package</a> to get some sort of SQL formatting going.</p>
+<p>Use markdown to indicate each SQL statement in your document ('#' for heading level 1).</p>
+<p>And then use <a href="http://pandoc.org" target="new">Pandoc</a> to convert from markdown to Word's docx format.</p>
+<pre><code>    brew install pandoc
+    pandoc -f markdown -t docx yourDocument.md -o yourDocument.docx
+</code></pre>

@@ -1,0 +1,27 @@
+---
+layout: post
+title: Indexes on Delivered Tables
+date: 2008-09-16 04:09:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Index Delivered
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '2578015668495975610'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p class="Normal" style="margin-bottom:10pt;"><b><span style="font-size:10pt;">1. PSMENUITEM<br /></span></b><span style="font-size:10pt;">create index psoft.MW_PSMENUITEM on psoft.PSMENUITEM ( PNLGRPNAME, ITEMNAME ) tablespace psindex;</span></p>
+<p class="Normal" style="margin-bottom:10pt;"><b><span style="font-size:10pt;">2. PSPNLGROUP<br /></span></b><span style="font-size:10pt;">create index psoft.MW_PSPNLGROUP on psoft.PSPNLGROUP ( PNLNAME, ITEMNAME ) tablespace psindex;</span></p>
+<p class="Normal" style="margin-bottom:10pt;"><b><span style="font-size:10pt;">3. PSAUTHITEM<br /></span></b><span style="font-size:10pt;">create index psoft.MW_PSAUTHITEM on psoft.PSAUTHITEM ( DISPLAYONLY, BARITEMNAME, PNLITEMNAME, CLASSID ) tablespace psindex;</span></p>
+<p class="Normal" style="margin-bottom:10pt;"><b><span style="font-size:10pt;">4. PS_VAT_DEFAULT_HDR</span></b><span style="font-size:10pt;"><br />create index PSOFT.MW_PS_VAT_DEFAULT_HDR on PSOFT.PS_VAT_DEFAULT_HDR ( VAT_DRIVER, COUNTRY, STATE, VAT_DRIVER_KEY1, VAT_DRIVER_KEY2, VAT_DRIVER_KEY3, EFF_STATUS, EFFDT, END_EFFDT, VAT_DRIVER_KEY4, VAT_DRIVER_KEY5, VAT_SETID );</span></p>

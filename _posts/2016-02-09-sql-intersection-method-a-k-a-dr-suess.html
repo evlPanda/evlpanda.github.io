@@ -1,0 +1,152 @@
+---
+layout: post
+title: SQL Intersection Method (a.k.a. Dr Suess)
+date: 2016-02-09 00:52:26.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  _publicize_job_id: '19612332567'
+  _rest_api_client_id: "-1"
+  _rest_api_published: '1'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>This handy piece of SQL will return all the dates where criteria is valid across any number of tables. Say you wanted to find the dates that an employee has 'x' in table a, 'y' in table b, and 'z' in table c you could use the following.</p>
+<p>Written for DB2, use 'dual' in place of sysibm.dummy1 in Oracle etc.</p>
+<p>Note that all tables must have a "start date" and an "end date" field (although "end date" can be blank).</p>
+<pre><code>
+
+/* Adjust daterange to suit. */
+with daterange(dt) as (
+   select current date - 2 year
+   from sysibm.sysdummy1
+   union all
+   select dt + 1 day
+   from daterange
+   where dt &lt; current date + 2 years
+)
+
+select
+  a.some_field as key_field_1
+, a.some_other_field as key_field_2
+, x.dt as key_field_3
+, c.etcetera
+
+from
+  daterange x
+, some_table_a a
+, some_table_b b
+, some_table_c c
+
+where a.some_field = 'x'
+
+and b.keyfields = a.keyfields
+and b.some_field = 'y'
+
+and c.keyfields = b.keyfields
+and c.some_other_field = 'z'
+
+/* 
+   Begin Intersection method.
+   Find only rows that overlap other rows in other tables. 
+   All combinations = a:b, a:c, b:c 
+*/
+
+/* a:b */
+and (
+      (a.start_dt between b.start_dt and b.end_dt
+      or b.start_dt between a.start_dt and a.end_dt)
+   or
+      (a.end_dt is null
+      and b.start_dt &gt;= a.start_dt)
+   or
+      (b.end_dt is null
+      and a.start_dt &gt;= b.start_dt)
+)
+
+/* a:c */
+and (
+      (a.start_dt between c.start_dt and c.end_dt
+      or c.start_dt between a.start_dt and a.end_dt)
+   or
+      (a.end_dt is null
+      and c.start_dt &gt;= a.start_dt)
+   or
+      (c.end_dt is null
+      and a.start_dt &gt;= c.start_dt)
+)
+
+/* b:c */
+and (
+      (b.start_dt between c.start_dt and c.end_dt
+      or c.start_dt between b.start_dt and b.end_dt)
+   or
+      (b.end_dt is null
+      and c.start_dt &gt;= b.start_dt)
+   or
+      (c.end_dt is null
+      and b.start_dt &gt;= c.start_dt)
+)
+
+/* Return only days that are between the overlapping date ranges. */
+and x.dt between
+   greatest(a.start_dt, b.start_dt, c.start_dt)
+and
+   least(
+     nvl(a.end_dt, date('3000-01-01'))
+   , nvl(b.end_dt, date('3000-01-01'))
+   , nvl(c.end_dt, date('3000-01-01')))
+
+/* Return only one day per overlap. Group by key fields. */
+group by a.some_field, a.some_other_field, x.dt
+
+</code></pre>
+<h3>Bonus!</h3>
+<p>PeopleCode to write the intersection method for you! This avoids getting hynotised by the pattern when you're doing it for six or more tables and is correct every time.</p>
+<pre><code>
+Local array of string &amp;arrAliases = Split(ADO_INTERSECTN.TEXT254.Value, ",");
+
+ADO_INTERSECTN.HTML_AREA_01.Value = "";
+
+Local integer &amp;i, &amp;j;
+Local string &amp;str;
+
+For &amp;i = 1 To &amp;arrAliases.Len
+   For &amp;j = &amp;i + 1 To &amp;arrAliases.Len
+      
+      &amp;str = &amp;str | "/* " | &amp;arrAliases [&amp;i] | " - " | &amp;arrAliases [&amp;j] | " */";
+      &amp;str = &amp;str | " AND ( (" | &amp;arrAliases [&amp;i] | ".start_dt BETWEEN " | &amp;arrAliases [&amp;j] | ".start_dt AND " | &amp;arrAliases [&amp;j] | ".end_dt ";
+      &amp;str = &amp;str | "OR " | &amp;arrAliases [&amp;j] | ".start_dt BETWEEN " | &amp;arrAliases [&amp;i] | ".start_dt AND " | &amp;arrAliases [&amp;i] | ".end_dt) ";
+      &amp;str = &amp;str | "OR (" | &amp;arrAliases [&amp;i] | ".end_dt IS NULL ";
+      &amp;str = &amp;str | "AND " | &amp;arrAliases [&amp;j] | ".start_dt &gt;= " | &amp;arrAliases [&amp;i] | ".start_dt) ";
+      &amp;str = &amp;str | "OR (" | &amp;arrAliases [&amp;j] | ".end_dt IS NULL ";
+      &amp;str = &amp;str | "AND " | &amp;arrAliases [&amp;i] | ".start_dt &gt;= " | &amp;arrAliases [&amp;j] | ".start_dt) ) ";
+      
+   End-For;
+End-For;
+
+&amp;str = &amp;str | " and x.date1 between greatest(";
+For &amp;i = 1 To &amp;arrAliases.Len
+   &amp;str = &amp;str | &amp;arrAliases [&amp;i] | ".start_dt, ";
+End-For;
+&amp;str = Left(&amp;str, Len(&amp;str) - 2);
+
+&amp;str = &amp;str | ") and least(";
+For &amp;i = 1 To &amp;arrAliases.Len
+   &amp;str = &amp;str | "nvl(" | &amp;arrAliases [&amp;i] | ".end_dt, date('3000-01-01')), ";
+End-For;
+&amp;str = Left(&amp;str, Len(&amp;str) - 2);
+&amp;str = &amp;str | ")";
+
+
+ADO_INTERSECTN.HTML_AREA_01.Value = &amp;str;
+</code></pre></p>

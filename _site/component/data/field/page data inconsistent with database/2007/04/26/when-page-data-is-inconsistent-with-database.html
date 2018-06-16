@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>When “Page data is inconsistent with database” | The PeopleSoft Experience</title>
+<meta name="generator" content="Jekyll v3.8.3" />
+<meta property="og:title" content="When “Page data is inconsistent with database”" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="How we hate this one. PeopleSoft politely tells you that there is some data (being updated) that is inconsistent with what is in the database. It is not polite enough to tell you which data however. Here is some code to give you a clue. It returns all data that has changed on the Component. /* Place in the Component.SavePreChange event. Finds all data that is being updated in a component when saved. */&lt;/p&gt; Local integer &amp;i, &amp;amp;amp;amp;j, &amp;k, &amp;r, &amp;f; /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */ Function CheckRowset(&amp;level as integer, &amp;rs As Rowset) For &amp;i = 1 to &amp;rs.ActiveRowCount /* Loop through all Records in the RowSet. */ For &amp;r = 1 To &amp;rs(&amp;i).RecordCount /* Find Records that have changed. */ Local Record &amp;rec = &amp;rs(&amp;i).GetRecord(&amp;r); If &amp;rec.IsChanged Then /* Loop through all the Fields in the Record. */ For &amp;f = 1 To &amp;rec.FieldCount /* Find Fields that have changed. */ If &amp;rec.GetField(&amp;f).IsChanged Then Local Field &amp;amp;amp;fld = &amp;rec.GetField(&amp;f); WinMessage(&quot;FIELD CHANGED - Level: &quot; | &amp;level | &quot;, Row: 1, Record: &quot; | &amp;amp;rec.Name | &quot;, Field: &quot; | &amp;fld.Name | &quot;, OriginalValue= &quot; | &amp;fld.OriginalValue | &quot;, Value= &quot; | &amp;fld.Value,0); End-If; End-For; End-If; End-For;&lt;/p&gt; &lt;/span&gt;&lt;/span&gt;&lt;/code&gt; End-For;End-Function;&lt;/p&gt; /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */ /* Level 0. */Local Rowset &amp;rowset0 = GetLevel0();CheckRowset(0,&amp;rowset0); /* Level 1. */For &amp;i = 1 To &amp;rowset0(1).ChildCount Local Rowset &amp;rowset1 = &amp;rowset0(1).GetRowset(&amp;i); CheckRowset(1,&amp;rowset1); /* Level 2. */ For &amp;j = 1 To &amp;rowset1(1).ChildCount Local Rowset &amp;rowset2 = &amp;rowset1(1).GetRowset(&amp;j); CheckRowset(2,&amp;rowset2); /* Level 3 (maximum). */ For &amp;k = 1 To &amp;rowset2(1).ChildCount Local Rowset &amp;rowset3 = &amp;rowset2(1).GetRowset(&amp;k); CheckRowset(3,&amp;rowset3); End-For; End-For; End-For;&lt;/span&gt;&lt;/code&gt;" />
+<meta property="og:description" content="How we hate this one. PeopleSoft politely tells you that there is some data (being updated) that is inconsistent with what is in the database. It is not polite enough to tell you which data however. Here is some code to give you a clue. It returns all data that has changed on the Component. /* Place in the Component.SavePreChange event. Finds all data that is being updated in a component when saved. */&lt;/p&gt; Local integer &amp;i, &amp;amp;amp;amp;j, &amp;k, &amp;r, &amp;f; /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */ Function CheckRowset(&amp;level as integer, &amp;rs As Rowset) For &amp;i = 1 to &amp;rs.ActiveRowCount /* Loop through all Records in the RowSet. */ For &amp;r = 1 To &amp;rs(&amp;i).RecordCount /* Find Records that have changed. */ Local Record &amp;rec = &amp;rs(&amp;i).GetRecord(&amp;r); If &amp;rec.IsChanged Then /* Loop through all the Fields in the Record. */ For &amp;f = 1 To &amp;rec.FieldCount /* Find Fields that have changed. */ If &amp;rec.GetField(&amp;f).IsChanged Then Local Field &amp;amp;amp;fld = &amp;rec.GetField(&amp;f); WinMessage(&quot;FIELD CHANGED - Level: &quot; | &amp;level | &quot;, Row: 1, Record: &quot; | &amp;amp;rec.Name | &quot;, Field: &quot; | &amp;fld.Name | &quot;, OriginalValue= &quot; | &amp;fld.OriginalValue | &quot;, Value= &quot; | &amp;fld.Value,0); End-If; End-For; End-If; End-For;&lt;/p&gt; &lt;/span&gt;&lt;/span&gt;&lt;/code&gt; End-For;End-Function;&lt;/p&gt; /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */ /* Level 0. */Local Rowset &amp;rowset0 = GetLevel0();CheckRowset(0,&amp;rowset0); /* Level 1. */For &amp;i = 1 To &amp;rowset0(1).ChildCount Local Rowset &amp;rowset1 = &amp;rowset0(1).GetRowset(&amp;i); CheckRowset(1,&amp;rowset1); /* Level 2. */ For &amp;j = 1 To &amp;rowset1(1).ChildCount Local Rowset &amp;rowset2 = &amp;rowset1(1).GetRowset(&amp;j); CheckRowset(2,&amp;rowset2); /* Level 3 (maximum). */ For &amp;k = 1 To &amp;rowset2(1).ChildCount Local Rowset &amp;rowset3 = &amp;rowset2(1).GetRowset(&amp;k); CheckRowset(3,&amp;rowset3); End-For; End-For; End-For;&lt;/span&gt;&lt;/code&gt;" />
+<link rel="canonical" href="http://localhost:4000/component/data/field/page%20data%20inconsistent%20with%20database/2007/04/26/when-page-data-is-inconsistent-with-database.html" />
+<meta property="og:url" content="http://localhost:4000/component/data/field/page%20data%20inconsistent%20with%20database/2007/04/26/when-page-data-is-inconsistent-with-database.html" />
+<meta property="og:site_name" content="The PeopleSoft Experience" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2007-04-26T02:28:00+10:00" />
+<script type="application/ld+json">
+{"description":"How we hate this one. PeopleSoft politely tells you that there is some data (being updated) that is inconsistent with what is in the database. It is not polite enough to tell you which data however. Here is some code to give you a clue. It returns all data that has changed on the Component. /* Place in the Component.SavePreChange event. Finds all data that is being updated in a component when saved. */&lt;/p&gt; Local integer &amp;i, &amp;amp;amp;amp;j, &amp;k, &amp;r, &amp;f; /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */ Function CheckRowset(&amp;level as integer, &amp;rs As Rowset) For &amp;i = 1 to &amp;rs.ActiveRowCount /* Loop through all Records in the RowSet. */ For &amp;r = 1 To &amp;rs(&amp;i).RecordCount /* Find Records that have changed. */ Local Record &amp;rec = &amp;rs(&amp;i).GetRecord(&amp;r); If &amp;rec.IsChanged Then /* Loop through all the Fields in the Record. */ For &amp;f = 1 To &amp;rec.FieldCount /* Find Fields that have changed. */ If &amp;rec.GetField(&amp;f).IsChanged Then Local Field &amp;amp;amp;fld = &amp;rec.GetField(&amp;f); WinMessage(&quot;FIELD CHANGED - Level: &quot; | &amp;level | &quot;, Row: 1, Record: &quot; | &amp;amp;rec.Name | &quot;, Field: &quot; | &amp;fld.Name | &quot;, OriginalValue= &quot; | &amp;fld.OriginalValue | &quot;, Value= &quot; | &amp;fld.Value,0); End-If; End-For; End-If; End-For;&lt;/p&gt; &lt;/span&gt;&lt;/span&gt;&lt;/code&gt; End-For;End-Function;&lt;/p&gt; /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */ /* Level 0. */Local Rowset &amp;rowset0 = GetLevel0();CheckRowset(0,&amp;rowset0); /* Level 1. */For &amp;i = 1 To &amp;rowset0(1).ChildCount Local Rowset &amp;rowset1 = &amp;rowset0(1).GetRowset(&amp;i); CheckRowset(1,&amp;rowset1); /* Level 2. */ For &amp;j = 1 To &amp;rowset1(1).ChildCount Local Rowset &amp;rowset2 = &amp;rowset1(1).GetRowset(&amp;j); CheckRowset(2,&amp;rowset2); /* Level 3 (maximum). */ For &amp;k = 1 To &amp;rowset2(1).ChildCount Local Rowset &amp;rowset3 = &amp;rowset2(1).GetRowset(&amp;k); CheckRowset(3,&amp;rowset3); End-For; End-For; End-For;&lt;/span&gt;&lt;/code&gt;","@type":"BlogPosting","url":"http://localhost:4000/component/data/field/page%20data%20inconsistent%20with%20database/2007/04/26/when-page-data-is-inconsistent-with-database.html","headline":"When “Page data is inconsistent with database”","dateModified":"2007-04-26T02:28:00+10:00","datePublished":"2007-04-26T02:28:00+10:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/component/data/field/page%20data%20inconsistent%20with%20database/2007/04/26/when-page-data-is-inconsistent-with-database.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="The PeopleSoft Experience" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">The PeopleSoft Experience</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">When &quot;Page data is inconsistent with database&quot;</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2007-04-26T02:28:00+10:00" itemprop="datePublished">Apr 26, 2007
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{"login"=>"evlpanda", "email"=>"m.nitschke@gmail.com", "display_name"=>"Michael Nitschke", "first_name"=>"", "last_name"=>""}</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>How we hate this one.  PeopleSoft politely tells you that there is some data (being updated) that is inconsistent with what is in the database.  It is not polite enough to tell you <span style="font-weight:bold;">which</span> data however.</p>
+<p>Here is some code to give you a clue.  It returns all data that has changed on the Component.</p>
+<p><code><br /><span style="font-size:78%;"><span style="font-family:courier new;">/* Place in the Component.SavePreChange event.</span><br /><span style="font-family:courier new;">   Finds all data that is being updated in a component when saved. */</span></p>
+<p><span style="font-family:courier new;">Local integer &amp;i, &amp;amp;amp;amp;j, &amp;k, &amp;r, &amp;f;</span></p>
+<p><span style="font-family:courier new;">/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */</span></p>
+<p><span style="font-family:courier new;">Function CheckRowset(&amp;level as integer, &amp;rs As Rowset)</span></p>
+<p>For &amp;i = 1 to &amp;rs.ActiveRowCount</p>
+<p><span style="font-family:courier new;">   /* Loop through all Records in the RowSet. */</span><br /><span style="font-family:courier new;">   For &amp;r = 1 To &amp;rs(&amp;i).RecordCount</span></p>
+<p><span style="font-family:courier new;">      /* Find Records that have changed. */</span><br /><span style="font-family:courier new;">      Local Record &amp;rec = &amp;rs(&amp;i).GetRecord(&amp;r);</span><br /><span style="font-family:courier new;">      If &amp;rec.IsChanged Then</span></p>
+<p><span style="font-family:courier new;">         /* Loop through all the Fields in the Record. */</span><br /><span style="font-family:courier new;">         For &amp;f = 1 To &amp;rec.FieldCount</span></p>
+<p><span style="font-family:courier new;">            /* Find Fields that have changed. */</span><br /><span style="font-family:courier new;">            If &amp;rec.GetField(&amp;f).IsChanged Then</span></p>
+<p><span style="font-family:courier new;">               Local Field &amp;amp;amp;fld = &amp;rec.GetField(&amp;f);</span><br /><span style="font-family:courier new;">               WinMessage("FIELD CHANGED - Level: " | &amp;level | ", Row: 1, Record: " | &amp;amp;rec.Name | ", Field: " | &amp;fld.Name | ", OriginalValue= " | &amp;fld.OriginalValue | ", Value= " | &amp;fld.Value,0);</span></p>
+<p><span style="font-family:courier new;">            End-If;</span></p>
+<p><span style="font-family:courier new;">         End-For;</span></p>
+<p><span style="font-family:courier new;">      End-If;</span></p>
+<p><span style="font-family:courier new;">   End-For;</p>
+<p></span></span></code><code><span style="font-size:78%;"><span style="font-family:courier new;">   End-For;</span></span></code><br /><code><span style="font-size:78%;"><br /><span style="font-family:courier new;">End-Function;</span></p>
+<p><span style="font-family:courier new;">/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */</span></p>
+<p><span style="font-family:courier new;">/* Level 0. */</span><br /><span style="font-family:courier new;">Local Rowset &amp;rowset0 = GetLevel0();</span><br /><span style="font-family:courier new;">CheckRowset(0,&amp;rowset0);</span></p>
+<p><span style="font-family:courier new;">/* Level 1. */</span><br /><span style="font-family:courier new;">For &amp;i = 1 To &amp;rowset0(1).ChildCount</span></p>
+<p><span style="font-family:courier new;">   Local Rowset &amp;rowset1 = &amp;rowset0(1).GetRowset(&amp;i);</span><br /><span style="font-family:courier new;">   CheckRowset(1,&amp;rowset1);</span></p>
+<p><span style="font-family:courier new;">   /* Level 2. */</span><br /><span style="font-family:courier new;">   For &amp;j = 1 To &amp;rowset1(1).ChildCount</span></p>
+<p><span style="font-family:courier new;">      Local Rowset &amp;rowset2 = &amp;rowset1(1).GetRowset(&amp;j);</span><br /><span style="font-family:courier new;">      CheckRowset(2,&amp;rowset2);</span></p>
+<p><span style="font-family:courier new;">      /* Level 3 (maximum). */</span><br /><span style="font-family:courier new;">      For &amp;k = 1 To &amp;rowset2(1).ChildCount</span></p>
+<p><span style="font-family:courier new;">         Local Rowset &amp;rowset3 = &amp;rowset2(1).GetRowset(&amp;k);</span><br /><span style="font-family:courier new;">         CheckRowset(3,&amp;rowset3);</span></p>
+<p><span style="font-family:courier new;">      End-For;</span></p>
+<p><span style="font-family:courier new;">   End-For;</span></p>
+<p><span style="font-family:courier new;">End-For;</span></span><br /></code></p>
+
+  </div><a class="u-url" href="/component/data/field/page%20data%20inconsistent%20with%20database/2007/04/26/when-page-data-is-inconsistent-with-database.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">The PeopleSoft Experience</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">The PeopleSoft Experience</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evlPanda"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evlPanda</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Musings, chit-chat, and sometimes useful stuff related to PeopleSoft, especially PeopleCode.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

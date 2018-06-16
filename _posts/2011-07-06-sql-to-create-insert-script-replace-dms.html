@@ -1,0 +1,27 @@
+---
+layout: post
+title: SQL to Create Insert Script; Replace DMS
+date: 2011-07-06 00:57:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- SQL Create Insert
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '8058689532681887202'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>Instead using DMS to move data around you could run the following to insert a zillion rows. PL/SQL creates the SQL file for you.</p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>CREATE OR REPLACE FUNCTION GET_INSERT_SCRIPT(V_TABLE_NAME VARCHAR2)<br />RETURN VARCHAR2 AS<br />B_FOUND BOOLEAN := FALSE;<br />V_TEMPA VARCHAR2 (8000);<br />V_TEMPB VARCHAR2 (8000);<br />V_TEMPC VARCHAR2 (255);<br />BEGIN<br />    FOR TAB_REC IN (SELECT TABLE_NAME<br />                    FROM ALL_TABLES<br />                    WHERE TABLE_NAME = UPPER (V_TABLE_NAME)) LOOP<br />        B_FOUND := TRUE;<br />        V_TEMPA := 'select ''insert into ' || TAB_REC.TABLE_NAME || ' (';<br />        FOR COL_REC IN (SELECT *<br />                        FROM ALL_TAB_COLUMNS<br />                        WHERE TABLE_NAME = TAB_REC.TABLE_NAME<br />                        ORDER BY COLUMN_ID) LOOP<br />            IF COL_REC.COLUMN_ID = 1 THEN<br />                V_TEMPA := V_TEMPA || '''||chr(10)||''';<br />            ELSE<br />                V_TEMPA := V_TEMPA || ',''||chr(10)||''';<br />                V_TEMPB := V_TEMPB || ',''||chr(10)||''';<br />            END IF;<br /><br />            V_TEMPA := V_TEMPA || COL_REC.COLUMN_NAME;<br />            IF INSTR (COL_REC.DATA_TYPE, 'CHAR') &gt; 0 THEN<br />                V_TEMPC := '''''''''||' || COL_REC.COLUMN_NAME || '||''''''''';<br />            ELSIF INSTR (COL_REC.DATA_TYPE, 'DATE') &gt; 0 THEN<br />                V_TEMPC := '''to_date(''''''||to_char('<br />                        || COL_REC.COLUMN_NAME<br />                        || ',''mm/dd/yyyy hh24:mi'')||'''''',''''mm/dd/yyyy hh24:mi'''')''';<br />            ELSE<br />                V_TEMPC := COL_REC.COLUMN_NAME;<br />            END IF;<br /><br />            V_TEMPB := V_TEMPB<br />                    || '''||decode('<br />                    || COL_REC.COLUMN_NAME<br />                    || ',Null,''Null'','<br />                    || V_TEMPC<br />                    || ')||''';<br />        END LOOP;<br /><br />        V_TEMPA := V_TEMPA<br />                || ') values ('<br />                || V_TEMPB<br />                || ');'' from '<br />                || TAB_REC.TABLE_NAME<br />                || ';';<br />    END LOOP;<br /><br />    IF NOT B_FOUND THEN<br />        V_TEMPA := '-â?? Table ' || V_TABLE_NAME || ' not found';<br />    ELSE<br />        V_TEMPA := V_TEMPA || CHR (10) || 'select ''-- commit;'' from dual;';<br />    END IF;<br /><br />    RETURN V_TEMPA;<br />END;<br />/<br />SHOW ERRORS<br /><br /></code></pre>
+<p>And the Code to run it:</p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>set head off<br />set pages 0<br />set trims on<br />set lines 2000<br />set feed off<br />set echo off<br />spool c:\Temp\genInsertForMyTable.sql<br />SELECT get_insert_script('PS_SAD_TAC_MAP_BOA') FROM DUAL;  -- change table here<br />spool off<br /></code></pre>

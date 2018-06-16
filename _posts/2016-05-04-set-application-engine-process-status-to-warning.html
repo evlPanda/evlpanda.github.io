@@ -1,0 +1,25 @@
+---
+layout: post
+title: Set Application Engine Process Status to Warning
+date: 2016-05-04 05:07:41.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '22456932087'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<pre><code>ADO_EI_AET.AE_APPSTATUS = 1; /* Update process status to Warning. Magic. */</code></pre>
+<p>Simply add the Field AE_APPSTATUS to the main AET table for your Application Engine and set it to 1 if you want the process status to be Warning rather than Success.</p>
+<p>Useful if you have an error log for example that you want the user to be aware of, even though everything ran to success.</p>

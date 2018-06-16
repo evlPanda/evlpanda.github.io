@@ -1,0 +1,24 @@
+---
+layout: post
+title: Searching Through Views
+date: 2013-02-27 00:12:00.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '424073063943454593'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>If you make a change on a Record or View you should check its impact. App Designer doesn't search through SQL definitions but you can do that yourself in SQL:</p>
+<p>select SQLID from PSSQLTEXTDEFN<br />where sqltext like '%SOME_TABLE%'</p>

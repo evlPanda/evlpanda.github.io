@@ -1,0 +1,30 @@
+---
+layout: post
+title: DMS for Research Publications
+date: 2007-04-26 00:32:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- DMS
+- Publication
+- Research
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '1171019140792974555'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>Useful script for myself to move a Research Publications data around from environment to environment:</p>
+<p><code><br />SET OUTPUT c:\temp\temp.dat;<br />SET LOG c:\temp\tmp.log;<br />export gur_pblctn where gur_pblctn_ref_nr = '17581';<br />export gur_gu_authors where gur_pblctn_ref_nr = '17581';<br />export gur_oth_authors where gur_pblctn_ref_nr = '17581';<br />export gur_pbl_curator where gur_pblctn_ref_nr = '17581';<br />export gur_pblctn_exbt where gur_pblctn_ref_nr = '17581';<br />export gur_pbl_rfcd where gur_pblctn_ref_nr = '17581';<br />export gur_verifctn where gur_pblctn_ref_nr = '17581';<br />export gur_pbl_file where gur_pblctn_ref_nr = '17581';<br />export gur_ver_status where gur_pblctn_ref_nr = '17581';<br />export gur_pbl_email where gur_pblctn_ref_nr = '17581';<br />export gur_pbl_emailto where gur_pblctn_ref_nr = '17581';<br />export gur_pbl_emailcc where gur_pblctn_ref_nr = '17581';</p>
+<p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - </p>
+<p>SET INPUT c:\temp\temp.dat;<br />SET LOG c:\temp\tmp.log;<br />delete from ps_gur_pblctn where gur_pblctn_ref_nr = '17581';<br />delete from ps_gur_gu_authors where gur_pblctn_ref_nr = '17581';<br />delete from ps_gur_oth_authors where gur_pblctn_ref_nr = '17581';<br />delete from ps_gur_pbl_curator where gur_pblctn_ref_nr = '17581';<br />delete from ps_gur_pblctn_exbt where gur_pblctn_ref_nr = '17581';<br />delete from ps_gur_pbl_rfcd where gur_pblctn_ref_nr = '17581';<br />delete from ps_gur_verifctn where gur_pblctn_ref_nr = '17581';<br />delete from ps_gur_pbl_file where gur_pblctn_ref_nr = '17581';<br />delete from ps_gur_ver_status where gur_pblctn_ref_nr = '17581';<br />delete from ps_gur_pbl_email where gur_pblctn_ref_nr = '17581';<br />delete from ps_gur_pbl_emailto where gur_pblctn_ref_nr = '17581';<br />delete from ps_gur_pbl_emailcc where gur_pblctn_ref_nr = '17581';</p>
+<p>import *;<br /></code></p>

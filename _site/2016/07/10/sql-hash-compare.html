@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>SQL Hash Compare | The PeopleSoft Experience</title>
+<meta name="generator" content="Jekyll v3.8.3" />
+<meta property="og:title" content="SQL Hash Compare" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This can be used to compare two sets of parent-child data against each other. There are intricacies and seemingly never ending exceptions (including contradicting exceptions) when comparing two sets of parent-child data which I won&#39;t go into except to say be warned. Here is a complete solution that mimics the way people compare two sets of parent-child data; by flattening the data in their minds first. First of all the data. I&#39;ve chosen a set of shops, which is not the best analogy but go with it. with parent_data as ( select 1 as id, &#39;Fruit Store&#39; as type from sysibm.sysdummy1 union select 2 as id, &#39;Pet Store&#39; as type from sysibm.sysdummy1 union select 3 as id, &#39;Bakery&#39; as type from sysibm.sysdummy1 )" />
+<meta property="og:description" content="This can be used to compare two sets of parent-child data against each other. There are intricacies and seemingly never ending exceptions (including contradicting exceptions) when comparing two sets of parent-child data which I won&#39;t go into except to say be warned. Here is a complete solution that mimics the way people compare two sets of parent-child data; by flattening the data in their minds first. First of all the data. I&#39;ve chosen a set of shops, which is not the best analogy but go with it. with parent_data as ( select 1 as id, &#39;Fruit Store&#39; as type from sysibm.sysdummy1 union select 2 as id, &#39;Pet Store&#39; as type from sysibm.sysdummy1 union select 3 as id, &#39;Bakery&#39; as type from sysibm.sysdummy1 )" />
+<link rel="canonical" href="http://localhost:4000/2016/07/10/sql-hash-compare.html" />
+<meta property="og:url" content="http://localhost:4000/2016/07/10/sql-hash-compare.html" />
+<meta property="og:site_name" content="The PeopleSoft Experience" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-07-10T05:08:39+10:00" />
+<script type="application/ld+json">
+{"description":"This can be used to compare two sets of parent-child data against each other. There are intricacies and seemingly never ending exceptions (including contradicting exceptions) when comparing two sets of parent-child data which I won&#39;t go into except to say be warned. Here is a complete solution that mimics the way people compare two sets of parent-child data; by flattening the data in their minds first. First of all the data. I&#39;ve chosen a set of shops, which is not the best analogy but go with it. with parent_data as ( select 1 as id, &#39;Fruit Store&#39; as type from sysibm.sysdummy1 union select 2 as id, &#39;Pet Store&#39; as type from sysibm.sysdummy1 union select 3 as id, &#39;Bakery&#39; as type from sysibm.sysdummy1 )","@type":"BlogPosting","url":"http://localhost:4000/2016/07/10/sql-hash-compare.html","headline":"SQL Hash Compare","dateModified":"2016-07-10T05:08:39+10:00","datePublished":"2016-07-10T05:08:39+10:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2016/07/10/sql-hash-compare.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="The PeopleSoft Experience" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">The PeopleSoft Experience</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">SQL Hash Compare</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2016-07-10T05:08:39+10:00" itemprop="datePublished">Jul 10, 2016
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{"login"=>"evlpanda", "email"=>"m.nitschke@gmail.com", "display_name"=>"Michael Nitschke", "first_name"=>"", "last_name"=>""}</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>This can be used to compare two sets of parent-child data against each other. There are intricacies and seemingly never ending exceptions (including contradicting exceptions) when comparing two sets of parent-child data which I won't go into except to say be warned.</p>
+<p>Here is a complete solution that mimics the way people compare two sets of parent-child data; by flattening the data in their minds first.</p>
+<p>First of all the data. I've chosen a set of shops, which is not the best analogy but go with it.</p>
+<pre><code>
+with parent_data as (
+	select 1 as id, 'Fruit Store' as type from sysibm.sysdummy1 union
+	select 2 as id, 'Pet Store' as type from sysibm.sysdummy1 union
+	select 3 as id, 'Bakery' as type from sysibm.sysdummy1
+)
+
+, child_data as (
+	select 1 as id, 1 as parent_id, 'Apple'  as item, 1.0 as price, date('2016-07-19') as use_by_date from sysibm.sysdummy1 union
+	select 2 as id, 1 as parent_id, 'Pear'   as item, 1.5 as price, date('2016-07-20') as use_by_date from sysibm.sysdummy1 union
+	select 3 as id, 1 as parent_id, 'Orange' as item, 1.7 as price, date('2016-07-21') as use_by_date from sysibm.sysdummy1 union
+
+	select 4 as id, 2 as parent_id, 'Puppy'  as item, 55  as price, cast(null as date) as use_by_date from sysibm.sysdummy1 union
+	select 5 as id, 2 as parent_id, 'Kitten' as item, 40  as price, cast(null as date) as use_by_date from sysibm.sysdummy1 union
+
+	select 6 as id, 3 as parent_id, 'Bread'  as item, 1.6 as price, date('2016-07-10') as use_by_date from sysibm.sysdummy1 union
+	select 7 as id, 3 as parent_id, 'Cake'   as item, 17  as price, date('2016-07-15') as use_by_date from sysibm.sysdummy1 union
+	select 8 as id, 3 as parent_id, 'Bagel'  as item, 0.8 as price, date('2016-07-10') as use_by_date from sysibm.sysdummy1 union
+)
+</code></pre>
+<p>Next we'll concatenate all the 'properties' of each of the child data rows:</p>
+<pre><code>
+, numbered_sets (id, type, hash, rownum) as (
+	select 
+	  p.id
+	, p.type
+	, replace(trim(c.item) || char(trim(price)) || char(nvl(use_by_date, '3000-01-01')), ' ',  '') as hash
+	, rownumber() over(partition by p.id, p.type order by c.id) as rownum
+	from
+	  parent_data p
+		left outer join child_data c
+		on c.parent_id = p.id
+)
+</code></pre>
+<p>This gives us the following:</p>
+<pre><code>
+ID          TYPE        HASH                           ROWNUM              
+----------- ----------- ------------------------------ ------
+          1 Fruit Store Apple1.02016-07-19                  1
+          1 Fruit Store Pear1.52016-07-20                   2
+          1 Fruit Store Orange1.72016-07-21                 3
+          2 Pet Store   Puppy55.03000-01-01                 1
+          2 Pet Store   Kitten40.03000-01-01                2
+          3 Bakery      Bread1.62016-07-10                  1
+          3 Bakery      Cake17.02016-07-15                  2
+          3 Bakery      Bagel.82016-07-10                   3
+</code></pre>
+<p>And now we can make the final move to completely flatten all data about each store:</p>
+<pre><code>
+, navigate_sets (id, type, hash_list, rownum) as (
+
+	select 
+	  n.id
+	, n.type
+	, trim(cast(n.hash as varchar(200)))
+	, n.rownum
+	from numbered_sets n
+	where n.rownum = 1
+
+	union all
+
+	select 
+	  s.id
+	, s.type
+	, trim(n.hash_list || s.hash) -- &lt;&lt; super hash
+	, s.rownum
+	from numbered_sets s
+		inner join navigate_sets n
+		on n.id = s.id
+		and n.type = s.type
+		and n.rownum + 1 = s.rownum
+)
+
+select id, type, max(hash_list) as hash from navigate_sets group by id, type
+</code></pre>
+<p>Giving us our final set of completely flattened data for each store:</p>
+<pre><code>
+ID          TYPE        HASH                                                                                                                                                                                                        
+----------- ----------- ------------------------------------------------------
+          1 Fruit Store Apple1.02016-07-19Pear1.52016-07-20Orange1.72016-07-21                                                                                                                                                  
+          2 Pet Store   Puppy55.03000-01-01Kitten40.03000-01-01                                                                                                                                                                 
+          3 Bakery      Bread1.62016-07-10Cake17.02016-07-15Bagel.82016-07-10  
+</code></pre>
+<p>This can be your 'A' side of a compare. Do the same as above with your 'B' side and then simply run <i>SELECT * FROM A MINUS SELECT * FROM B</i> to compare the two sets of data.</p>
+
+  </div><a class="u-url" href="/2016/07/10/sql-hash-compare.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">The PeopleSoft Experience</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">The PeopleSoft Experience</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evlPanda"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evlPanda</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Musings, chit-chat, and sometimes useful stuff related to PeopleSoft, especially PeopleCode.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

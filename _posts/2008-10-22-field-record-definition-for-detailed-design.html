@@ -1,0 +1,24 @@
+---
+layout: post
+title: Field Record Definition for Detailed Design
+date: 2008-10-22 05:58:00.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- design sql record definition def
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '4192661929194034464'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>run, copy and paste (work in progess):<br /><span style="font-size:85%;"><br /><span style="font-family:courier new;">DEFINE RECNAME = 'UQ_BNK_RCN_PAYM';<br />-- FIELD, KEY, SEARCHKEY, LIST, REQ, EDIT, PROMPT TABLE, DEFAULT<br />SELECT<br />  FIELDNAME AS FIELD<br />, ' ' AS KEY<br />, ' ' AS SEARCHKEY<br />, ' ' AS LISTT<br />, ' ' AS REQ<br />, ' ' AS EDIT<br />, ' ' AS PROMPTTABLE<br />, ' ' AS DEFAULTT<br />FROM PSRECFIELD<br />WHERE RECNAME = &amp;RECNAME<br />ORDER BY FIELDNUM<br />;</span><br /></span></p>

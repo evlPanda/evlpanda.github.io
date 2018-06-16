@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Using Outer Joins AND Effective Dated Logic | The PeopleSoft Experience</title>
+<meta name="generator" content="Jekyll v3.8.3" />
+<meta property="og:title" content="Using Outer Joins AND Effective Dated Logic" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="How can you use outer joins on a table and still use effective dated logic? Something like this. Note that the outer join will either return no rows, and thus a NULL value for EFFDT, or it will return a date and subsequent effective dated logic can be used.r /&gt;.csharpcode, .csharpcode pre{ font-size: small; color: black; font-family: Consolas, &quot;Courier New&quot;, Courier, Monospace; background-color: #ffffff; /*white-space: pre;*/} .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em;} .csharpcode .lnum { color: #606060; } AND C.BUSINESS_UNIT (+) = A.BUSINESS_UNITAND C.COMMON_ID (+) = A.COMMON_IDAND C.SA_ID_TYPE (+) = A.SA_ID_TYPEAND C.ITEM_NBR_CHARGE (+) = A.ITEM_NBRAND (NULL = C.EFFDT OR (C.EFFDT = (SELECT MAX(C_ED.EFFDT) FROM sysadm.ps_ITEM_XREF C_ED WHERE C_ED.BUSINESS_UNIT = C.BUSINESS_UNIT AND C_ED.COMMON_ID = C.COMMON_ID AND C_ED.SA_ID_TYPE = C.SA_ID_TYPE AND C_ED.ITEM_NBR_CHARGE = C.ITEM_NBR_CHARGE AND C_ED.ITEM_NBR_PAYMENT = C.ITEM_NBR_PAYMENT AND C_ED.EFFDT &lt;= SYSDATE)))" />
+<meta property="og:description" content="How can you use outer joins on a table and still use effective dated logic? Something like this. Note that the outer join will either return no rows, and thus a NULL value for EFFDT, or it will return a date and subsequent effective dated logic can be used.r /&gt;.csharpcode, .csharpcode pre{ font-size: small; color: black; font-family: Consolas, &quot;Courier New&quot;, Courier, Monospace; background-color: #ffffff; /*white-space: pre;*/} .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em;} .csharpcode .lnum { color: #606060; } AND C.BUSINESS_UNIT (+) = A.BUSINESS_UNITAND C.COMMON_ID (+) = A.COMMON_IDAND C.SA_ID_TYPE (+) = A.SA_ID_TYPEAND C.ITEM_NBR_CHARGE (+) = A.ITEM_NBRAND (NULL = C.EFFDT OR (C.EFFDT = (SELECT MAX(C_ED.EFFDT) FROM sysadm.ps_ITEM_XREF C_ED WHERE C_ED.BUSINESS_UNIT = C.BUSINESS_UNIT AND C_ED.COMMON_ID = C.COMMON_ID AND C_ED.SA_ID_TYPE = C.SA_ID_TYPE AND C_ED.ITEM_NBR_CHARGE = C.ITEM_NBR_CHARGE AND C_ED.ITEM_NBR_PAYMENT = C.ITEM_NBR_PAYMENT AND C_ED.EFFDT &lt;= SYSDATE)))" />
+<link rel="canonical" href="http://localhost:4000/sql%20join%20null%20effdt%20outer/2008/01/16/using-outer-joins-and-effective-dated-logic.html" />
+<meta property="og:url" content="http://localhost:4000/sql%20join%20null%20effdt%20outer/2008/01/16/using-outer-joins-and-effective-dated-logic.html" />
+<meta property="og:site_name" content="The PeopleSoft Experience" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-01-16T06:19:00+11:00" />
+<script type="application/ld+json">
+{"description":"How can you use outer joins on a table and still use effective dated logic? Something like this. Note that the outer join will either return no rows, and thus a NULL value for EFFDT, or it will return a date and subsequent effective dated logic can be used.r /&gt;.csharpcode, .csharpcode pre{ font-size: small; color: black; font-family: Consolas, &quot;Courier New&quot;, Courier, Monospace; background-color: #ffffff; /*white-space: pre;*/} .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em;} .csharpcode .lnum { color: #606060; } AND C.BUSINESS_UNIT (+) = A.BUSINESS_UNITAND C.COMMON_ID (+) = A.COMMON_IDAND C.SA_ID_TYPE (+) = A.SA_ID_TYPEAND C.ITEM_NBR_CHARGE (+) = A.ITEM_NBRAND (NULL = C.EFFDT OR (C.EFFDT = (SELECT MAX(C_ED.EFFDT) FROM sysadm.ps_ITEM_XREF C_ED WHERE C_ED.BUSINESS_UNIT = C.BUSINESS_UNIT AND C_ED.COMMON_ID = C.COMMON_ID AND C_ED.SA_ID_TYPE = C.SA_ID_TYPE AND C_ED.ITEM_NBR_CHARGE = C.ITEM_NBR_CHARGE AND C_ED.ITEM_NBR_PAYMENT = C.ITEM_NBR_PAYMENT AND C_ED.EFFDT &lt;= SYSDATE)))","@type":"BlogPosting","url":"http://localhost:4000/sql%20join%20null%20effdt%20outer/2008/01/16/using-outer-joins-and-effective-dated-logic.html","headline":"Using Outer Joins AND Effective Dated Logic","dateModified":"2008-01-16T06:19:00+11:00","datePublished":"2008-01-16T06:19:00+11:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/sql%20join%20null%20effdt%20outer/2008/01/16/using-outer-joins-and-effective-dated-logic.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="The PeopleSoft Experience" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">The PeopleSoft Experience</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Using Outer Joins AND Effective Dated Logic</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2008-01-16T06:19:00+11:00" itemprop="datePublished">Jan 16, 2008
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{"login"=>"evlpanda", "email"=>"m.nitschke@gmail.com", "display_name"=>"Michael Nitschke", "first_name"=>"", "last_name"=>""}</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>How can you use outer joins on a table and still use effective dated logic?  Something like this. </p>
+<p>Note that the outer join will either return no rows, and thus a NULL value for EFFDT, or it will return a date and subsequent effective dated logic can be used.<br /><!-- code formatted by http://manoli.net/csharpformat/ -->r /&gt;.csharpcode, .csharpcode pre<br />{<br /> font-size: small;<br /> color: black;<br /> font-family: Consolas, "Courier New", Courier, Monospace;<br /> background-color: #ffffff;<br /> /*white-space: pre;*/<br />}</p>
+<p>.csharpcode pre { margin: 0em; }</p>
+<p>.csharpcode .rem { color: #008000; }</p>
+<p>.csharpcode .kwrd { color: #0000ff; }</p>
+<p>.csharpcode .str { color: #006080; }</p>
+<p>.csharpcode .op { color: #0000c0; }</p>
+<p>.csharpcode .preproc { color: #cc6633; }</p>
+<p>.csharpcode .asp { background-color: #ffff00; }</p>
+<p>.csharpcode .html { color: #800000; }</p>
+<p>.csharpcode .attr { color: #ff0000; }</p>
+<p>.csharpcode .alt <br />{<br /> background-color: #f4f4f4;<br /> width: 100%;<br /> margin: 0em;<br />}</p>
+<p>.csharpcode .lnum { color: #606060; }</p>
+<pre class="csharpcode"><span class="kwrd">AND</span> C.BUSINESS_UNIT (+) = A.BUSINESS_UNIT<br /><span class="kwrd">AND</span> C.COMMON_ID (+) = A.COMMON_ID<br /><span class="kwrd">AND</span> C.SA_ID_TYPE (+) = A.SA_ID_TYPE<br /><span class="kwrd">AND</span> C.ITEM_NBR_CHARGE (+) = A.ITEM_NBR<br /><span class="kwrd">AND</span><br />   (<span class="kwrd">NULL</span> = C.EFFDT<br />   <span class="kwrd">OR</span><br />       (C.EFFDT =<br />           (<span class="kwrd">SELECT</span> <span class="kwrd">MAX</span>(C_ED.EFFDT)<br />           <span class="kwrd">FROM</span> sysadm.ps_ITEM_XREF C_ED<br />           <span class="kwrd">WHERE</span> C_ED.BUSINESS_UNIT = C.BUSINESS_UNIT<br />           <span class="kwrd">AND</span> C_ED.COMMON_ID = C.COMMON_ID<br />           <span class="kwrd">AND</span> C_ED.SA_ID_TYPE = C.SA_ID_TYPE<br />           <span class="kwrd">AND</span> C_ED.ITEM_NBR_CHARGE = C.ITEM_NBR_CHARGE<br />           <span class="kwrd">AND</span> C_ED.ITEM_NBR_PAYMENT = C.ITEM_NBR_PAYMENT<br />           <span class="kwrd">AND</span> C_ED.EFFDT &lt;= SYSDATE)))</pre>
+
+  </div><a class="u-url" href="/sql%20join%20null%20effdt%20outer/2008/01/16/using-outer-joins-and-effective-dated-logic.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">The PeopleSoft Experience</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">The PeopleSoft Experience</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evlPanda"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evlPanda</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Musings, chit-chat, and sometimes useful stuff related to PeopleSoft, especially PeopleCode.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

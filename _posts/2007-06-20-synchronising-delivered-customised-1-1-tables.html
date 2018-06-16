@@ -1,0 +1,45 @@
+---
+layout: post
+title: Synchronising Delivered & Customised 1-1 tables
+date: 2007-06-20 00:13:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Field
+- PeopleCode
+- sibling
+- Synchronise
+- Table
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '850454658165358339'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p><span style="font-weight:bold;">UPDATE (years later): I ask myself why not just use another scroll level below the delivered record/scroll containing the sibling record?  PeopleSoft will handle the inserts and updates automagically.</p>
+<p>Following is likely wrong, but left for reference.<br /></span><br />Rather than add custom fields to a PeopleSoft delivered record it is better to create a new record with the same keys that will serve to store new, custom fields.  This table and the delivered table will have a 1-1 relationship and there will be less/no work for future upgrades.</p>
+<p>To display and synchronise the data on this new table a work record is used on the page.  The example below is using Griffith University (GU) records and delivered PS records.</p>
+<ol>
+<li><span style="font-weight:bold;">Set default values</span> on this derived record so that there will always be a row in the new table that matches the original table.  (Someone will try to join to the new table and have no data at some stage).  That is default the key values of the work record to those of the delivered record.</p>
+</li>
+<li><span style="font-weight:bold;">RowInit PeopleCode</span> (GU Work Rec.RI) displays the synchronised data on the Work Record:
+<p><span style="font-size:85%;"><span style="font-family:courier new;">SQLExec("SELECT SOME_FIELD1, SOME_FIELD2 FROM GU_RECORD WHERE KEYFIELD1 = :1", PS_RECORD.KEYFIELD1.Value, GU_WORK_RECORD.SOME_FIELD1.Value);</span></span></p>
+</li>
+<li><span style="font-weight:bold;">SavePostChange PeopleCode</span> (Component.PS_RECORD.SPC) then synchronises the tables with a 1-1 relationship (updated 22.10.2007):<span style="font-size:85%;">
+<p>Local Record &amp;recGU_RECORD = CreateRecord(Record.GU_RECORD);</p>
+<p>/* Populate. */<br />GetRecord(Record.GU_WORK_RECORD).CopyFieldsTo(&amp;recGU_RECORD);<br />GetRecord().CopyFieldsTo(&amp;recGU_RECORD);</p>
+<p>/* Delete if required. */<br />If GetRecord().IsDeleted Then<br />  &amp;recGU_RECORD.Delete();<br />Else</p>
+<p>  /* Default (specific) values if required. */<br />  If None(&amp;recGU_RECORD.SOME_FIELD.Value) Then<br />     &amp;recGU_RECORD.</span><span style="font-size:85%;">GU_RECORD</span><span style="font-size:85%;">.SetDefault();<br />  End-If;</p>
+<p>  /* Insert/update. */<br />  &amp;saved = &amp;recGU_RECORD.Save();</p>
+<p>End-If;</span><span style="font-size:85%;"><br /></span></p>
+</li>
+</ol>

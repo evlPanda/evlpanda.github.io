@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>SQL to Create Insert Script; Replace DMS | The PeopleSoft Experience</title>
+<meta name="generator" content="Jekyll v3.8.3" />
+<meta property="og:title" content="SQL to Create Insert Script; Replace DMS" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Instead using DMS to move data around you could run the following to insert a zillion rows. PL/SQL creates the SQL file for you. CREATE OR REPLACE FUNCTION GET_INSERT_SCRIPT(V_TABLE_NAME VARCHAR2)RETURN VARCHAR2 ASB_FOUND BOOLEAN := FALSE;V_TEMPA VARCHAR2 (8000);V_TEMPB VARCHAR2 (8000);V_TEMPC VARCHAR2 (255);BEGIN FOR TAB_REC IN (SELECT TABLE_NAME FROM ALL_TABLES WHERE TABLE_NAME = UPPER (V_TABLE_NAME)) LOOP B_FOUND := TRUE; V_TEMPA := &#39;select &#39;&#39;insert into &#39; || TAB_REC.TABLE_NAME || &#39; (&#39;; FOR COL_REC IN (SELECT * FROM ALL_TAB_COLUMNS WHERE TABLE_NAME = TAB_REC.TABLE_NAME ORDER BY COLUMN_ID) LOOP IF COL_REC.COLUMN_ID = 1 THEN V_TEMPA := V_TEMPA || &#39;&#39;&#39;||chr(10)||&#39;&#39;&#39;; ELSE V_TEMPA := V_TEMPA || &#39;,&#39;&#39;||chr(10)||&#39;&#39;&#39;; V_TEMPB := V_TEMPB || &#39;,&#39;&#39;||chr(10)||&#39;&#39;&#39;; END IF; V_TEMPA := V_TEMPA || COL_REC.COLUMN_NAME; IF INSTR (COL_REC.DATA_TYPE, &#39;CHAR&#39;) &gt; 0 THEN V_TEMPC := &#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;||&#39; || COL_REC.COLUMN_NAME || &#39;||&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;; ELSIF INSTR (COL_REC.DATA_TYPE, &#39;DATE&#39;) &gt; 0 THEN V_TEMPC := &#39;&#39;&#39;to_date(&#39;&#39;&#39;&#39;&#39;&#39;||to_char(&#39; || COL_REC.COLUMN_NAME || &#39;,&#39;&#39;mm/dd/yyyy hh24:mi&#39;&#39;)||&#39;&#39;&#39;&#39;&#39;&#39;,&#39;&#39;&#39;&#39;mm/dd/yyyy hh24:mi&#39;&#39;&#39;&#39;)&#39;&#39;&#39;; ELSE V_TEMPC := COL_REC.COLUMN_NAME; END IF; V_TEMPB := V_TEMPB || &#39;&#39;&#39;||decode(&#39; || COL_REC.COLUMN_NAME || &#39;,Null,&#39;&#39;Null&#39;&#39;,&#39; || V_TEMPC || &#39;)||&#39;&#39;&#39;; END LOOP; V_TEMPA := V_TEMPA || &#39;) values (&#39; || V_TEMPB || &#39;);&#39;&#39; from &#39; || TAB_REC.TABLE_NAME || &#39;;&#39;; END LOOP; IF NOT B_FOUND THEN V_TEMPA := &#39;-â?? Table &#39; || V_TABLE_NAME || &#39; not found&#39;; ELSE V_TEMPA := V_TEMPA || CHR (10) || &#39;select &#39;&#39;-- commit;&#39;&#39; from dual;&#39;; END IF; RETURN V_TEMPA;END;/SHOW ERRORS And the Code to run it: set head offset pages 0set trims onset lines 2000set feed offset echo offspool c:\Temp\genInsertForMyTable.sqlSELECT get_insert_script(&#39;PS_SAD_TAC_MAP_BOA&#39;) FROM DUAL; -- change table herespool off" />
+<meta property="og:description" content="Instead using DMS to move data around you could run the following to insert a zillion rows. PL/SQL creates the SQL file for you. CREATE OR REPLACE FUNCTION GET_INSERT_SCRIPT(V_TABLE_NAME VARCHAR2)RETURN VARCHAR2 ASB_FOUND BOOLEAN := FALSE;V_TEMPA VARCHAR2 (8000);V_TEMPB VARCHAR2 (8000);V_TEMPC VARCHAR2 (255);BEGIN FOR TAB_REC IN (SELECT TABLE_NAME FROM ALL_TABLES WHERE TABLE_NAME = UPPER (V_TABLE_NAME)) LOOP B_FOUND := TRUE; V_TEMPA := &#39;select &#39;&#39;insert into &#39; || TAB_REC.TABLE_NAME || &#39; (&#39;; FOR COL_REC IN (SELECT * FROM ALL_TAB_COLUMNS WHERE TABLE_NAME = TAB_REC.TABLE_NAME ORDER BY COLUMN_ID) LOOP IF COL_REC.COLUMN_ID = 1 THEN V_TEMPA := V_TEMPA || &#39;&#39;&#39;||chr(10)||&#39;&#39;&#39;; ELSE V_TEMPA := V_TEMPA || &#39;,&#39;&#39;||chr(10)||&#39;&#39;&#39;; V_TEMPB := V_TEMPB || &#39;,&#39;&#39;||chr(10)||&#39;&#39;&#39;; END IF; V_TEMPA := V_TEMPA || COL_REC.COLUMN_NAME; IF INSTR (COL_REC.DATA_TYPE, &#39;CHAR&#39;) &gt; 0 THEN V_TEMPC := &#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;||&#39; || COL_REC.COLUMN_NAME || &#39;||&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;; ELSIF INSTR (COL_REC.DATA_TYPE, &#39;DATE&#39;) &gt; 0 THEN V_TEMPC := &#39;&#39;&#39;to_date(&#39;&#39;&#39;&#39;&#39;&#39;||to_char(&#39; || COL_REC.COLUMN_NAME || &#39;,&#39;&#39;mm/dd/yyyy hh24:mi&#39;&#39;)||&#39;&#39;&#39;&#39;&#39;&#39;,&#39;&#39;&#39;&#39;mm/dd/yyyy hh24:mi&#39;&#39;&#39;&#39;)&#39;&#39;&#39;; ELSE V_TEMPC := COL_REC.COLUMN_NAME; END IF; V_TEMPB := V_TEMPB || &#39;&#39;&#39;||decode(&#39; || COL_REC.COLUMN_NAME || &#39;,Null,&#39;&#39;Null&#39;&#39;,&#39; || V_TEMPC || &#39;)||&#39;&#39;&#39;; END LOOP; V_TEMPA := V_TEMPA || &#39;) values (&#39; || V_TEMPB || &#39;);&#39;&#39; from &#39; || TAB_REC.TABLE_NAME || &#39;;&#39;; END LOOP; IF NOT B_FOUND THEN V_TEMPA := &#39;-â?? Table &#39; || V_TABLE_NAME || &#39; not found&#39;; ELSE V_TEMPA := V_TEMPA || CHR (10) || &#39;select &#39;&#39;-- commit;&#39;&#39; from dual;&#39;; END IF; RETURN V_TEMPA;END;/SHOW ERRORS And the Code to run it: set head offset pages 0set trims onset lines 2000set feed offset echo offspool c:\Temp\genInsertForMyTable.sqlSELECT get_insert_script(&#39;PS_SAD_TAC_MAP_BOA&#39;) FROM DUAL; -- change table herespool off" />
+<link rel="canonical" href="http://localhost:4000/sql%20create%20insert/2011/07/06/sql-to-create-insert-script-replace-dms.html" />
+<meta property="og:url" content="http://localhost:4000/sql%20create%20insert/2011/07/06/sql-to-create-insert-script-replace-dms.html" />
+<meta property="og:site_name" content="The PeopleSoft Experience" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-07-06T00:57:00+10:00" />
+<script type="application/ld+json">
+{"description":"Instead using DMS to move data around you could run the following to insert a zillion rows. PL/SQL creates the SQL file for you. CREATE OR REPLACE FUNCTION GET_INSERT_SCRIPT(V_TABLE_NAME VARCHAR2)RETURN VARCHAR2 ASB_FOUND BOOLEAN := FALSE;V_TEMPA VARCHAR2 (8000);V_TEMPB VARCHAR2 (8000);V_TEMPC VARCHAR2 (255);BEGIN FOR TAB_REC IN (SELECT TABLE_NAME FROM ALL_TABLES WHERE TABLE_NAME = UPPER (V_TABLE_NAME)) LOOP B_FOUND := TRUE; V_TEMPA := &#39;select &#39;&#39;insert into &#39; || TAB_REC.TABLE_NAME || &#39; (&#39;; FOR COL_REC IN (SELECT * FROM ALL_TAB_COLUMNS WHERE TABLE_NAME = TAB_REC.TABLE_NAME ORDER BY COLUMN_ID) LOOP IF COL_REC.COLUMN_ID = 1 THEN V_TEMPA := V_TEMPA || &#39;&#39;&#39;||chr(10)||&#39;&#39;&#39;; ELSE V_TEMPA := V_TEMPA || &#39;,&#39;&#39;||chr(10)||&#39;&#39;&#39;; V_TEMPB := V_TEMPB || &#39;,&#39;&#39;||chr(10)||&#39;&#39;&#39;; END IF; V_TEMPA := V_TEMPA || COL_REC.COLUMN_NAME; IF INSTR (COL_REC.DATA_TYPE, &#39;CHAR&#39;) &gt; 0 THEN V_TEMPC := &#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;||&#39; || COL_REC.COLUMN_NAME || &#39;||&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;; ELSIF INSTR (COL_REC.DATA_TYPE, &#39;DATE&#39;) &gt; 0 THEN V_TEMPC := &#39;&#39;&#39;to_date(&#39;&#39;&#39;&#39;&#39;&#39;||to_char(&#39; || COL_REC.COLUMN_NAME || &#39;,&#39;&#39;mm/dd/yyyy hh24:mi&#39;&#39;)||&#39;&#39;&#39;&#39;&#39;&#39;,&#39;&#39;&#39;&#39;mm/dd/yyyy hh24:mi&#39;&#39;&#39;&#39;)&#39;&#39;&#39;; ELSE V_TEMPC := COL_REC.COLUMN_NAME; END IF; V_TEMPB := V_TEMPB || &#39;&#39;&#39;||decode(&#39; || COL_REC.COLUMN_NAME || &#39;,Null,&#39;&#39;Null&#39;&#39;,&#39; || V_TEMPC || &#39;)||&#39;&#39;&#39;; END LOOP; V_TEMPA := V_TEMPA || &#39;) values (&#39; || V_TEMPB || &#39;);&#39;&#39; from &#39; || TAB_REC.TABLE_NAME || &#39;;&#39;; END LOOP; IF NOT B_FOUND THEN V_TEMPA := &#39;-â?? Table &#39; || V_TABLE_NAME || &#39; not found&#39;; ELSE V_TEMPA := V_TEMPA || CHR (10) || &#39;select &#39;&#39;-- commit;&#39;&#39; from dual;&#39;; END IF; RETURN V_TEMPA;END;/SHOW ERRORS And the Code to run it: set head offset pages 0set trims onset lines 2000set feed offset echo offspool c:\\Temp\\genInsertForMyTable.sqlSELECT get_insert_script(&#39;PS_SAD_TAC_MAP_BOA&#39;) FROM DUAL; -- change table herespool off","@type":"BlogPosting","url":"http://localhost:4000/sql%20create%20insert/2011/07/06/sql-to-create-insert-script-replace-dms.html","headline":"SQL to Create Insert Script; Replace DMS","dateModified":"2011-07-06T00:57:00+10:00","datePublished":"2011-07-06T00:57:00+10:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/sql%20create%20insert/2011/07/06/sql-to-create-insert-script-replace-dms.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="The PeopleSoft Experience" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">The PeopleSoft Experience</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">SQL to Create Insert Script; Replace DMS</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2011-07-06T00:57:00+10:00" itemprop="datePublished">Jul 6, 2011
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{"login"=>"evlpanda", "email"=>"m.nitschke@gmail.com", "display_name"=>"Michael Nitschke", "first_name"=>"", "last_name"=>""}</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Instead using DMS to move data around you could run the following to insert a zillion rows. PL/SQL creates the SQL file for you.</p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>CREATE OR REPLACE FUNCTION GET_INSERT_SCRIPT(V_TABLE_NAME VARCHAR2)<br />RETURN VARCHAR2 AS<br />B_FOUND BOOLEAN := FALSE;<br />V_TEMPA VARCHAR2 (8000);<br />V_TEMPB VARCHAR2 (8000);<br />V_TEMPC VARCHAR2 (255);<br />BEGIN<br />    FOR TAB_REC IN (SELECT TABLE_NAME<br />                    FROM ALL_TABLES<br />                    WHERE TABLE_NAME = UPPER (V_TABLE_NAME)) LOOP<br />        B_FOUND := TRUE;<br />        V_TEMPA := 'select ''insert into ' || TAB_REC.TABLE_NAME || ' (';<br />        FOR COL_REC IN (SELECT *<br />                        FROM ALL_TAB_COLUMNS<br />                        WHERE TABLE_NAME = TAB_REC.TABLE_NAME<br />                        ORDER BY COLUMN_ID) LOOP<br />            IF COL_REC.COLUMN_ID = 1 THEN<br />                V_TEMPA := V_TEMPA || '''||chr(10)||''';<br />            ELSE<br />                V_TEMPA := V_TEMPA || ',''||chr(10)||''';<br />                V_TEMPB := V_TEMPB || ',''||chr(10)||''';<br />            END IF;<br /><br />            V_TEMPA := V_TEMPA || COL_REC.COLUMN_NAME;<br />            IF INSTR (COL_REC.DATA_TYPE, 'CHAR') &gt; 0 THEN<br />                V_TEMPC := '''''''''||' || COL_REC.COLUMN_NAME || '||''''''''';<br />            ELSIF INSTR (COL_REC.DATA_TYPE, 'DATE') &gt; 0 THEN<br />                V_TEMPC := '''to_date(''''''||to_char('<br />                        || COL_REC.COLUMN_NAME<br />                        || ',''mm/dd/yyyy hh24:mi'')||'''''',''''mm/dd/yyyy hh24:mi'''')''';<br />            ELSE<br />                V_TEMPC := COL_REC.COLUMN_NAME;<br />            END IF;<br /><br />            V_TEMPB := V_TEMPB<br />                    || '''||decode('<br />                    || COL_REC.COLUMN_NAME<br />                    || ',Null,''Null'','<br />                    || V_TEMPC<br />                    || ')||''';<br />        END LOOP;<br /><br />        V_TEMPA := V_TEMPA<br />                || ') values ('<br />                || V_TEMPB<br />                || ');'' from '<br />                || TAB_REC.TABLE_NAME<br />                || ';';<br />    END LOOP;<br /><br />    IF NOT B_FOUND THEN<br />        V_TEMPA := '-â?? Table ' || V_TABLE_NAME || ' not found';<br />    ELSE<br />        V_TEMPA := V_TEMPA || CHR (10) || 'select ''-- commit;'' from dual;';<br />    END IF;<br /><br />    RETURN V_TEMPA;<br />END;<br />/<br />SHOW ERRORS<br /><br /></code></pre>
+<p>And the Code to run it:</p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>set head off<br />set pages 0<br />set trims on<br />set lines 2000<br />set feed off<br />set echo off<br />spool c:\Temp\genInsertForMyTable.sql<br />SELECT get_insert_script('PS_SAD_TAC_MAP_BOA') FROM DUAL;  -- change table here<br />spool off<br /></code></pre>
+
+  </div><a class="u-url" href="/sql%20create%20insert/2011/07/06/sql-to-create-insert-script-replace-dms.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">The PeopleSoft Experience</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">The PeopleSoft Experience</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evlPanda"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evlPanda</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Musings, chit-chat, and sometimes useful stuff related to PeopleSoft, especially PeopleCode.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

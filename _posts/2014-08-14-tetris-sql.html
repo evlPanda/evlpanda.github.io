@@ -1,0 +1,24 @@
+---
+layout: post
+title: Tetris SQL
+date: 2014-08-14 07:15:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '7882967867665453055'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>This is a DB2 solution.  Oracle will be different for the 'daterange' WITH clause (subquery factoring)
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>-- Two step process:<br />-- Delete rows in Target that don't exist in Results, <br />-- Insert rows from Result that don't exist in Target.<br /><br />-- Tricky bit: <br />-- Don't overwrite any manually added rows in the Target.<br />-- Instead block *around* them; <b>Tetris</b>.<br /><br /><br />-- DELETE<br />delete from TARGET_TBL d<br />where d.source = 'ee'<br />and <br />    (processing_range.start_dt between d.start_dt and d.end_dt<br />    or processing_range.end_dt between d.start_dt and d.end_dt<br />    or d.start_dt between processing_range.start_dt and processing_range.end_dt)<br />and not exists<br />    (select 1<br />    from RESULTS_TBL a<br />    where a.pin_num = d.pin_num<br />    and a.start_dt = d.start_Dt<br />    and a.end_dt = d.end_dt)<br /><br /><br /><br />-- INSERT<br />with daterange(level,dt) as (<br />    select 1, current date - 1 year<br />    from sysibm.sysdummy1<br />    union all select level + 1, dt + 1 day<br />    from daterange<br />    where level &lt; 1000 and dt &lt; current date + 1 year<br />)<br /><br />select '1. Result' as thing, pin_num, start_dt, end_dt, 'ee' as source from RESULTS_TBL<br />union<br />select '2. Existing' as thing, pin_num, start_dt, end_dt, source from TARGET_TBL<br /><br />union<br />select <br />  '3. Answer' as thing<br />, a.pin_num<br /><br />-- For PI/EA<br />, greatest(a.start_dt, <br />    (select coalesce(max(s.end_dt) + 1 day, a.start_dt)<br />    from TARGET_TBL s<br />    where s.pin_num = a.pin_num<br />    and s.end_dt between a.start_dt and d.dt)) as start_dt<br /><br />-- For PI/EA<br />, least(a.end_dt, <br />    (select coalesce(min(s.start_dt) - 1 day, a.end_dt)<br />    from TARGET_TBL s<br />    where s.pin_num = a.pin_num<br />    and s.start_dt between d.dt and s.end_dt)) as end_dt<br /><br />, 'ee' as source<br />from <br />  RESULTS_TBL a<br />, daterange d<br />where d.dt between a.start_dt and a.end_dt<br />and not exists<br />    (select 1<br />    from TARGET_TBL x<br />    where x.pin_num = a.pin_num<br />    and d.dt between x.start_dt and x.end_dt)<br /><br /></code></pre>

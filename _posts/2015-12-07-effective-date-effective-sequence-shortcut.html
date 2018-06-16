@@ -1,0 +1,32 @@
+---
+layout: post
+title: Effective Date & Effective Sequence Shortcut
+date: 2015-12-07 23:05:58.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '17574296973'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>You can't use the %EffDtCheck() shortcut with Records that have EFFSEQ. Here's likely as close as you'll get. Works well when you have a lot of key fields.</p>
+<pre>AND job.effdt = ( 
+   SELECT MAX(job_ed.effdt) 
+   FROM PS_JOB job_ed 
+   WHERE %Join(common_keys, JOB job_ed, JOB job, EFFDT, EFFSEQ) 
+   AND job_ed.EFFDT &lt;= %CurrentDateIn) 
+AND job.effseq = ( 
+   SELECT MAX(job_es.effseq) 
+   FROM PS_JOB job_es 
+   WHERE %Join(common_keys, JOB job_es, JOB job, EFFSEQ))</pre>

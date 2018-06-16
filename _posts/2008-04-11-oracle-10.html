@@ -1,0 +1,27 @@
+---
+layout: post
+title: Oracle 10
+date: 2008-04-11 04:41:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Oracle tune sql 10
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '1676122708192373520'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>From email:</p>
+<p>Oracle (since version 8 ? ) has been recommending to all that we move toward the Cost Based Optimizer (CBO).  Prior to this Oracle used (and still can use) the RULE based Optimizer, which pretty much just uses predicate logic and knowledge of indexes to do its job.  (Also, the order of tables in the FROM clause is important, and the order of the WHERE clauses)</p>
+<p>The CBO attempts to come up with the cheapest row access plan based on the actual cost (CPU and IO) of the plan.  To do this, Oracle needs accurate statistics on the tables and indexes involved.  These statistics are gathered using the Oracle supplied PLSQL procedures within the DBMS_STATS package.  These procedures gather a bunch of different information about the tables and indexes, and can also gather histogram information, which can be invaluable on (mainly indexed) columns where there is highly skewed data.  Stats gathering is becoming more automagic as time goes on.  Everytime Oracle release a new version, there are new and improved auto options for stats gathering.   there is also the possibility (we are not doing this presently) of gathering "system stats" as well.  These are separate to the data object stats, and must be gathered by monitoring a live system.  These stats attempt to place real time values on IO based on system load.  If these are available, the CBO correlates its IO estimates with these real time estimates.</p>
+<p>The CBO is not perfect though, and occasionally it will choose a less than optimal access path.  This happens mainly because stats usually contain imprecise estimates made during stats gathering.  It is possible to collect complete and accurate stats, but this is extremely expensive.  To give you an example, it takes over 30 hours to gather stats in HE90U5 (using the auto options, which will estimate some things).</p>

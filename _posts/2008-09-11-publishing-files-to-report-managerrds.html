@@ -1,0 +1,31 @@
+---
+layout: post
+title: Publishing Files to Report Manager/RDS
+date: 2008-09-11 00:41:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- RDS Report Manager Publish File
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '5759745767330770648'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>See also: <a href="http://capital-it.blogspot.com/2008/02/getting-sqrs-to-publish-to-rds.html">http://capital-it.blogspot.com/2008/02/getting-sqrs-to-publish-to-rds.html</a></p>
+<p>In short the generated files must be created in the same folder that is generated for the process.  I've found that App Engines at least are very fussy with filenames and they must follow the following convention:</p>
+<p>  AE_<span style="font-style:italic;">ProcessName</span>_<span style="font-style:italic;">ProcessInstance</span>.txt/csv</p>
+<p>I have found, with App Engines at least, that the RDS only likes extensions txt and csv.  Worth trying a few more.</p>
+<p>The path can be found here:</p>
+<p><span style="font-size:100%;"><span style="font-family:courier new;">    SELECT PRCSOUTPUTDIR || '\'</span><br /><span style="font-family:courier new;">    FROM PSPRCSPARMS</span><br /><span style="font-family:courier new;">    WHERE PRCSINSTANCE = 11579</span></span></p>
+<p>Example code:<br /><span style="font-size:85%;"><br /></span><span style="font-size:85%;"><span style="font-family:courier new;">    Local string &amp;pathNm<br />  SQLExec("select prcsoutputdir || '\' from PSPRCSPARMS where prcsinstance = :1", UQ_UQAP0860_AET.PROCESS_INSTANCE.Value, &amp;pathNm);</span><br /><span style="font-family:courier new;">    Local string &amp;fileNm = "AE_UQAP0860_" | UQ_UQAP0860_AET.PROCESS_INSTANCE.Value | ".csv";</p>
+<p></span></span><span style="font-weight:bold;">Note:</span> I have noticed that the file does not publish to RDS/Report Manager if... well I'm not sure.  Check that filename is not too long, does not contain extra periods (don't use %DateTime in the filename) etc., etc..</p>

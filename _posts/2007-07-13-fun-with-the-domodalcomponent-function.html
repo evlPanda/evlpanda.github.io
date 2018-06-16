@@ -1,0 +1,43 @@
+---
+layout: post
+title: Fun with the DoModalComponent function.
+date: 2007-07-13 06:51:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- DoModalComponent
+- Function
+- PeopleCode
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '6758085570710511750'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>The example given in PeopleBooks is misleading.  Read the description carefully -</p>
+<p>The first three parameters are straighforward, and can be drag-dropped from the menu definition in your project (shortcut hint there).</p>
+<p>The fourth parameter is a little different:</p>
+<table border="0" cellspacing="2" width="100%">
+<tbody valign="top">
+<tr>
+<td>
+<p class="TERM"><i>component_item_name</i> </p>
+</td>
+<td>
+<p class="TERM">The component item name of the page to be displayed on top of the  modal component when it displays. The component item name is specified in the  component definition. </p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Note "<span style="font-style:italic;">The component item name is specified in the component definition</span>"?  Open up the component and find the page you want to navigate to.  <span style="font-weight:bold;"></p>
+<p>For this parameter use the page's "Item Name", not the "Page Name".</p>
+<p></span><span>It's always a bit nasty when the example is misleading and the explanation slightly obscured, I mean who reads the doco really, really carefully?  ; )</span><span style="font-weight:bold;"><br /></span></p>

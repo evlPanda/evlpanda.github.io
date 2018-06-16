@@ -1,0 +1,25 @@
+---
+layout: post
+title: Automatically Generate Upgrade Scripts
+date: 2013-02-27 23:17:00.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '5745686071284554791'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>Snippet of PeopleCode that takes a Project and creates an upgrade script for all the Records in that Project. Does 90%+ of the work for you.</p>
+<p>Requires a Prompt to select the Project, a button to put this code under, and a HTML Area to output the results to.</p>
+<pre style="background-color:#eeeeee;border:1px dashed #999999;color:black;font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;font-size:12px;line-height:14px;overflow:auto;padding:5px;width:100%;"><code>If None(NS_MN_TEST.PROJECTNAME.Value) Then<br />   MessageBox(0, "", 0, 0, "Enter a Project Name");<br />Else<br />   <br />   Local string &amp;title, &amp;result, &amp;fields;<br />   Local integer &amp;f;<br />   <br />   Local Record &amp;recPSPROJECTDEFN = CreateRecord(Record.PSPROJECTDEFN);<br />   &amp;recPSPROJECTDEFN.PROJECTNAME.Value = NS_MN_TEST.PROJECTNAME.Value;<br />   &amp;recPSPROJECTDEFN.SelectByKey();<br />   <br />   Local Record &amp;recPSOPRDEFN = CreateRecord(Record.PSOPRDEFN);<br />   &amp;recPSOPRDEFN.OPRID.Value = &amp;recPSPROJECTDEFN.LASTUPDOPRID.Value;<br />   &amp;recPSOPRDEFN.SelectByKey();<br />   <br />   &amp;title = &amp;title | "/*" | Char(13);<br />   &amp;title = &amp;title | "     WORK UNIT:     " | &amp;recPSPROJECTDEFN.PROJECTNAME.Value | Char(13);<br />   &amp;title = &amp;title | "     DEVELOPER:     " | &amp;recPSOPRDEFN.OPRDEFNDESC.Value | Char(13);<br />   &amp;title = &amp;title | "     DATE:          " | String(%Date) | Char(13);<br />   &amp;title = &amp;title | "     DESCRIPTION:   " | &amp;recPSPROJECTDEFN.PROJECTDESCR.Value | Char(13);<br />   &amp;title = &amp;title | "     INSTRUCTIONS:  EXECUTE IN THE TARGET" | Char(13);<br />   &amp;title = &amp;title | "     DEPENDENCIES:  " | Char(13);<br />   &amp;title = &amp;title | "*/" | Char(13) | Char(13);<br />   <br />   &amp;title = &amp;title | "-- List of Records that have data converted by this script:" | Char(13);<br />   <br />   <br />   Local SQL &amp;sql = CreateSQL("SELECT OBJECTVALUE1 FROM PSPROJECTITEM A, PSRECDEFN B WHERE A.PROJECTNAME = :1 AND A.OBJECTTYPE = 0 AND A.OBJECTID2 = 0 AND B.RECNAME = A.OBJECTVALUE1 AND B.RECTYPE = 0", NS_MN_TEST.PROJECTNAME.Value);<br />   <br />   Local string &amp;recName;<br />   While &amp;sql.Fetch(&amp;recName)<br />      <br />      If Left(&amp;recName, 3) = "NS_" Then<br />         <br />         &amp;title = &amp;title | "--    " | &amp;recName | Char(13);<br />         <br />         &amp;result = &amp;result | Char(13) | "-- " | &amp;recName | Char(13);<br />         &amp;result = &amp;result | "Delete From ps_" | &amp;recName | ";" | Char(13);<br />         Local Record &amp;rec = CreateRecord(@("record." | &amp;recName));<br />         &amp;result = &amp;result | "Insert Into ps_" | &amp;recName | "(" | Char(13);<br />         For &amp;f = 1 To &amp;rec.FieldCount<br />            If &amp;f = 1 Then<br />               &amp;fields = "  " | &amp;rec.GetField(&amp;f).Name | Char(13);<br />            Else<br />               &amp;fields = &amp;fields | ", " | &amp;rec.GetField(&amp;f).Name | Char(13);<br />            End-If;<br />         End-For;<br />         &amp;result = &amp;result | &amp;fields | ")" | Char(13);<br />         &amp;result = &amp;result | "Select " | Char(13) | &amp;fields | "From ps_" | &amp;recName | "@nsconv.unsw.edu.au;" | Char(13);<br />         <br />      End-If;<br />      <br />   End-While;<br />   <br />   &amp;title = &amp;title | Char(13) | "SPOOL ON;" | Char(13);<br />   &amp;title = &amp;title | "SET ECHO ON;" | Char(13);<br />   &amp;title = &amp;title | "SPOOL 'c:\temp\" | Substring(&amp;recPSPROJECTDEFN.PROJECTNAME.Value, 4, 7) | "_data_conversion.log' REPLACE;" | Char(13);<br />   <br />   <br />   NS_MN_TEST.HTMLAREA1.Value = &amp;title | Char(13) | Char(13) | &amp;result | Char(13) | Char(13) | "commit;" | Char(13) | Char(13) | "SPOOL OFF;";<br />   <br />End-If;<br />Paste your text here.<br /></code></pre>

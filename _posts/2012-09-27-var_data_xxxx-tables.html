@@ -1,0 +1,37 @@
+---
+layout: post
+title: VAR_DATA_xxxx Tables
+date: 2012-09-27 03:52:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- http://schemas.google.com/blogger/2008/kind#post
+- VAR_DATA_xxxx
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '697964878568270605'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>In version 7 variable data specific to each ADMIN_FUNCTION for a Communication  was stored on the COMMUNICATION Table. This has changed in v9, with a specific Table for each Admin Function.</p>
+<p>For example: Records VAR_DATA_ADMA stores variable data for Admin function ADMA, VAR_DATA_SPRG for SPRG and so on.</p>
+<p><b>PS_COMMUNICATION joins to PS_VAR_DATA_xxxx on COMMON_ID and VAR_DATA_SEQ.</b></p>
+<p>IMPORTANT: This is completely different to a normal child table in PeopleSoft (and one has to question wtf they did it for). VAR_DATA_xxxx is not a child table of COMMUNICATION, in the typical PeopleSoft fashion. COMMUNICATION.VAR_DATA_SEQ is a Foreign Key, as in a standard, relational database. The reasoning for this is unknown to me as it doesn't match the other 30,000 Tables.</p>
+<p>There is PeopleCode on COMMUNICATION.VAR_DATA_SEQ that handles synchronising its value between the two Tables. It might pay to spend 5 minutes understanding it.<br />______________________</p>
+<p><b>Common scenario:</b> Business was using a variable data field in v7 that is not on the associated VAR_DATA_xxxx Record in v9. What to do in v9?</p>
+<p><b>Solution:</b>
+<ol>
+<li>Add the Field(s) onto the VAR_DATA_xxxx Record.</li>
+<li>Each Admin Function has an associated Variable Data page called COMM_VAR_xxxx, where xxxx is the Admin Function code. Add the fields to this page from Record.CM_DERIVED.</li>
+<li>Use the following script to populate the v9 tables:</li>
+</ol>
+<pre style="background-color:#eeeeee;border:1px dashed #999999;color:black;font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;font-size:12px;line-height:14px;overflow:auto;padding:5px;width:100%;"><code>-- Update configuration table.<br /><br />UPDATE PS_ADM_FUNCTN_TBL<br /><br />SET<br /><br />  ACAD_CAREER_AF = 'Y', STDNT_CAR_NBR_AF = 'Y', AID_YEAR_AF = 'Y', CAMPUS_EVNT_NBR_AF = 'Y', EVENT_MTG_NBR_AF = 'Y'<br /><br />, ADMIN_FCN_PEOPLE = 'N', SSR_RS_CANDNBR_AF = 'N'<br /><br />WHERE ADMIN_FUNCTION = 'THES';<br /><br />COMMIT;<br /><br />-- Move data from v7 PS_COMMUNICATION into v9 VAR_DATA_xxxx<br /><br />DELETE FROM PS_VAR_DATA_THES;<br /><br />INSERT INTO PS_VAR_DATA_THES (<br /><br />  COMMON_ID<br /><br />, VAR_DATA_SEQ<br /><br />, SSR_RS_CANDIT_NBR<br /><br />, SSR_RS_SUBMSSN_NBR<br /><br />, ACAD_CAREER              -- &lt; New field<br /><br />, STDNT_CAR_NBR         -- &lt; New field<br /><br />, AID_YEAR             -- &lt; New field<br /><br />, CAMPUS_EVENT_NBR         -- &lt; New field<br /><br />, EVENT_MTG_NBR         -- &lt; New field<br /><br />)<br /><br />SELECT<br /><br />  EMPLID<br /><br />, (ROW_NUMBER() OVER(PARTITION BY EMPLID ORDER BY EMPLID)) - 1 AS VAR_DATA_SEQ<br /><br />, 0<br /><br />, 0<br /><br />, ACAD_CAREER<br /><br />, STDNT_CAR_NBR<br /><br />, AID_YEAR<br /><br />, CAMPUS_EVENT_NBR<br /><br />, EVENT_MTG_NBR<br /><br />FROM<br /><br />    (SELECT DISTINCT<br /><br />      EMPLID<br /><br />    , ACAD_CAREER<br /><br />    , STDNT_CAR_NBR<br /><br />    , AID_YEAR<br /><br />    , CAMPUS_EVENT_NBR<br /><br />    , EVENT_MTG_NBR<br /><br />    FROM PS_COMMUNICATION@NSCONV.UNSW.EDU.AU<br /><br />    WHERE ADMIN_FUNCTION = 'THES')<br /><br />;<br /><br />-- Update ps_communication to point to correct var_data/var_data_seq<br /><br />-- This updates ps_communication by first finding the matching row in v7, and then finding the converted var data in v9.<br /><br />-- It points to the new v9 data by updating ps_communication.var_data_seq.<br /><br />update ps_communication x<br /><br />set x.var_data_seq =<br /><br />                (select var_Data_Seq<br /><br />                from<br /><br />                  ps_communication@nsconv.unsw.edu.au a<br /><br />                , ps_var_data_thes b<br /><br />                where a.emplid = x.common_id<br /><br />                and a.comm_dttm = x.comm_dttm<br /><br />                and a.institution = x.institution<br /><br />                and a.admin_function = x.admin_function<br /><br />                and a.comm_category = x.comm_category<br /><br />                and b.common_id = a.emplid<br /><br />                and b.acad_career = a.acad_career<br /><br />                and b.stdnt_car_nbr = a.stdnt_car_nbr<br /><br />                and b.aid_year = a.aid_year<br /><br />                and b.campus_event_nbr = a.campus_event_nbr<br /><br />                and b.event_mtg_nbr = a.event_mtg_nbr<br /><br />                )<br /><br />where x.admin_function = 'THES'<br /><br />;<br /><br />commit;<br /></code></pre>

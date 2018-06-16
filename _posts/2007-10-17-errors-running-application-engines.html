@@ -1,0 +1,28 @@
+---
+layout: post
+title: Errors running Application Engines
+date: 2007-10-17 05:47:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- http://schemas.google.com/blogger/2008/kind#post
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '1437895913591769106'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>If you get the following error:</p>
+<p><span style="font-size:85%;"><span style="font-family:georgia;">"Message:</span><br /><span style="font-family:georgia;">All Processing Suspended: Restart OPRID=S390765, RUNID=31-01-03112240, PI=2988 </span></p>
+<p><span style="font-family:georgia;">Description:</span><br /><span style="font-family:georgia;">A pending process was found for the current Operator id, Run Control id, and Application Engine Program.  This process either is running now or has abended.  Please restart the pending process if it has abended, and allow it to run to completion, before submitting a new process request."</span></span><br /><span style="font-size:85%;"><span style="font-family:georgia;"><br /></span></span>...you need to cleanup the dead rows in sysadm.ps_<span style="font-weight:bold;">aeruncontrol</span>.</p>
+<p>PeopleTools &gt; Application Engine &gt; Manage Abends</p>
+<p><span style="font-family:courier new;"><br /></span><span style="font-family:courier new;"><br /></span></p>

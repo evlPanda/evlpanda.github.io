@@ -1,0 +1,29 @@
+---
+layout: post
+title: Cool way of getting the year, month or day
+date: 2007-04-16 01:31:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- date
+- day
+- extract
+- http://schemas.google.com/blogger/2008/kind#post
+- SQL
+- year
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '8128306787551324211'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p><code><br />select <br />  extract(year from sysdate) as year<br />, extract(month from sysdate) as month<br />, extract(day from sysdate) as day<br />from dual;<br /></code></p>

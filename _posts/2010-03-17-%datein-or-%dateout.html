@@ -1,0 +1,24 @@
+---
+layout: post
+title: "%DateIn or %DateOut"
+date: 2010-03-17 04:52:00.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '3892621169229701001'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>Sometimes you need both:</p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>%Select(CC_DAY_UOA_AET.DATE_DAY, CC_DAY_UOA_AET.SCHED_HRS)<br /><br />SELECT<br />%DateOut(%DateIn(%Bind(CC_PYDT_UOA_AET.PYMT_DT)) + daynum)<br />, sched_hrs<br />FROM ps_sch_defn_dtl a<br />... <br /></code></pre>

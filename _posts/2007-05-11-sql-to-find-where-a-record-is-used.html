@@ -1,0 +1,26 @@
+---
+layout: post
+title: SQL to find where a record is used
+date: 2007-05-11 05:32:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- http://schemas.google.com/blogger/2008/kind#post
+- work record
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '2460812532071839878'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>This SQL will return all pages, including secondary/subpages, and components that use a given record:</p>
+<p><span style="font-size:85%;"><span style="font-family:courier new;">-- all panels that have record and the associated panelgroup<br />select distinct<br />  a.pnlname as panel, 'subpage' as type<br />, c.pnlgrpname as component<br />, a.recname as record<br />from<br />  sysadm.pspnlfield a<br />, sysadm.psrecdefn b<br />, sysadm.pspnlgroup c<br />where a.recname = 'GU_EX_WORK'<br />and b.recname = a.recname<br />--and b.rectype = 2<br />and c.pnlname = a.pnlname<br />union<br />select distinct<br />  a.pnlname as page, 'subpage' as type<br />, c.pnlgrpname as component<br />, a.recname as record<br />from<br />  sysadm.pspnlfield a<br />, sysadm.pspnlfield b<br />, sysadm.pspnlgroup c<br />where a.recname = 'GU_EX_WORK'<br />and b.subpnlname = a.pnlname<br />and c.pnlname = b.pnlname<br />;</span></span></p>

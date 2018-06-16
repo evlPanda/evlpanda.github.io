@@ -1,0 +1,39 @@
+---
+layout: post
+title: Component Interface Not Working
+date: 2015-08-14 07:04:35.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '13715393959'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+excerpt: If it errors it won't tell you.
+---
+<p>You <em>must</em> include the following when saving your CI. If you don't it will error <em>silently</em>. It will appear to have worked but in effect it does nothing. If it errors it won't tell you.</p>
+<pre><code>
+      If Not (&amp;myCI.Save()) Then
+         Local any &amp;COLL = %Session.PSMessages;
+         For &amp;i = 1 To &amp;COLL.Count
+            Local any &amp;ERROR = &amp;COLL.Item(&amp;i);
+            Local any &amp;TEXT = &amp;ERROR.Text;
+            MessageBox(0, "", 0, 0, &amp;ERROR | " " | &amp;TEXT);
+         End-For;
+         &amp;COLL.DeleteAll();
+      End-If;
+</code></pre>
+<p>Also, to avoid going mad I recommend setting the following property of your CI. Things like &amp;itmSomeTable.Count don't get updated in real time otherwise! You'll insert rows and won't see this value update until <em>after</em> you save.</p>
+<pre><code>      
+    &amp;myCI.InteractiveMode = True;
+</code></pre>

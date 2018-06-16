@@ -1,0 +1,29 @@
+---
+layout: post
+title: PDF Stamper (iText)
+date: 2011-09-21 10:07:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- pdf stamper itext Java object attach
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '558173756023302171'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>Download the JAR file from here:<br /><a href="http://itextpdf.com/download.php">http://itextpdf.com/download.php</a></p>
+<p>Place it on the App Server, where all the other JAR files are (somewhere)</p>
+<p>Note you'll need Acrobat Pro to add fields to the PDF and give them names.</p>
+<p>Example PeopleCode. Will Instantiate the Java object, open the Template file (source) and the target file (...target) and then map data to the defined fields on your template.</p>
+<p>Will also create an attachment and then view ti - pop up the PDF output.</p>
+<pre style="background-color:#eeeeee;border:1px dashed #999999;color:black;font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;font-size:12px;line-height:14px;overflow:auto;padding:5px;width:100%;"><code>Local JavaObject &amp;Outputstream, &amp;PDFWriter, &amp;PDFReader, &amp;PDFStamper, &amp;TemplateFields;<br /><br />/* File name */<br />Evaluate &amp;recAMS_CAF_DAT_VW.AMS_CAF_TYPE.Value<br />When = "C"<br />   /* Pivot date for old/new form is 22/12/2010 */<br />   If &amp;recAMS_CAF_DAT_VW.EFFDT.Value &gt;= Date(20101222) Then<br />      &amp;TemplatePathname = GetEnv("PS_HOME") | "/rmit/tmp/1290A_NEW_TEMPLATE.pdf";<br />   Else<br />      &amp;TemplatePathname = GetEnv("PS_HOME") | "/rmit/tmp/1290A_OLD_TEMPLATE.pdf";<br />   End-If;<br />When = "F"<br />   /* There is a really old form version, pre 2009. */<br />   If &amp;recAMS_CAF_DAT_VW.EFFDT.Value &gt;= Date(20090101) Then<br />      &amp;TemplatePathname = GetEnv("PS_HOME") | "/rmit/tmp/1292A_OLDOLD_TEMPLATE.pdf";<br />   Else<br />      /* Pivot date for old/new form is 22/12/2010 */<br />      If &amp;recAMS_CAF_DAT_VW.EFFDT.Value &gt;= Date(20101222) Then<br />         &amp;TemplatePathname = GetEnv("PS_HOME") | "/rmit/tmp/1292A_NEW_TEMPLATE.pdf";<br />      Else<br />         &amp;TemplatePathname = GetEnv("PS_HOME") | "/rmit/tmp/1292A_OLD_TEMPLATE.pdf";<br />      End-If;<br />   End-If;<br />When = "V"<br />   /* Pivot date for old/new form is 22/12/2010 */<br />   If &amp;recAMS_CAF_DAT_VW.EFFDT.Value &gt;= Date(20101222) Then<br />      &amp;TemplatePathname = GetEnv("PS_HOME") | "/rmit/tmp/1296A_NEW_TEMPLATE.pdf";<br />   Else<br />      &amp;TemplatePathname = GetEnv("PS_HOME") | "/rmit/tmp/1296A_OLD_TEMPLATE.pdf";<br />   End-If;<br />End-Evaluate;<br /><br />&amp;FILE = %OperatorId | "_" | %Datetime | "_eCAF_PDF_STAMPER_OUTPUT.pdf";<br /><br />/* Output File path */<br />/* ps_home = /software/peoplesoft/product/pscs/pscsdv4 */<br />&amp;InOutputPdfPathname = GetEnv("PS_HOME") | "/rmit/tmp/" | &amp;FILE;<br /><br /><br />/* Create the "input" Template PDF */<br />&amp;PDFReader = CreateJavaObject("com.lowagie.text.pdf.PdfReader", &amp;TemplatePathname);<br />&amp;PDFReader.consolidateNamedDestinations();<br />&amp;PDFReader.removeUnusedObjects();<br /><br />/* Create the "Output" Template PDF */<br />&amp;Outputstream = CreateJavaObject("java.io.FileOutputStream", &amp;InOutputPdfPathname);<br />&amp;PDFStamper = CreateJavaObject("com.lowagie.text.pdf.PdfStamper", &amp;PDFReader, &amp;Outputstream);<br /><br />/* Flatten the form */<br />&amp;PDFStamper.setFormFlattening( True);<br /><br />/* Get the fields to stamp */<br />&amp;TemplateFields = &amp;PDFStamper.getAcroFields();<br /><br />/* Stamp fields */<br />&amp;TemplateFields.setField("FAMILY_NAME", "Test family name");<br />rem &amp;TemplateFields.setField("name", "John Student");<br />rem &amp;TemplateFields.setField("address", "Baeyensstraat 121, Sint-Amandsberg");<br />rem &amp;TemplateFields.setField("postal_code", "BE-9040");<br />rem &amp;TemplateFields.setField("email", "s1234567@somewhere.edu.au");<br /><br />/* Close the stamper */<br />&amp;PDFStamper.close();<br /><br />/* Needed if in think-time */<br />CommitWork();<br /><br /><br />/* Put PDF file temporarily into database, so we can send to users browser using the ViewAttachment function */<br />&amp;Ret = PutAttachment("record://AMS_ECAF_ATTACH", &amp;FILE, &amp;InOutputPdfPathname);<br />If &amp;Ret = %Attachment_Success Then;<br />   <br />   /* Send Output file to the browser */<br />   &amp;Ret = ViewAttachment("record://AMS_ECAF_ATTACH", &amp;FILE, &amp;FILE, True, True);<br />   <br />   /* Remove temporary PDF file from database */<br />   &amp;Ret = DeleteAttachment("record://AMS_ECAF_ATTACH", &amp;FILE, True);<br />   <br />End-If;<br /></code></pre>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>The PeopleSoft Experience | Musings, chit-chat, and sometimes useful stuff related to PeopleSoft, especially PeopleCode.</title>
+<meta name="generator" content="Jekyll v3.8.3" />
+<meta property="og:title" content="The PeopleSoft Experience" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I don&#39;t often post random snippets of SQL, but I thought this was a good one. Rare enough to be able to forget it easily, and perhaps will be required again. This returns schedules based on the schedule id(s) that is/are current for a given employee during a given payment period. If there is no schedule id default to &#39;UOA01&#39;. The first part was tricky as sch_assign is an effective dated table, and has no required end date, but each row does end when the next effective date comes into effect. I solved that using a subselect to derive the end_dt. Easy enough. The next part, defaulting in &#39;UOA01&#39; was a little trickier. A union to always bring in UOA01, but then a not exists subselect to only bring in where part A of the union returned nothing. Perhaps easy when you see the solution first, this one took me quite a few attempts, and half the afternoon. Saved for prosperity and that time in the future when I ask myself &quot;I remember doing similar...&quot;. Apart from doing some tricky things with dates this SQL always returns a value. There is a default value in the SQL. select %DateOut(dur), b.sched_hrsfrom (select a.schedule_id , a.effdt as bgn_dt , (select min(x.effdt) - 1 from ps_sch_assign x where x.emplid = a.emplid and x.empl_rcd = a.empl_rcd and x.effdt &lt; a.effdt) as end_dt from %Table(sch_assign) a where a.emplid = %Bind(cc_a20_uoa_aet.emplid) and a.empl_rcd = %Bind(cc_a20_uoa_aet.empl_rcd) and a.schedule_id &#39; &#39; and a.effdt &lt; %Bind(cc_a20_uoa_aet.prd_end_dt) union select &#39;UOA01&#39; , to_date(&#39;01/01/2000&#39;, &#39;dd/mm/yyyy&#39;) as bgn_dt , to_date(&#39;31/12/9999&#39;, &#39;dd/mm/yyyy&#39;) as end_dt from dual where not exists (select 1 from %Table(sch_assign) a where a.emplid = %Bind(cc_a20_uoa_aet.emplid) and a.empl_rcd = %Bind(cc_a20_uoa_aet.empl_rcd) and a.schedule_id &#39; &#39; and a.effdt &lt; %Bind(cc_a20_uoa_aet.prd_end_dt))) a, %Table(sch_clnd_vw) bwhere b.schedule_id = a.schedule_idand b.dur between %Bind(cc_a20_uoa_aet.prd_bgn_dt) and %Bind(cc_a20_uoa_aet.prd_end_dt)and (b.dur &lt;= a.end_dt or a.end_dt is null)and b.sched_hrs &gt; 0order by dur" />
+<meta property="og:description" content="I don&#39;t often post random snippets of SQL, but I thought this was a good one. Rare enough to be able to forget it easily, and perhaps will be required again. This returns schedules based on the schedule id(s) that is/are current for a given employee during a given payment period. If there is no schedule id default to &#39;UOA01&#39;. The first part was tricky as sch_assign is an effective dated table, and has no required end date, but each row does end when the next effective date comes into effect. I solved that using a subselect to derive the end_dt. Easy enough. The next part, defaulting in &#39;UOA01&#39; was a little trickier. A union to always bring in UOA01, but then a not exists subselect to only bring in where part A of the union returned nothing. Perhaps easy when you see the solution first, this one took me quite a few attempts, and half the afternoon. Saved for prosperity and that time in the future when I ask myself &quot;I remember doing similar...&quot;. Apart from doing some tricky things with dates this SQL always returns a value. There is a default value in the SQL. select %DateOut(dur), b.sched_hrsfrom (select a.schedule_id , a.effdt as bgn_dt , (select min(x.effdt) - 1 from ps_sch_assign x where x.emplid = a.emplid and x.empl_rcd = a.empl_rcd and x.effdt &lt; a.effdt) as end_dt from %Table(sch_assign) a where a.emplid = %Bind(cc_a20_uoa_aet.emplid) and a.empl_rcd = %Bind(cc_a20_uoa_aet.empl_rcd) and a.schedule_id &#39; &#39; and a.effdt &lt; %Bind(cc_a20_uoa_aet.prd_end_dt) union select &#39;UOA01&#39; , to_date(&#39;01/01/2000&#39;, &#39;dd/mm/yyyy&#39;) as bgn_dt , to_date(&#39;31/12/9999&#39;, &#39;dd/mm/yyyy&#39;) as end_dt from dual where not exists (select 1 from %Table(sch_assign) a where a.emplid = %Bind(cc_a20_uoa_aet.emplid) and a.empl_rcd = %Bind(cc_a20_uoa_aet.empl_rcd) and a.schedule_id &#39; &#39; and a.effdt &lt; %Bind(cc_a20_uoa_aet.prd_end_dt))) a, %Table(sch_clnd_vw) bwhere b.schedule_id = a.schedule_idand b.dur between %Bind(cc_a20_uoa_aet.prd_bgn_dt) and %Bind(cc_a20_uoa_aet.prd_end_dt)and (b.dur &lt;= a.end_dt or a.end_dt is null)and b.sched_hrs &gt; 0order by dur" />
+<link rel="canonical" href="http://localhost:4000/sql%20default%20schedule/2010/05/06/81.html" />
+<meta property="og:url" content="http://localhost:4000/sql%20default%20schedule/2010/05/06/81.html" />
+<meta property="og:site_name" content="The PeopleSoft Experience" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-05-06T06:53:00+10:00" />
+<script type="application/ld+json">
+{"description":"I don&#39;t often post random snippets of SQL, but I thought this was a good one. Rare enough to be able to forget it easily, and perhaps will be required again. This returns schedules based on the schedule id(s) that is/are current for a given employee during a given payment period. If there is no schedule id default to &#39;UOA01&#39;. The first part was tricky as sch_assign is an effective dated table, and has no required end date, but each row does end when the next effective date comes into effect. I solved that using a subselect to derive the end_dt. Easy enough. The next part, defaulting in &#39;UOA01&#39; was a little trickier. A union to always bring in UOA01, but then a not exists subselect to only bring in where part A of the union returned nothing. Perhaps easy when you see the solution first, this one took me quite a few attempts, and half the afternoon. Saved for prosperity and that time in the future when I ask myself &quot;I remember doing similar...&quot;. Apart from doing some tricky things with dates this SQL always returns a value. There is a default value in the SQL. select %DateOut(dur), b.sched_hrsfrom (select a.schedule_id , a.effdt as bgn_dt , (select min(x.effdt) - 1 from ps_sch_assign x where x.emplid = a.emplid and x.empl_rcd = a.empl_rcd and x.effdt &lt; a.effdt) as end_dt from %Table(sch_assign) a where a.emplid = %Bind(cc_a20_uoa_aet.emplid) and a.empl_rcd = %Bind(cc_a20_uoa_aet.empl_rcd) and a.schedule_id &#39; &#39; and a.effdt &lt; %Bind(cc_a20_uoa_aet.prd_end_dt) union select &#39;UOA01&#39; , to_date(&#39;01/01/2000&#39;, &#39;dd/mm/yyyy&#39;) as bgn_dt , to_date(&#39;31/12/9999&#39;, &#39;dd/mm/yyyy&#39;) as end_dt from dual where not exists (select 1 from %Table(sch_assign) a where a.emplid = %Bind(cc_a20_uoa_aet.emplid) and a.empl_rcd = %Bind(cc_a20_uoa_aet.empl_rcd) and a.schedule_id &#39; &#39; and a.effdt &lt; %Bind(cc_a20_uoa_aet.prd_end_dt))) a, %Table(sch_clnd_vw) bwhere b.schedule_id = a.schedule_idand b.dur between %Bind(cc_a20_uoa_aet.prd_bgn_dt) and %Bind(cc_a20_uoa_aet.prd_end_dt)and (b.dur &lt;= a.end_dt or a.end_dt is null)and b.sched_hrs &gt; 0order by dur","@type":"BlogPosting","url":"http://localhost:4000/sql%20default%20schedule/2010/05/06/81.html","headline":"The PeopleSoft Experience","dateModified":"2010-05-06T06:53:00+10:00","datePublished":"2010-05-06T06:53:00+10:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/sql%20default%20schedule/2010/05/06/81.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="The PeopleSoft Experience" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">The PeopleSoft Experience</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline"></h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2010-05-06T06:53:00+10:00" itemprop="datePublished">May 6, 2010
+      </time>• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{"login"=>"evlpanda", "email"=>"m.nitschke@gmail.com", "display_name"=>"Michael Nitschke", "first_name"=>"", "last_name"=>""}</span></span></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I don't often post random snippets of SQL, but I thought this was a good one. Rare enough to be able to forget it easily, and perhaps will be required again.</p>
+<p>This returns schedules based on the schedule id(s) that is/are current for a given employee during a given payment period. If there is no schedule id default to 'UOA01'.</p>
+<p>The first part was tricky as sch_assign is an effective dated table, and has no <i>required</i> end date, but each row does end when the next effective date comes into effect. I solved that using a subselect to derive the end_dt. Easy enough.</p>
+<p>The next part, defaulting in 'UOA01' was a little trickier. A union to always bring in UOA01, but then a not exists subselect to only bring in where part A of the union returned nothing.</p>
+<p>Perhaps easy when you see the solution first, this one took me quite a few attempts, and half the afternoon. Saved for prosperity and that time in the future when I ask myself "I remember doing similar...".</p>
+<p>Apart from doing some tricky things with dates this SQL always returns a value. There is a default value in the SQL.</p>
+<pre style="background-color:#eeeeee;border:1px dashed rgb(153,153,153);color:black;font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;font-size:12px;line-height:14px;overflow:auto;padding:5px;width:100%;"><code>select<br />  %DateOut(dur)<br />, b.sched_hrs<br />from<br />    (select<br />      a.schedule_id<br />    , a.effdt as bgn_dt<br />    ,<br />        (select min(x.effdt) - 1<br />        from ps_sch_assign x<br />        where x.emplid = a.emplid<br />        and x.empl_rcd = a.empl_rcd<br />        and x.effdt &lt; a.effdt) as end_dt<br />    from %Table(sch_assign) a<br />    where a.emplid = %Bind(cc_a20_uoa_aet.emplid)<br />    and a.empl_rcd = %Bind(cc_a20_uoa_aet.empl_rcd)<br />    and a.schedule_id  ' '<br />    and a.effdt &lt; %Bind(cc_a20_uoa_aet.prd_end_dt)<br />    union<br />    select <br />      'UOA01'<br />    , to_date('01/01/2000', 'dd/mm/yyyy') as bgn_dt<br />    , to_date('31/12/9999', 'dd/mm/yyyy') as end_dt<br />    from dual<br />    where not exists<br />        (select 1<br />        from %Table(sch_assign) a<br />        where a.emplid = %Bind(cc_a20_uoa_aet.emplid)<br />        and a.empl_rcd = %Bind(cc_a20_uoa_aet.empl_rcd)<br />        and a.schedule_id  ' '<br />        and a.effdt &lt; %Bind(cc_a20_uoa_aet.prd_end_dt))) a<br />, %Table(sch_clnd_vw) b<br />where b.schedule_id = a.schedule_id<br />and b.dur between %Bind(cc_a20_uoa_aet.prd_bgn_dt) and %Bind(cc_a20_uoa_aet.prd_end_dt)<br />and (b.dur &lt;= a.end_dt or a.end_dt is null)<br />and b.sched_hrs &gt; 0<br />order by dur<br /></code></pre>
+
+  </div><a class="u-url" href="/sql%20default%20schedule/2010/05/06/81.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">The PeopleSoft Experience</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">The PeopleSoft Experience</li><li><a class="u-email" href="mailto:your-email@example.com">your-email@example.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/evlPanda"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">evlPanda</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Musings, chit-chat, and sometimes useful stuff related to PeopleSoft, especially PeopleCode.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

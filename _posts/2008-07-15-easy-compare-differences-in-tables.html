@@ -1,0 +1,39 @@
+---
+layout: post
+title: Easy Compare Differences in Tables
+date: 2008-07-15 03:08:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Oracle SQL Differences Compare
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '399289237443833209'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>SELECT * FROM TABLE_A<br />MINUS<br />SELECT * FROM TABLE_B</p>
+<p>This can be expanded out to include the actual rows that are different between the two tables, or missing:</p>
+<p><!-- code formatted by http://manoli.net/csharpformat/ --></p>
+<p>.csharpcode, .csharpcode pre<br />{<br /> font-size: small;<br /> color: black;<br /> font-family: Consolas, "Courier New", Courier, Monospace;<br /> background-color: #ffffff;<br /> /*white-space: pre;*/<br />}</p>
+<p>.csharpcode pre { margin: 0em; }</p>
+<p>.csharpcode .rem { color: #008000; }</p>
+<p>.csharpcode .kwrd { color: #0000ff; }</p>
+<p>.csharpcode .str { color: #006080; }</p>
+<p>.csharpcode .op { color: #0000c0; }</p>
+<p>.csharpcode .preproc { color: #cc6633; }</p>
+<p>.csharpcode .asp { background-color: #ffff00; }</p>
+<p>.csharpcode .html { color: #800000; }</p>
+<p>.csharpcode .attr { color: #ff0000; }</p>
+<p>.csharpcode .alt <br />{<br /> background-color: #f4f4f4;<br /> width: 100%;<br /> margin: 0em;<br />}</p>
+<p>.csharpcode .lnum { color: #606060; }</p>
+<pre class="csharpcode"><br /><span class="kwrd">SELECT</span> * <span class="kwrd">FROM</span> (<br /><br /><span class="kwrd">SELECT</span><br />  <span class="str">'T906_TIME_CODE'</span> <span class="kwrd">AS</span> TABLE_NAME<br />, <span class="str">'@AURPREP'</span> <span class="kwrd">AS</span> DATABASE_NAME<br />,     DECODE( <span class="rem">-- Check if rows are different or missing.  Missing if no row found with matching keys.</span><br />        (<span class="kwrd">SELECT</span> 1 <span class="kwrd">FROM</span> T906_TIME_CODE B<br />        <span class="kwrd">WHERE</span> NVL(B.T906F370_TRAN_CODE_TERM, <span class="str">'X'</span>) = NVL(A.T906F370_TRAN_CODE_TERM, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F005_AWARD_CODE, <span class="str">'X'</span>) = NVL(A.T906F005_AWARD_CODE, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F010_TIME_CODE, <span class="str">'X'</span>) = NVL(A.T906F010_TIME_CODE, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F075_COSTING_ACCOUNT, <span class="str">'X'</span>) = NVL(A.T906F075_COSTING_ACCOUNT, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F310_ACCOUNT, <span class="str">'X'</span>) = NVL(A.T906F310_ACCOUNT, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F074_PC, <span class="str">'X'</span>) = NVL(A.T906F074_PC, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F020_LEAVE_TYPE_AWARD, <span class="str">'X'</span>) = NVL(A.T906F020_LEAVE_TYPE_AWARD, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F025_LEAVE_TYPE_CODE, <span class="str">'X'</span>) = NVL(A.T906F025_LEAVE_TYPE_CODE, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F060_SECURITY_TASK, <span class="str">'X'</span>) = NVL(A.T906F060_SECURITY_TASK, <span class="str">'X'</span>)<br />        )    , 1, <span class="str">'DIFFERENCES'</span><br />    , <span class="str">'MISSING IN CURRENT'</span>) <span class="kwrd">AS</span> STATUS<br />, A.*<br /><span class="kwrd">FROM</span><br />    (<span class="kwrd">SELECT</span> * <span class="kwrd">FROM</span> T906_TIME_CODE@AURPREP<br />    MINUS<br />    <span class="kwrd">SELECT</span> * <span class="kwrd">FROM</span> T906_TIME_CODE) A<br /><br /><span class="kwrd">UNION</span><br /><br /><span class="kwrd">SELECT</span><br />  <span class="str">'T906_TIME_CODE'</span> <span class="kwrd">AS</span> TABLE_NAME<br />, <span class="str">'CURRENT'</span> <span class="kwrd">AS</span> DATABASE_NAME<br />,     DECODE( <span class="rem">-- Check if rows are different or missing.  Missing if no row found with matching keys.</span><br />        (<span class="kwrd">SELECT</span> 1 <span class="kwrd">FROM</span> T906_TIME_CODE@AURPREP B<br />        <span class="kwrd">WHERE</span> NVL(B.T906F370_TRAN_CODE_TERM, <span class="str">'X'</span>) = NVL(A.T906F370_TRAN_CODE_TERM, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F005_AWARD_CODE, <span class="str">'X'</span>) = NVL(A.T906F005_AWARD_CODE, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F010_TIME_CODE, <span class="str">'X'</span>) = NVL(A.T906F010_TIME_CODE, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F075_COSTING_ACCOUNT, <span class="str">'X'</span>) = NVL(A.T906F075_COSTING_ACCOUNT, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F310_ACCOUNT, <span class="str">'X'</span>) = NVL(A.T906F310_ACCOUNT, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F074_PC, <span class="str">'X'</span>) = NVL(A.T906F074_PC, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F020_LEAVE_TYPE_AWARD, <span class="str">'X'</span>) = NVL(A.T906F020_LEAVE_TYPE_AWARD, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F025_LEAVE_TYPE_CODE, <span class="str">'X'</span>) = NVL(A.T906F025_LEAVE_TYPE_CODE, <span class="str">'X'</span>)<br />        <span class="kwrd">AND</span> NVL(B.T906F060_SECURITY_TASK, <span class="str">'X'</span>) = NVL(A.T906F060_SECURITY_TASK, <span class="str">'X'</span>)<br />        )    , 1, <span class="str">'DIFFERENCES'</span><br />    , <span class="str">'MISSING IN @AURPREP'</span>) <span class="kwrd">AS</span> STATUS<br />, A.*<br /><span class="kwrd">FROM</span><br />    (<span class="kwrd">SELECT</span> * <span class="kwrd">FROM</span> T906_TIME_CODE<br />    MINUS<br />    <span class="kwrd">SELECT</span> * <span class="kwrd">FROM</span> T906_TIME_CODE@AURPREP) A<br /><br />)<br /><span class="kwrd">ORDER</span> <span class="kwrd">BY</span> <span class="rem">-- (keys)</span><br />  T906F370_TRAN_CODE_TERM<br />, T906F005_AWARD_CODE<br />, T906F010_TIME_CODE<br />, T906F075_COSTING_ACCOUNT<br />, T906F310_ACCOUNT<br />, T906F074_PC<br />, T906F020_LEAVE_TYPE_AWARD<br />, T906F025_LEAVE_TYPE_CODE<br />, T906F060_SECURITY_TASK<br />, 2<br />;</pre>

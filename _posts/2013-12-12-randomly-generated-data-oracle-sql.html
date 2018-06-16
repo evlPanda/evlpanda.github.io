@@ -1,0 +1,24 @@
+---
+layout: post
+title: Randomly Generated Data - Oracle SQL
+date: 2013-12-12 23:48:00.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '6034445244001767124'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>select<br />  trunc(dbms_random.value(1, 11)) as seconds<br />from dual<br />connect by level &lt; 11<br /></code></pre>
+<p> (You could join the results to a table using rownum I guess)</p>

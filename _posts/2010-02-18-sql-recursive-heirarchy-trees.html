@@ -1,0 +1,28 @@
+---
+layout: post
+title: SQL - Recursive Heirarchy Trees
+date: 2010-02-18 06:23:00.000000000 +11:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- SQL Tree Heirarchy Recursive
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '7994629861671139056'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p><span style="font-family:courier new;"></span>Assuming a table something like this:<br />
+<blockquote>PERSON_ID<br />PARENT_ID<br />NAME</p></blockquote>
+<p>Start with this.<br />
+<blockquote>SELECT<br />LPAD(' ', 2*level-1) || SYS_CONNECT_BY_PATH(NAME, '\') "Path"<br />  FROM TABLE_NAME<br />  CONNECT BY PRIOR PERSON_ID = PARENT_ID;</p></blockquote>
+<p>Google "Connect By" for more information.</p>

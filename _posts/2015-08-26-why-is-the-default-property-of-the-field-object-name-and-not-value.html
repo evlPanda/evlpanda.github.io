@@ -1,0 +1,29 @@
+---
+layout: post
+title: Why is the default property of the Field object .name and not .value?
+date: 2015-08-26 09:31:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags: []
+meta:
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '14109936693'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>I can't be sure, but I think it has to do with <em>dot syntax</em>.</p>
+<p>For example as you write PeopleCode using the dot notation... is it notation or syntax? ...it looks like this:</p>
+<p><code>&amp;RowSet(&amp;i).Record.Field.Property</code></p>
+<p><code>.Name</code> is the default else you'd have to write the longer and equally correct version:</p>
+<p><code>&amp;Rowset(&amp;i).GetRecord(Record.RecordName).GetField(Field.FieldName).Property</code></p>
+<p>Because <code>.Name</code> is the default property the shorthand version works. In the same vein <code>.GetRecord</code> and <code>.GetField</code> are the default methods of the Row and Record objects respectively. The shorthand code is just using the default methods and properties of each object in the chain.</p>
+<p>/beer</p>

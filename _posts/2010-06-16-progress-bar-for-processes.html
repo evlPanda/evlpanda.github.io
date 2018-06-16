@@ -1,0 +1,29 @@
+---
+layout: post
+title: Progress Bar for Processes
+date: 2010-06-16 05:28:00.000000000 +10:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- progress process indicator
+tags: []
+meta:
+  blogger_blog: capital-it.blogspot.com
+  blogger_author: Michael Nitschke
+  blogger_0c9a3d51488c214aefd1a54a659341d6_permalink: '2308475392839517361'
+author:
+  login: evlpanda
+  email: m.nitschke@gmail.com
+  display_name: Michael Nitschke
+  first_name: ''
+  last_name: ''
+---
+<p>1. Create an HTML area on a page where you are going to query the progress of a Process.</p>
+<p>2. You need to setup a "progress" table for your process. You will need to update the values from within the process while it is running.</p>
+<p>e.g. fields EMPLOYEES_TOTAL | EMPLOYEES_PROCESSED etc. </p>
+<p>You will probably have to run a precursory SQL to count how many rows are expected to be processed up front, and then update the progress as each row or set of rows is processed.</p>
+<p>3. Here is some sample code to update the HTML area with details of how the process is progressing. CC_DERIVED_UOA.DESCRLONG is the HTML Area on the page.</p>
+<pre style="font-family:Andale Mono, Lucida Console, Monaco, fixed, monospace;color:#000000;background-color:#eee;font-size:12px;border:1px dashed #999999;line-height:14px;padding:5px;overflow:auto;width:100%;"><code>Function UpdateProgressBar(&amp;title, &amp;complete, &amp;total) Returns string<br />   <br />   Local string &amp;str = "";<br />   &amp;str = &amp;str | "   <tr><td>" | &amp;title | ":&nbsp;</td>";</tr><br />   <br />   /* Calc pct complete. */<br />   If &amp;total &gt; 0 Then<br />      &amp;pct = (&amp;complete / &amp;total) * 10;<br />   Else<br />      &amp;pct = 10;<br />   End-If;<br />   <br />   /* Update bars. */<br />   For &amp;i = 1 To 10<br />      If &amp;pct &gt;= &amp;i Then<br />         If &amp;total = 0 Then<br />            &amp;str = &amp;str | "      <td>&nbsp;</td>"; /* grey */<br />         Else<br />            &amp;str = &amp;str | "      <td>&nbsp;</td>"; /* green */<br />         End-If;<br />      Else<br />         &amp;str = &amp;str | "      <td>&nbsp;</td>"; /* red */<br />      End-If;<br />   End-For;<br />   <br />   &amp;str = &amp;str | "      <td>&nbsp;&nbsp;" | &amp;complete | " / " | &amp;total | "</td>";<br />   &amp;str = &amp;str | "   ";<br />   <br />   Return &amp;str;<br />   <br />End-Function;<br /><br /><br /><br />Local Rowset &amp;rsCC_PROGRESS_UOA = CreateRowset(Record.CC_PROGRESS_UOA);<br />&amp;rsCC_PROGRESS_UOA.Fill(); /* only ever one row */<br />Local Record &amp;recCC_PROGRESS_UOA = &amp;rsCC_PROGRESS_UOA(1).GetRecord(Record.CC_PROGRESS_UOA);<br /><br />&amp;strl_progbar = &amp;strl_progbar | "<table>";</table><br />&amp;strl_progbar = &amp;strl_progbar | UpdateProgressBar("Employees", &amp;recCC_PROGRESS_UOA.CC_FULLTM_COMPLETE.Value, &amp;recCC_PROGRESS_UOA.CC_FULLTM_TOTAL.Value);<br />&amp;strl_progbar = &amp;strl_progbar | UpdateProgressBar("Casuals", &amp;recCC_PROGRESS_UOA.CC_CASUAL_COMPLETE.Value, &amp;recCC_PROGRESS_UOA.CC_CASUAL_TOTAL.Value);<br />&amp;strl_progbar = &amp;strl_progbar | UpdateProgressBar("Scholarships", &amp;recCC_PROGRESS_UOA.CC_SCHOL_COMPLETE.Value, &amp;recCC_PROGRESS_UOA.CC_SCHOL_TOTAL.Value);<br />&amp;strl_progbar = &amp;strl_progbar | "<br />";<br /><br />CC_DERIVED_UOA.DESCRLONG.Value = &amp;strl_progbar;<br /><br /></code></pre>
