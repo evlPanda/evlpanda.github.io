@@ -4,7 +4,7 @@ title: Stack Edit Post
 author: Michael Nitschke
 tags: Editors
 categories: Editors
-date: '2018-06-19'
+date: 2018-06-19 12:34:56 +1000
 
 ---
 
