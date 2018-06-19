@@ -9,15 +9,15 @@ date: '2018-06-19'
 ---
 
 
-**markdown** |  ˈmɑːkdəʊn  | 
-noun 
+**markdown** |  ˈmɑːkdəʊn  |
+noun
 a reduction in price: *markdowns of up to 50 per cent  on  many items.*
 
 I've started using a combination of [StackEdit](https://stackedit.io/), [Jekyll](https://jekyllrb.com), and [GitHub Pages](https://pages.github.com) to write this blog.
 
 The primary reason is I much prefer using [markdown](https://en.wikipedia.org/wiki/Markdown) to write documents. It does everything I need and nothing more.
 
-GitHub pages offers free hosting, and it works with Jekyll. Magic.
+GitHub pages offers free hosting, and it works with Jekyll. Magic. :)
 
 **Test code:**
 
@@ -65,7 +65,7 @@ I've added this template in StackEdit to use instead of the provided Jekyll, htm
 layout: post  
 {{{files.0.content.yamlProperties}}}  
 ---  
-  
+
 {{{files.0.content.text}}}
 ```
 ## Publishing
@@ -80,4 +80,3 @@ Once I've published it as *exactly* this format, and to given directory, it's al
 
 
 > Written with [StackEdit](https://stackedit.io/).
-
