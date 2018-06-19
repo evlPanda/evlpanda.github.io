@@ -4,8 +4,8 @@
 ---
 
 <hr>
-<h2 id="layout-posttitle--first-jekyll-post.date---2018-06-16-163558-1000categories-test">layout: post<br>
-title:  "First Jekyll Post."<br>
+<h2 id="layout-posttitle--first-stackedit-post.date---2018-06-16-163558-1000categories-test">layout: post<br>
+title:  "First StackEdit Post."<br>
 date:   2018-06-16 16:35:58 +1000<br>
 categories: test</h2>
 <p>Test</p>
