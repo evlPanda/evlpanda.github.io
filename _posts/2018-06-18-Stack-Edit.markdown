@@ -1,6 +1,5 @@
 ---
-extensions:
-  preset: ''
+layout: post
 title: Stack Edit Post
 author: Michael Nitschke
 tags: Editors
