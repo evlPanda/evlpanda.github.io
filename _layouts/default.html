@@ -9,7 +9,7 @@
 			<span class="logoBlue">import</span><span class="logoTitle"> The:PeopleSoft:Experience;</span>
 			<nav>
 					<ul>
-						<li><a href={{ "/"  | relative_url }}>Select max(a_ed.effdt) from Posts</a></li>
+						<li><a href={{ "/"  | relative_url }}>%EffDtCheck(&Posts a_ed, a, :1)</a></li>
 						<li><a href={{ "/blog" | relative_url }}>%SelectAll(Posts)</a></li>
 						<li><a href={{ "/blog" | relative_url }}>%SelectByKey(Posts)</a></li>
 				</ul>
@@ -22,8 +22,8 @@
 			<footer>
 	    		<ul>
 						<li><a href="mailto:m.nitschke@gmail.com">%EmailAddress</a></li>
-						<li><a href="http://www.linkedin.com">TransferPage(Page.LinkedIn);</a></li>
-	        	<li><a href="https://github.com/thepeoplesoftexperience">TransferPage(Page.GitHub);</a></li>
+						<li><a href="http://www.linkedin.com">TransferPage(Page.LinkedIn)</a></li>
+						<li><a href={{ "/articles" | relative_url }}>GetURL(URL.InterestingArticles)</a></li>
 				</ul>
 			</footer>
 		</body>
