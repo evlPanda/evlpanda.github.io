@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<!--<link rel="stylesheet" type="text/css" href="/css/main.css">-->
+			<link rel="stylesheet" type="text/css" href=/ThePeopleSoftExperience/css/main.css>
+			<title>CleanCodeExample01</title>
+		</head>
+		<body>
+			<span class="logoBlue">import</span><span class="logoTitle"> The:PeopleSoft:Experience;</span>
+			<nav>
+					<ul>
+						<li><a href=/ThePeopleSoftExperience/>Select max(a_ed.effdt) from Posts</a></li>
+						<li><a href=/ThePeopleSoftExperience/blog>%SelectAll(Posts)</a></li>
+						<li><a href=/ThePeopleSoftExperience/blog>%SelectByKey(Posts)</a></li>
+				</ul>
+			</nav>
+			<div class="container">
+
+			</br>
+<span class="comment">/* 30 Jun 2018 */</span></br>
+<span class="blue">method</span><span class="yellow"> CleanCodeExample01</span>()
+
+<div class="post">
+  <p>There may be nothing harder to follow than a deeply nested series of loops and ifs directing a collection of obfuscated variable and method names.</p>
+
+<p><strong>Before:</strong></p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="code"><pre><span class="no">While</span> <span class="o">&amp;</span><span class="n">user_keys</span> <span class="o">=</span> <span class="no">False</span> <span class="n">and</span>
+  <span class="o">&amp;</span><span class="n">wallet</span> <span class="o">=</span> <span class="no">False</span> <span class="n">and</span>
+  <span class="o">&amp;</span><span class="n">phone</span> <span class="o">&lt;&gt;</span> <span class="s2">"Y"</span>
+  <span class="no">If</span> <span class="o">&amp;</span><span class="n">user_keys</span> <span class="o">=</span> <span class="no">True</span> <span class="no">Then</span>
+    <span class="no">If</span> <span class="o">&amp;</span><span class="n">wallet</span> <span class="o">=</span> <span class="no">True</span> <span class="no">Then</span>
+      <span class="no">If</span> <span class="o">&amp;</span><span class="n">phone</span> <span class="o">=</span> <span class="s2">"Y"</span> <span class="no">Then</span>
+        <span class="no">LeaveForWork</span><span class="p">();</span>
+      <span class="no">Else</span>
+        <span class="o">&amp;</span><span class="n">obj_ph</span> <span class="o">=</span> <span class="no">PhoneFinder</span><span class="p">(</span><span class="o">&amp;</span><span class="n">user</span><span class="p">);</span>
+        <span class="o">&amp;</span><span class="n">phone</span> <span class="o">=</span> <span class="s2">"Y"</span><span class="p">;</span>
+      <span class="no">End</span><span class="o">-</span><span class="no">If</span><span class="p">;</span>
+    <span class="no">Else</span>
+      <span class="no">DoFind</span><span class="p">(</span><span class="s2">"wallet"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">user</span><span class="p">);</span>
+    <span class="no">End</span><span class="o">-</span><span class="no">If</span><span class="p">;</span>
+  <span class="no">Else</span>
+    <span class="o">&amp;</span><span class="n">keys</span> <span class="o">=</span> <span class="no">LoadKeys</span><span class="p">(</span><span class="o">&amp;</span><span class="n">user</span><span class="p">,</span> <span class="s2">"house"</span><span class="p">,</span> <span class="kp">true</span><span class="p">,</span> <span class="n">null</span><span class="p">);</span>
+  <span class="no">End</span><span class="o">-</span><span class="no">If</span><span class="p">;</span>
+<span class="no">End</span><span class="o">-</span><span class="no">While</span><span class="p">;</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>I’m dizzy.</p>
+
+<p><strong>After:</strong></p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre>  <span class="no">If</span> <span class="n">not</span> <span class="o">&amp;</span><span class="n">hasHouseKeys</span> <span class="no">Then</span>
+    <span class="no">GetHouseKeys</span><span class="p">();</span>
+  <span class="no">End</span><span class="o">-</span><span class="no">If</span><span class="p">;</span>
+  <span class="no">If</span> <span class="n">not</span> <span class="o">&amp;</span><span class="n">hasWallet</span> <span class="no">Then</span>
+    <span class="no">GetWallet</span><span class="p">();</span>
+  <span class="no">End</span><span class="o">-</span><span class="no">If</span><span class="p">;</span>
+  <span class="no">If</span> <span class="n">not</span> <span class="o">&amp;</span><span class="n">hasPhone</span> <span class="no">Then</span>
+    <span class="no">GetPhone</span><span class="p">();</span>
+  <span class="no">End</span><span class="o">-</span><span class="no">If</span><span class="p">;</span>
+  <span class="no">LeaveForWork</span><span class="p">();</span></pre></td></tr></tbody></table></code></pre></figure>
+
+<p>40% less code and <em>so much</em> easier to read.</p>
+
+<p>You can remove <em>nested ifs</em> by checking for exceptions first. This leaves a clear <a href="https://en.wikipedia.org/wiki/Happy_path">happy path</a>.</p>
+
+</div>
+
+<span class="blue">end-method;</span>
+
+
+			</div><!-- /.container -->
+			<footer>
+	    		<ul>
+						<li><a href="mailto:m.nitschke@gmail.com">%EmailAddress</a></li>
+						<li><a href="http://www.linkedin.com">TransferPage(Page.LinkedIn);</a></li>
+	        	<li><a href="https://github.com/thepeoplesoftexperience">TransferPage(Page.GitHub);</a></li>
+				</ul>
+			</footer>
+		</body>
+	</html>

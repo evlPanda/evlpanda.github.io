@@ -1,8 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.3">Jekyll</generator><link href="http://localhost:4000/ThePeopleSoftExperience/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/ThePeopleSoftExperience/" rel="alternate" type="text/html" /><updated>2018-07-02T21:32:21+10:00</updated><id>http://localhost:4000/ThePeopleSoftExperience/</id><title type="html">The PeopleSoft Experience</title><subtitle>%This.PassingPhase = True;</subtitle><entry><title type="html">AboutThisNewBlog</title><link href="http://localhost:4000/ThePeopleSoftExperience/blog/2018/07/01/about_this_new_blog" rel="alternate" type="text/html" title="AboutThisNewBlog" /><published>2018-07-01T12:34:56+10:00</published><updated>2018-07-01T12:34:56+10:00</updated><id>http://localhost:4000/ThePeopleSoftExperience/blog/2018/07/01/about_this_new_blog</id><content type="html" xml:base="http://localhost:4000/ThePeopleSoftExperience/blog/2018/07/01/about_this_new_blog">&lt;p&gt;After years of fighting with Blogger and WordPress I have finally stumbled across &lt;a href=&quot;https://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt; and &lt;a href=&quot;https://pages.github.com&quot;&gt;GitHub Pages&lt;/a&gt;.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>Hank Quinlan's Blog</title>
+ <link href="http://hankquinlan.github.io/blog/atom.xml" rel="self"/>
+ <link href="http://hankquinlan.github.io/blog"/>
+ <updated>2018-07-02T21:32:21+10:00</updated>
+ <id>http://hankquinlan.github.io/blog</id>
+ <author>
+   <name>Hank Quinlan</name>
+   <email>hankquinlanhub@gmail.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>AboutThisNewBlog</title>
+   <link href="http://hankquinlan.github.io/blog/2018/07/01/about_this_new_blog"/>
+   <updated>2018-07-01T12:34:56+10:00</updated>
+   <id>http://hankquinlan.github.io//blog/2018/07/01/about_this_new_blog</id>
+   <content type="html">&lt;p&gt;After years of fighting with Blogger and WordPress I have finally stumbled across &lt;a href=&quot;https://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt; and &lt;a href=&quot;https://pages.github.com&quot;&gt;GitHub Pages&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Finally, a super simple blogging platform that I can write in &lt;a href=&quot;https://en.wikipedia.org/wiki/Markdown&quot;&gt;Markdown&lt;/a&gt;!&lt;/p&gt;
 
-&lt;p&gt;Stylesheet is using the &lt;a href=&quot;http://ethanschoonover.com/solarized&quot;&gt;solarized dark theme&lt;/a&gt;, and Consolas type face.&lt;/p&gt;</content><author><name></name></author><summary type="html">After years of fighting with Blogger and WordPress I have finally stumbled across Jekyll and GitHub Pages.</summary></entry><entry><title type="html">CleanCodeExample01</title><link href="http://localhost:4000/ThePeopleSoftExperience/blog/2018/06/30/clean_code_example_01" rel="alternate" type="text/html" title="CleanCodeExample01" /><published>2018-06-30T12:49:57+10:00</published><updated>2018-06-30T12:49:57+10:00</updated><id>http://localhost:4000/ThePeopleSoftExperience/blog/2018/06/30/clean_code_example_01</id><content type="html" xml:base="http://localhost:4000/ThePeopleSoftExperience/blog/2018/06/30/clean_code_example_01">&lt;p&gt;There may be nothing harder to follow than a deeply nested series of loops and ifs directing a collection of obfuscated variable and method names.&lt;/p&gt;
+&lt;p&gt;Stylesheet is using the &lt;a href=&quot;http://ethanschoonover.com/solarized&quot;&gt;solarized dark theme&lt;/a&gt;, and Consolas type face.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>CleanCodeExample01</title>
+   <link href="http://hankquinlan.github.io/blog/2018/06/30/clean_code_example_01"/>
+   <updated>2018-06-30T12:49:57+10:00</updated>
+   <id>http://hankquinlan.github.io//blog/2018/06/30/clean_code_example_01</id>
+   <content type="html">&lt;p&gt;There may be nothing harder to follow than a deeply nested series of loops and ifs directing a collection of obfuscated variable and method names.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Before:&lt;/strong&gt;&lt;/p&gt;
 
@@ -70,4 +98,9 @@
 
 &lt;p&gt;40% less code and &lt;em&gt;so much&lt;/em&gt; easier to read.&lt;/p&gt;
 
-&lt;p&gt;You can remove &lt;em&gt;nested ifs&lt;/em&gt; by checking for exceptions first. This leaves a clear &lt;a href=&quot;https://en.wikipedia.org/wiki/Happy_path&quot;&gt;happy path&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">There may be nothing harder to follow than a deeply nested series of loops and ifs directing a collection of obfuscated variable and method names.</summary></entry></feed>
+&lt;p&gt;You can remove &lt;em&gt;nested ifs&lt;/em&gt; by checking for exceptions first. This leaves a clear &lt;a href=&quot;https://en.wikipedia.org/wiki/Happy_path&quot;&gt;happy path&lt;/a&gt;.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ 
+</feed>
