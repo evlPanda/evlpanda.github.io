@@ -5,7 +5,7 @@ title: This
 <ul class="posts">
 
   {% for post in site.posts %}
-    <li><span class="blue">Local</span> &post = <span class="blue">create </span><a href="{{ post.url }}" title="{{ post.title }}">Posts:{{ post.title }}()</a>; <span class="comment">/* {{ post.date | date_to_string }} */</span></li>
+    <li>&post = <span class="blue">create </span><a href="{{ post.url }}" title="{{ post.title }}">Posts:{{ post.title }}()</a>; <span class="comment">/* {{ post.blurb }} {{ post.date | date: "%y.%m.%d" }} */</span></li>
   {% endfor %}
 
 </ul>

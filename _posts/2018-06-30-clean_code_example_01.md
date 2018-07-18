@@ -2,6 +2,7 @@
 layout: post
 title:  "CleanCodeExample01"
 date:   2018-06-30 12:49:57 +1000
+blurb:  "How to code for humans."
 categories: clean code
 ---
 

@@ -22,13 +22,13 @@ p {
   color: var(--base0);
 }
 
-.logoBlue {
+.logoImport {
   font-size: 1.62em;
-  color: var(--blue);
+  color: var(--green);
 }
 .logoTitle {
   font-size: 1.62em;
-  color: var(--yellow);
+  color: var(--cyan);
 }
 .quote {
   padding: 20px;
@@ -50,12 +50,12 @@ nav ul li, footer ul li {
 
 a {
   text-decoration: none;
-  color: var(--cyan);
+  color: var(--blue);
   padding: 3px 0px 3px 0px;
 }
 a:hover {
   text-decoration: underline;
-  color: var(--cyan);
+  color: var(--blue);
   background-color: var(--base02);
   padding: 3px 0px 3px 0px;
 }

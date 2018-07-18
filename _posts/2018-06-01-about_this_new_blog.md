@@ -1,7 +1,8 @@
 ---
 layout: post
 title:  "AboutThisNewBlog"
-date:   2018-07-01 12:34:56 +1000
+date:   2018-06-01 12:34:56 +1000
+blurb:  "ReadMe.md"
 categories: blog
 ---
 
