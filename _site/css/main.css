@@ -11,7 +11,7 @@
   font-family: var(--code);
   color: var(--base0)
 }
-body {
+body { 
   margin: 60px auto;
   width: 800px;
   background-color: var(--base03);
