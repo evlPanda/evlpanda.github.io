@@ -2,7 +2,7 @@
 layout: post
 title:  "FullCalendar"
 date:   2019-09-09 12:34:56 +1000
-blurb:  "Implementing the FullCalendar jQuery plugin"
+blurb:  "Implementing FullCalendar"
 categories: peoplecode
 ---
 
