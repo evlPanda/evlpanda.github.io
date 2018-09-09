@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<link rel="stylesheet" type="text/css" href="/css/main.css">
+			<!-- <link rel="stylesheet" type="text/css" href=/css/main.css> -->
+			<title>InstallToyBitcoinMiner</title>
+		</head>
+		<body>
+			<span class="logoImport">import</span>
+			<span class="logoTitle"> The:PeopleSoft:Experience;</span>
+			<nav>
+					<ul>
+						<li><a href=/>%EffDtCheck(Posts a_ed, a, :1)</a></li>
+						<li><a href=/blog>%SelectAll(Posts)</a></li>
+						<li><a href=/blog>%SelectByKey(Posts)</a></li>
+				</ul>
+			</nav>
+			<div class="container">
+
+			</br>
+<span class="comment">/* 10 Jul 2018 */</span></br>
+<span class="blue">method</span><span class="yellow"> InstallToyBitcoinMiner</span>()
+
+<div class="post">
+  <h1 id="linux-vm">Linux VM</h1>
+
+<p>I used Slushpool or ckpool to mine solo, Ubuntu running via VirtualBox, and cgminer.</p>
+
+<p>Setup an account on slushpool.com. The pool’s url, your username and password are requested by cgminer when it starts.</p>
+
+<p>VirtualBox running Ubuntu 14.04
+Under Settings &gt; Ports I added a USB port; USB 3.0, added the GekkoScience USB miner (plug it in)</p>
+
+<p>Then in terminal:</p>
+
+<ol>
+  <li>Get a bunch of libraries:
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install -y build-essential git autoconf automake libtool pkg-config libcurl4-openssl-dev libudev-dev libc6-dev libncurses-dev libusb-1.0
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>The last three I added to original instructions as when I tried to build cgminer I was missing C headers - the compiler was complaining - and some other errors recommended I install the last two libraries there. i.e. read any error messages carefully. You might have to install some other libraries.</p>
+
+<ol>
+  <li>Get cgminer from github:
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> mkdir -p git/vthoang; cd git/vthoang
+ git clone https://github.com/vthoang/cgminer.git
+ cd cgminer
+</code></pre></div>    </div>
+    <p>Note that this version has the drivers for the Gekko miner.</p>
+  </li>
+  <li>Build cgminer, including the gekko drivers (important):
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> CFLAGS=”-O2 -march=native” ./autogen.sh --enable-gekko
+ make -j 2
+</code></pre></div>    </div>
+    <p>(that’s the letter ‘O’ on the CFLAGS=”-O2… line there, not the number zero)</p>
+  </li>
+  <li>Boot it up:
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> sudo ./cgminer -o stratum+tcp://sg.stratum.slushpool.com:3333 -u your_user_name
+</code></pre></div>    </div>
+    <p>or</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> sudo ./cgminer -o stratum_tcp://solo.ckpool.org:3333 -u 1spMAApJZV7q69pATUB1CNP11LZ6ejWV6 -p x
+</code></pre></div>    </div>
+    <p>sudo because it was complaining about not having access to USB unless root.</p>
+  </li>
+</ol>
+
+<p>ta-fucking-da.</p>
+
+<h1 id="macos--osx">MacOS / OSX</h1>
+
+<p>A few extra step to get it running native in MacOS.</p>
+
+<p>Install <a href="https://brew.sh">Homebrew</a>.</p>
+
+<p>In terminal install some libraries:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Brew install libusb
+Brew install pkg-config
+Brew install libtool
+Brew install autoconf
+Brew install automake
+</code></pre></div></div>
+<p>Then build the miner.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CFLAGS="-O2 -march=native" ./autogen.sh --enable-gekko
+Make -j 2
+</code></pre></div></div>
+
+<p>Finally, boot up the miner.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ./cgminer -o stratum+tcp://sg.stratum.slushpool.com:3333 -u your_user_name
+</code></pre></div></div>
+
+</div>
+
+<span class="blue">end-method;</span>
+
+
+			</div><!-- /.container -->
+			<footer>
+	    		<ul>
+						<li><a href="mailto:m.nitschke@gmail.com">%EmailAddress</a></li>
+						<li><a href="http://www.linkedin.com">TransferPage(Page.LinkedIn)</a></li>
+						<li><a href=/articles>GetURL(URL.InterestingArticles)</a></li>
+				</ul>
+			</footer>
+		</body>
+	</html>
