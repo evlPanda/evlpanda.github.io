@@ -7,9 +7,8 @@ categories: peoplecode
 ---
 
 [FullCalendar](https://fullcalendar.io) is an open source, jQuery plugin that I
-really wanted to use in an application I was building. I had already spent hours
-, or was it days, building my own calendar from scratch using HTML and CSS.
-I guess my Google-force must have been week when I started because I didn't come
+really wanted to use in an application I was building. I had already spent hours, or was it days, building my own calendar from scratch using HTML and CSS.
+I guess my Google-force must have been weak when I started because I didn't come
 across FullCalendar. Nonetheless I learnt a lot making my own, and had it looking
 really good in a weekly agenda view.
 
@@ -18,9 +17,9 @@ allows you to easily create and use calendars.
 
 If you find this useful drop me a note : )
 
-[I've put it on github](https://github.com/evlPanda/PeopleSoftFullCalendar) and
-will try to keep it up-to-date. Nonetheless what's on github now should see you
-making a calendar very quickly.
+[Find it on github](https://github.com/evlPanda/PeopleSoftFullCalendar).
+
+Example code:
 
 {% highlight ruby %}
 import YOUR_APP_PACKAGE:CALENDAR:FullCalendar;
