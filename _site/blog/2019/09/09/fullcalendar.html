@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<link rel="stylesheet" type="text/css" href="/css/main.css">
+			<!-- <link rel="stylesheet" type="text/css" href=/css/main.css> -->
+			<title>FullCalendar</title>
+		</head>
+		<body>
+			<span class="logoImport">import</span>
+			<span class="logoTitle"> The:PeopleSoft:Experience;</span>
+			<nav>
+					<ul>
+						<li><a href=/>%EffDtCheck(Posts a_ed, a, :1)</a></li>
+						<li><a href=/blog>%SelectAll(Posts)</a></li>
+						<li><a href=/blog>%SelectByKey(Posts)</a></li>
+				</ul>
+			</nav>
+			<div class="container">
+
+			</br>
+<span class="comment">/* 09 Sep 2019 */</span></br>
+<span class="blue">method</span><span class="yellow"> FullCalendar</span>()
+
+<div class="post">
+  <p><a href="https://fullcalendar.io">FullCalendar</a> is an open source, jQuery plugin that I
+really wanted to use in an application I was building. I had already spent hours
+, or was it days, building my own calendar from scratch using HTML and CSS.
+I guess my Google-force must have been week when I started because I didn’t come
+across FullCalendar. Nonetheless I learnt a lot making my own, and had it looking
+really good in a weekly agenda view.</p>
+
+<p>FullCalendar does all this and more, of course, so I have written a wrapper that
+allows you to easily create and use calendars.</p>
+
+<p>If you find this useful drop me a note : )</p>
+
+<p><a href="https://github.com/evlPanda/PeopleSoftFullCalendar">I’ve put it on github</a> and
+will try to keep it up-to-date. Nonetheless what’s on github now should see you
+making a calendar very quickly.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">import</span> <span class="no">YOUR_APP_PACKAGE</span><span class="ss">:CALENDAR:FullCalendar</span><span class="p">;</span>
+
+<span class="n">local</span> <span class="n">any</span> <span class="o">&amp;</span><span class="no">Calendar</span><span class="p">;</span>
+<span class="n">local</span> <span class="n">any</span> <span class="o">&amp;</span><span class="no">Event</span><span class="p">;</span>
+
+<span class="o">&amp;</span><span class="no">Calendar</span> <span class="o">=</span> <span class="n">create</span> <span class="no">YOUR_APP_PACKAGE</span><span class="ss">:CALENDAR:FullCalendar</span><span class="p">();</span>
+
+<span class="o">&amp;</span><span class="no">Event</span> <span class="o">=</span> <span class="o">&amp;</span><span class="no">Calendar</span><span class="o">.</span><span class="no">NewEvent</span><span class="p">();</span>
+<span class="o">&amp;</span><span class="no">Event</span><span class="o">.</span><span class="no">Title</span> <span class="o">=</span> <span class="s2">"Christmas"</span><span class="p">;</span>
+<span class="o">&amp;</span><span class="no">Event</span><span class="o">.</span><span class="no">Start</span> <span class="o">=</span> <span class="s2">"2018-12-25T09:00"</span><span class="p">;</span>
+<span class="o">&amp;</span><span class="no">Event</span><span class="o">.</span><span class="no">End</span> <span class="o">=</span> <span class="s2">"2018-12-25T17:00"</span><span class="p">;</span>
+<span class="o">&amp;</span><span class="no">Event</span><span class="o">.</span><span class="no">ClassName</span> <span class="o">=</span> <span class="s2">"red"</span><span class="p">;</span>
+<span class="o">&amp;</span><span class="no">Calendar</span><span class="o">.</span><span class="no">Events</span><span class="o">.</span><span class="no">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="no">Event</span><span class="p">);</span>
+
+<span class="o">&amp;</span><span class="no">Event</span> <span class="o">=</span> <span class="o">&amp;</span><span class="no">Calendar</span><span class="o">.</span><span class="no">NewEvent</span><span class="p">();</span>
+<span class="o">&amp;</span><span class="no">Event</span><span class="o">.</span><span class="no">Title</span> <span class="o">=</span> <span class="s2">"Boxing Day"</span><span class="p">;</span>
+<span class="o">&amp;</span><span class="no">Event</span><span class="o">.</span><span class="no">Start</span> <span class="o">=</span> <span class="s2">"2018-12-25T09:00"</span><span class="p">;</span>
+<span class="o">&amp;</span><span class="no">Event</span><span class="o">.</span><span class="no">End</span> <span class="o">=</span> <span class="s2">"2018-12-25T17:00"</span><span class="p">;</span>
+<span class="o">&amp;</span><span class="no">Event</span><span class="o">.</span><span class="no">ClassName</span> <span class="o">=</span> <span class="s2">"orange"</span><span class="p">;</span>
+<span class="o">&amp;</span><span class="no">Calendar</span><span class="o">.</span><span class="no">Events</span><span class="o">.</span><span class="no">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="no">Event</span><span class="p">);</span>
+
+<span class="no">PS_SOME_RECORD</span><span class="o">.</span><span class="no">HTMLAREA</span><span class="o">.</span><span class="no">Value</span> <span class="o">=</span> <span class="o">&amp;</span><span class="no">Calendar</span><span class="o">.</span><span class="no">Draw</span><span class="p">();</span></code></pre></figure>
+
+
+</div>
+
+<span class="blue">end-method;</span>
+
+
+			</div><!-- /.container -->
+			<footer>
+	    		<ul>
+						<li><a href="mailto:m.nitschke@gmail.com">%EmailAddress</a></li>
+						<li><a href="http://www.linkedin.com">TransferPage(Page.LinkedIn)</a></li>
+						<li><a href=/articles>GetURL(URL.InterestingArticles)</a></li>
+				</ul>
+			</footer>
+		</body>
+	</html>

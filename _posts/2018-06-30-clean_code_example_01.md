@@ -18,7 +18,7 @@ While &user_keys = False and
   &phone <> "Y"
 
   /* If we have all of them. */
-  If &user_keys = True Then
+  If &user_keys = True Thencd
     If &wallet = True Then
       If &phone = "Y" Then
         P_Leave_For_Work();
