@@ -26,7 +26,7 @@ For a useless, but illustrative example; perhaps some food-for-thought:
 {% highlight ruby %}
 class FieldX extends Field
   method FieldX(&fieldIn as Field);
-  method MakeRequired();
+  method makeRequired();
   property string Colour;
 end-class;
 
@@ -35,11 +35,21 @@ method FieldX
   %super = &fieldIn;
 end-method;
 
-method MakeRequired
+method makeRequired
   If none(%This.Value) Then
     WinMessage("It works!");
   End-If;
 end-method;
 {% endhighlight %}
+
+This object could then be used to "enhance" a normal Field object:
+{% highlight ruby %}
+import YOUR_LIBRARY:FieldX;
+
+local YOUR_LIBRARY:FieldX &EnhancedField;
+&EnhancedField = create YOUR_LIBRARY:FieldX(GetField());
+&EnhancedField.makeRequired();
+{% endhighlight %}
+
 
 I'll post some useful classes that I'm playing with at the moment some time in the near future.

@@ -10,7 +10,7 @@
 			<span class="logoTitle"> The:PeopleSoft:Experience;</span>
 			<nav>
 					<ul>
-						<li><a href=/>%EffDtCheck(Posts a_ed, a, :1)</a></li>
+						<li><a href=/>%EmployeeID</a></li>
 						<li><a href=/blog>%SelectAll(Posts)</a></li>
 						<li><a href=/blog>%SelectByKey(Posts)</a></li>
 				</ul>
@@ -22,7 +22,16 @@
 <span class="blue">method</span><span class="yellow"> InstallToyBitcoinMiner</span>()
 
 <div class="post">
-  <h1 id="linux-vm">Linux VM</h1>
+  <p>This is a nice little exercise as an introduction to mining Bitcoin. It uses a
+<em>very</em> cheap and practically useless miner, the <a href="https://www.ebay.com.au/itm/GekkoScience-2PAC-SHA256-USB-BM1384-USB-Stick-Miner-15-gh-s-bitcoin-mining-AB-/293217134755">GekkoScience USB Miner</a>
+which will pull an “amazing” 15gh/s.</p>
+
+<p>While not practical for actually mining Bitcoin considering <a href="https://www.blockchain.com/charts/hash-rate">the current hash
+rate</a> (at time of writing ~100,000,000
+terra hashes) it is a good rig to practise with before you go out and buy a
+full-fledged miner.</p>
+
+<h2 id="linux-vm">Linux VM</h2>
 
 <p>I used Slushpool or ckpool to mine solo, Ubuntu running via VirtualBox, and cgminer.</p>
 
@@ -68,7 +77,7 @@ Under Settings &gt; Ports I added a USB port; USB 3.0, added the GekkoScience US
 
 <p>ta-fucking-da.</p>
 
-<h1 id="macos--osx">MacOS / OSX</h1>
+<h2 id="macos--osx">MacOS / OSX</h2>
 
 <p>A few extra step to get it running native in MacOS.</p>
 

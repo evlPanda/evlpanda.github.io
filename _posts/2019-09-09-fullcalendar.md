@@ -17,9 +17,9 @@ allows you to easily create and use calendars.
 
 If you find this useful drop me a note : )
 
-[Find it on github](https://github.com/evlPanda/PeopleSoftFullCalendar).
+[Clone it from github](https://github.com/evlPanda/PeopleSoftFullCalendar).
 
-Example code:
+Example use:
 
 {% highlight ruby %}
 import YOUR_APP_PACKAGE:CALENDAR:FullCalendar;
@@ -45,3 +45,5 @@ local any &Event;
 
 PS_SOME_RECORD.HTMLAREA.Value = &Calendar.Draw();
 {% endhighlight %}
+
+There are some more examples in the ```/subclasses``` folder.

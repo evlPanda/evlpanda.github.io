@@ -11,7 +11,7 @@
   font-family: var(--code);
   color: var(--base0)
 }
-body { 
+body {
   margin: 60px auto;
   width: 800px;
   background-color: var(--base03);
@@ -24,7 +24,7 @@ p {
 
 .logoImport {
   font-size: 1.62em;
-  color: var(--magenta);
+  color: var(--blue);
 }
 .logoTitle {
   font-size: 1.62em;
@@ -50,12 +50,12 @@ nav ul li, footer ul li {
 
 a {
   text-decoration: none;
-  color: var(--blue);
+  color: var(--red);
   padding: 3px 0px 3px 0px;
 }
 a:hover {
   text-decoration: underline;
-  color: var(--blue);
+  color: var(--red);
   background-color: var(--base02);
   padding: 3px 0px 3px 0px;
 }

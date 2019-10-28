@@ -10,7 +10,7 @@
 			<span class="logoTitle"> The:PeopleSoft:Experience;</span>
 			<nav>
 					<ul>
-						<li><a href=/>%EffDtCheck(Posts a_ed, a, :1)</a></li>
+						<li><a href=/>%EmployeeID</a></li>
 						<li><a href=/blog>%SelectAll(Posts)</a></li>
 						<li><a href=/blog>%SelectByKey(Posts)</a></li>
 				</ul>
@@ -39,7 +39,7 @@
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">FieldX</span> <span class="n">extends</span> <span class="no">Field</span>
   <span class="nb">method</span> <span class="no">FieldX</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fieldIn</span> <span class="n">as</span> <span class="no">Field</span><span class="p">);</span>
-  <span class="nb">method</span> <span class="no">MakeRequired</span><span class="p">();</span>
+  <span class="nb">method</span> <span class="n">makeRequired</span><span class="p">();</span>
   <span class="n">property</span> <span class="n">string</span> <span class="no">Colour</span><span class="p">;</span>
 <span class="k">end</span><span class="o">-</span><span class="k">class</span><span class="p">;</span>
 
@@ -48,11 +48,19 @@
   <span class="o">%</span><span class="k">super</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">fieldIn</span><span class="p">;</span>
 <span class="k">end</span><span class="o">-</span><span class="nb">method</span><span class="p">;</span>
 
-<span class="nb">method</span> <span class="no">MakeRequired</span>
+<span class="nb">method</span> <span class="n">makeRequired</span>
   <span class="no">If</span> <span class="n">none</span><span class="p">(</span><span class="o">%</span><span class="no">This</span><span class="o">.</span><span class="no">Value</span><span class="p">)</span> <span class="no">Then</span>
     <span class="no">WinMessage</span><span class="p">(</span><span class="s2">"It works!"</span><span class="p">);</span>
   <span class="no">End</span><span class="o">-</span><span class="no">If</span><span class="p">;</span>
 <span class="k">end</span><span class="o">-</span><span class="nb">method</span><span class="p">;</span></code></pre></figure>
+
+<p>This object could then be used to “enhance” a normal Field object:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">import</span> <span class="no">YOUR_LIBRARY</span><span class="ss">:FieldX</span><span class="p">;</span>
+
+<span class="n">local</span> <span class="no">YOUR_LIBRARY</span><span class="ss">:FieldX</span> <span class="o">&amp;</span><span class="no">EnhancedField</span><span class="p">;</span>
+<span class="o">&amp;</span><span class="no">EnhancedField</span> <span class="o">=</span> <span class="n">create</span> <span class="no">YOUR_LIBRARY</span><span class="ss">:FieldX</span><span class="p">(</span><span class="no">GetField</span><span class="p">());</span>
+<span class="o">&amp;</span><span class="no">EnhancedField</span><span class="p">.</span><span class="nf">makeRequired</span><span class="p">();</span></code></pre></figure>
 
 <p>I’ll post some useful classes that I’m playing with at the moment some time in the near future.</p>
 

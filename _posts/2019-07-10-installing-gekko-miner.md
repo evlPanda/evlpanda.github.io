@@ -6,7 +6,16 @@ blurb:  "Programmable money."
 categories: bitcoin
 ---
 
-# Linux VM
+This is a nice little exercise as an introduction to mining Bitcoin. It uses a
+*very* cheap and practically useless miner, the [GekkoScience USB Miner](https://www.ebay.com.au/itm/GekkoScience-2PAC-SHA256-USB-BM1384-USB-Stick-Miner-15-gh-s-bitcoin-mining-AB-/293217134755)
+which will pull an "amazing" 15gh/s.
+
+While not practical for actually mining Bitcoin considering [the current hash
+rate](https://www.blockchain.com/charts/hash-rate) (at time of writing ~100,000,000
+terra hashes) it is a good rig to practise with before you go out and buy a
+full-fledged miner.
+
+## Linux VM
 
 I used Slushpool or ckpool to mine solo, Ubuntu running via VirtualBox, and cgminer.
 
@@ -51,7 +60,7 @@ sudo because it was complaining about not having access to USB unless root.
 
 ta-fucking-da.
 
-# MacOS / OSX
+## MacOS / OSX
 
 A few extra step to get it running native in MacOS.
 
