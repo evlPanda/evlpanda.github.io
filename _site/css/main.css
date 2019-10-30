@@ -28,7 +28,7 @@ p {
 }
 .logoTitle {
   font-size: 1.62em;
-  color: var(--cyan);
+  color: var(--blue);
 }
 .quote {
   padding: 20px;
@@ -50,12 +50,12 @@ nav ul li, footer ul li {
 
 a {
   text-decoration: none;
-  color: var(--red);
+  color: var(--blue);
   padding: 3px 0px 3px 0px;
 }
 a:hover {
   text-decoration: underline;
-  color: var(--red);
+  color: var(--blue);
   background-color: var(--base02);
   padding: 3px 0px 3px 0px;
 }
@@ -86,11 +86,11 @@ ul.posts li {
 }
 .posts a {
   text-decoration: none;
-  color: var(--yellow);
+  color: var(--magenta);
 }
 .posts a:hover {
   text-decoration: underline;
-  color: var(--yellow);
+  color: var(--magenta);
   background-color: var(--base02);
 }
 

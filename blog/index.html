@@ -3,12 +3,20 @@ layout: default
 title: Blog
 ---
 
-<span class="blue">method</span><span class="magenta"> getPost</span>(&post as string)<span class="blue"> returns APIObject;</span><br>
+<!--
+<span class="magenta">method getPost</span>(&post as string)<span class="blue"> returns APIObject;</span><br>
 &nbsp;&nbsp;&nbsp;<span class="blue">return </span><span class="red">CreateObject</span>("POSTS:" | &post);<br>
-<span class="blue">end-method;</span>
+<span class="magenta">end-method;</span>
 
 <ul class="posts">
   {% for post in site.posts %}
     <li><span class="red">%this</span>.<span class="magenta">getPost</span>("<a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>").view(); <span class="comment">/* {{ post.blurb }} {{ post.date | date: "%y.%m.%d" }} */</span></li>
+  {% endfor %}
+</ul>
+-->
+
+<ul class="posts">
+  {% for post in site.posts %}
+    <li><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}();</a> <span class="comment">/* {{ post.blurb }} {{ post.date | date: "%y.%m.%d" }} */</span></li>
   {% endfor %}
 </ul>
