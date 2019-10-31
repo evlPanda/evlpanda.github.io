@@ -16,20 +16,23 @@
 title: The PeopleSoft Experience
 email: m.nitschke@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  %This.PassingPhase = True;
+  A PeopleSoft developer's blog. PeopleCode solutions, examples, insights, tips and tricks.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://evlpanda.github.io/ThePeopleSoftExperience/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: jekyllrb
-#github_username:  jekyll
+github_username:  evlpanda
+linkedin_username: michaelnitschke
 
 # Build settings
-name: Michael Nitschke, Junior Developer
 markdown: kramdown
-permalink: /blog/:year/:month/:day/:title
-highlighter: rouge
-#theme: minima
-#plugins:
-#  - jekyll-feed 
+theme: minima
+show_excerpts: true
+plugins:
+  - jekyll-feed
+
+disqus:
+  shortname: thepeoplesoftexperience
+comments: true
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

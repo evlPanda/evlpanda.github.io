@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "PeopleToolsColourScheme"
+title:  "PeopleTools Colour Scheme"
 date:   3019-07-09 12:34:56 +1000
 blurb:  "Stylise your IDE"
 categories: editor

@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "InstallToyBitcoinMiner"
-date:   2018-07-10 12:34:56 +1000
+title:  "Install Toy Bitcoin Miner"
+date:   3001-07-10 12:34:56 +1000
 blurb:  "Programmable money."
 categories: bitcoin
 ---

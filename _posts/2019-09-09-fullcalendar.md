@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "FullCalendar"
+title:  "Implementing Full Calendar in PeopleSoft"
 date:   2019-09-09 12:34:56 +1000
 blurb:  "Implementing FullCalendar"
 categories: peoplecode
@@ -46,4 +46,5 @@ local any &Event;
 PS_SOME_RECORD.HTMLAREA.Value = &Calendar.Draw();
 {% endhighlight %}
 
-There are some more examples in the ```/subclasses``` folder.
+There are some more examples in the [:Subclasses](https://github.com/evlPanda/PeopleSoftFullCalendar/tree/master/Subclasses) Package.
+The ```InstructorSchedule``` class will work out-of-the-box with the given instructor.

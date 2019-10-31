@@ -1,31 +1,22 @@
 <!DOCTYPE html>
-	<html>
-		<head>
-			<link rel="stylesheet" type="text/css" href="/css/main.css">
-			<!-- <link rel="stylesheet" type="text/css" href={{ "/css/main.css" | relative_url }}> -->
-			<title>{{ page.title }}</title>
-		</head>
-		<body>
-			<span class="logoImport">import</span>
-			<span class="logoTitle"> The:PeopleSoft:Experience;</span>
-			<nav>
-					<ul>
-						<li><a href={{ "/"  | relative_url }}>%EmployeeID</a></li>
-						<li><a href={{ "/blog" | relative_url }}>%SelectAll(Posts)</a></li>
-						<li><a href={{ "/blog" | relative_url }}>%SelectByKey(Posts)</a></li>
-				</ul>
-			</nav>
-			<div class="container">
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
-			{{ content }}
+  {%- include head.html -%}
+  
+  <script src="https://kit.fontawesome.com/0589c6caf9.js" crossorigin="anonymous"></script>
 
-			</div><!-- /.container -->
-			<footer>
-	    		<ul>
-						<li><a href="mailto:m.nitschke@gmail.com">%EmailAddress</a></li>
-						<li><a href="http://www.linkedin.com">TransferPage(Page.LinkedIn)</a></li>
-						<li><a href={{ "/articles" | relative_url }}>GetURL(URL.InterestingArticles)</a></li>
-				</ul>
-			</footer>
-		</body>
-	</html>
+  <body>
+
+    {%- include header.html -%}
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        {{ content }}
+      </div>
+    </main>
+
+    {%- include footer.html -%}
+
+  </body>
+
+</html>
