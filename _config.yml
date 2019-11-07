@@ -29,6 +29,7 @@ theme: minima
 show_excerpts: true
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
 
 disqus:
   shortname: thepeoplesoftexperience
