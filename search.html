@@ -5,8 +5,11 @@ permalink: /search/
 ---
 <!-- Search input field -->
 <div id="search-container">
-  <input type="text" id="search" placeholder="search..." autofocus>
-  <span class="input-group-text border-0"><i class="fa fa-search" aria-hidden="true"></i></span>
+  <input type="text" id="search" placeholder="start typing..." autofocus style="padding:8px 15px; border:1px solid #dbdbdb; font-size: large">
+  <svg style="vertical-align: middle" id="i-search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <circle cx="14" cy="14" r="12" />
+    <path d="M23 23 L30 30"  />
+  </svg>
   <br><br>
 </div>
 
@@ -20,7 +23,7 @@ permalink: /search/
 SimpleJekyllSearch({
   searchInput: document.getElementById('search'),
   resultsContainer: document.getElementById('results'),
-  searchResultTemplate: '<div><span class="post-meta">{date}&nbsp;<i class="far fa-calendar-alt post-meta"></i></span><a href="{url}"><h1>{title}</h1></a><span>{blurb}</span></div><br>',
+  searchResultTemplate: '<div><a href="{url}"><h1>{title}</h1></span></a><span>{category}</span><br><span>{blurb}</span></div><br>',
   noResultsText: ("No result found."),
   json: '/search.json',
 })
