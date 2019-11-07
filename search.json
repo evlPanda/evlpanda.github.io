@@ -1,0 +1,15 @@
+---
+layout: nil
+---
+[
+  {% for post in site.posts %}
+    {
+      "title"    : "{{ post.title | escape }}",
+      "category" : "{{post.categories | join: ', '}}",
+      "tags"     : "{{ post.tags | join: ', ' }}",
+      "url"      : "{{ site.baseurl }}{{ post.url }}",
+      "date"     : "{{ post.date }}",
+      "blurb"    : "{{post.blurb | strip_html | strip_newlines | escape }}"
+    } {% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]

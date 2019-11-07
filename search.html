@@ -1,0 +1,27 @@
+---
+layout: page
+title: Search
+permalink: /search/
+---
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+<input type="text" id="search-input" placeholder="search...">
+<br><br>
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<!--searchResultTemplate: '<div><a href="{url}"><h1>{title}</h1></a><span>{date}</span><br><span>{blurb}</span></div>', -->
+
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  searchResultTemplate: '<div><span class="post-meta">{date}&nbsp;<i class="far fa-calendar-alt post-meta"></i></span><a href="{url}"><h1>{title}</h1></a><span>{blurb}</span></div><br>',
+  json: '/search.json'
+})
+</script>

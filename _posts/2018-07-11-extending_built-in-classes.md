@@ -2,7 +2,9 @@
 layout: post
 title:  "Extending the PeopleCode API"
 date:   2018-07-08 12:34:5 +1000
-categories: PeopleCode, Clean Code
+categories: PeopleCode
+tags: PeopleCode, Clean Code
+blurb: The premise of a class being open for extension, but closed for modification extends (ha) to PeopleCode's API too. Record, Field, Rowset and the rest of the gang are all open for extension.
 ---
 
 The premise of a class being [open for extension, but closed for modification](https://en.wikipedia.org/wiki/Open–closed_principle) extends (ha) to PeopleCode's API too. Record, Field, Rowset and the rest of the gang are all open for extension.
