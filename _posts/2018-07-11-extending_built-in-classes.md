@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Overriding the PeopleCode API"
+title:  "Extending the PeopleCode API"
 date:   2018-07-08 12:34:5 +1000
 categories: PeopleCode, Clean Code
 ---

@@ -6,14 +6,17 @@ blurb:  "Implementing FullCalendar"
 categories: peoplecode
 ---
 
-[FullCalendar](https://fullcalendar.io) is an open source, jQuery plugin that I
-really wanted to use in an application I was building. I had already spent hours, or was it days, building my own calendar from scratch using HTML and CSS.
+[FullCalendar](https://fullcalendar.io) is an open source jQuery plugin that I
+really wanted to use in an application I was building. I ended up creating a wrapper
+for it to be used in PeopleSoft.
+
+I had already spent hours, or was it days, building my own calendar from scratch using HTML and CSS.
 I guess my Google-force must have been weak when I started because I didn't come
 across FullCalendar. Nonetheless I learnt a lot making my own, and had it looking
 really good in a weekly agenda view.
 
 FullCalendar does all this and more, of course, so I have written a wrapper that
-allows you to easily create and use calendars.
+allows you to easily create and use calendars in PeopleSoft.
 
 If you find this useful drop me a note : )
 
