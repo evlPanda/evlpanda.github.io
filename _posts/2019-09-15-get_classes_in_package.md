@@ -29,8 +29,9 @@ end-method;
 
 If your classes take parameters when creating you'll need to mod or extend or whatever the above to use [CreateObjectArray(*Class_Name, Array_of_Args*)](https://docs.oracle.com/cd/E92519_02/pt856pbr3/eng/pt/tpcl/langref_PeopleCodeBuilt-inFunctionsAndLanguageConstructs_C.html#ub00fb66b-2299-4bb0-a977-e187ee7d0577) instead.
 
-I've just slapped the above together, mainly so that I can recall the SQL involved in the future. I haven't even tested it. Should be close though, and the main bit is really the SQL. :smiley:
+I've just slapped the above together, mainly so that I can recall the SQL involved in the future. I haven't even tested it. Should be close though, and the main bit is really the SQL. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU5Nzc5NTA4NywzNDgwNTM5NjgsNjE4Mj
-MxNjIwLDE2MzgxMTY4OTIsNjcxNjk0ODgxXX0=
+eyJoaXN0b3J5IjpbLTEyMjE1ODU5MjAsLTU5Nzc5NTA4NywzND
+gwNTM5NjgsNjE4MjMxNjIwLDE2MzgxMTY4OTIsNjcxNjk0ODgx
+XX0=
 -->
