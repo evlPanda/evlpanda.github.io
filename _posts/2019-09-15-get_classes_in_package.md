@@ -13,7 +13,7 @@ In this example there is an ```Interface``` and all AppClasses in the AppPackage
 
 The Array is an array of the same interface. The SQL filters out the interface itself.
 
-{% highlight java %}
+{% highlight rub%}
 import YOUR_PACKAGE:Example:Interface;
 
 method getArrayOfAppClasses() returns Array of YOUR_PACKAGE:Example:Interface;
@@ -33,6 +33,6 @@ end-method;
 
 I've just slapped the above together, mainly so that I can recall the SQL involved in the future, but it could be refactored into a nice little helper class that takes a path to an interface and returns the array, or similar.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjE4MjMxNjIwLDE2MzgxMTY4OTIsNjcxNj
-k0ODgxXX0=
+eyJoaXN0b3J5IjpbMTQwNDUyNDMyMyw2MTgyMzE2MjAsMTYzOD
+ExNjg5Miw2NzE2OTQ4ODFdfQ==
 -->
