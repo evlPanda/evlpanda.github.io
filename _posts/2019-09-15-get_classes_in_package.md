@@ -14,7 +14,11 @@ In this example there is an interface and all AppClasses in the AppPackage are o
 The Array is an array of the same interface. The SQL filters out the interface itself.
 
 {% highlight java %}
-method createAssessments
+import YOUR_PACKAGE:Example:Interface;
+
+method getArrayOfAppClasses() returns Array of YOUR_PACKAGE:Example:Interface;
+
+method getArrayOfAppClasses
    &Assessments = CreateArrayRept(create PRIOR_RECOGNITION:AutoAssess:Assessments:AssessmentInt(), 0);
    Local string &packageRoot = "PRIOR_RECOGNITION";
    Local string &path = "AutoAssess:Assessments";
@@ -26,5 +30,5 @@ method createAssessments
 end-method;
 {% endhighlight %}
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5MjY1NjMxODZdfQ==
+eyJoaXN0b3J5IjpbNzk1NzgyMDQ5XX0=
 -->
