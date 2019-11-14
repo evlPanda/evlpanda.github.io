@@ -3,13 +3,13 @@ layout: post
 title:  "Get All AppClasses in an AppPackage"
 date:   2019-09-15 12:34:56 +1000
 categories: PeopleCode
-blurb: This example code creates an array of all AppClasses in an AppPackage. Useful for any pattern that uses multiple sub-classes of the same type.
+blurb: This example code creates an array of all AppClasses in an AppPackage. Useful for some patterns that use multiple classes of the same type.
 
 ---
 
-This example code creates an array of all AppClasses in an AppPackage. Useful for any pattern that uses multiple sub-classes of the same type.
+This example code creates an array of all AppClasses in an AppPackage. Useful for some patterns that use multiple classes of the same type.
 
-In this example there is an interface and all AppClasses in the AppPackage are of this type; PRIOR_RECOGNITION:AutoAssess:Assessments:AssessmentInt. They all have a common method or two.
+In this example there is an ```Interface``` and all AppClasses in the AppPackage are of this type; PRIOR_RECOGNITION:AutoAssess:Assessments:AssessmentInt. They all have a common method or two.
 
 The Array is an array of the same interface. The SQL filters out the interface itself.
 
@@ -33,5 +33,6 @@ end-method;
 
 I've just slapped the above together, mainly so that I can recall the SQL involved in the future, but it could be refactored into a nice little helper class that takes a path to an interface and returns the array, or similar.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTYzODExNjg5Miw2NzE2OTQ4ODFdfQ==
+eyJoaXN0b3J5IjpbNjE4MjMxNjIwLDE2MzgxMTY4OTIsNjcxNj
+k0ODgxXX0=
 -->
