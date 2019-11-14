@@ -12,7 +12,10 @@ This example code creates an array of all AppClasses in an AppPackage. Useful fo
 The crux of this is some SQL:  
 ```
 select appclassid 
-from psappclassdefn where packageroot = :1 and qualifypath = :2 and appclassid <> :3```
+from psappclassdefn 
+where packageroot = :1 
+and qualifypath = :2 
+and appclassid <> :3```
 
 In this example there is an interface and all AppClasses in the AppPackage are of this type. The Array is an array of the same interface, and the SQL filters out the interface itself.
 
@@ -34,9 +37,9 @@ end-method;
 
 If your classes take parameters when creating you'll need to mod or extend or whatever the above to use [CreateObjectArray(*Class_Name, Array_of_Args*)](https://docs.oracle.com/cd/E92519_02/pt856pbr3/eng/pt/tpcl/langref_PeopleCodeBuilt-inFunctionsAndLanguageConstructs_C.html#ub00fb66b-2299-4bb0-a977-e187ee7d0577) instead.
 
-I've just slapped the above together, mainly so that I can recall the SQL involved in the future. I haven't even tested it. Should be close though, and the main bit is really the SQL. 
+I've just slapped the above together, mainly so that I can recall the SQL involved in future. I haven't even tested it. Should be close though, and the main bit is really the SQL. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk3NDkzMjU3NiwtNTk3Nzk1MDg3LDM0OD
-A1Mzk2OCw2MTgyMzE2MjAsMTYzODExNjg5Miw2NzE2OTQ4ODFd
-fQ==
+eyJoaXN0b3J5IjpbLTExODI0MDU5ODMsLTU5Nzc5NTA4NywzND
+gwNTM5NjgsNjE4MjMxNjIwLDE2MzgxMTY4OTIsNjcxNjk0ODgx
+XX0=
 -->
