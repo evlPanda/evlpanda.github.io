@@ -15,11 +15,14 @@ select appclassid
 from psappclassdefn 
 where packageroot = :1 
 and qualifypath = :2 
-and appclassid <> :3```
+and appclassid <> :3
+```
 
-In this example there is an interface and all AppClasses in the AppPackage are of this type. The Array is an array of the same interface, and the SQL filters out the interface itself.
+This all assumes an interface, and that all AppClasses in the AppPackage are of this type.  
+The Array is an array of the same interface.  
+The SQL filters out the interface itself.
 
-{% highlight ruby %}
+{% highlight java %}
 class ArrayOfAppClasses
    method get(&packageRoot as string, &path as string, &interface as string) returns Array of APIObject;
 end-class;   
@@ -39,7 +42,7 @@ If your classes take parameters when creating you'll need to mod or extend or wh
 
 I've just slapped the above together, mainly so that I can recall the SQL involved in future. I haven't even tested it. Should be close though, and the main bit is really the SQL. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExODI0MDU5ODMsLTU5Nzc5NTA4NywzND
-gwNTM5NjgsNjE4MjMxNjIwLDE2MzgxMTY4OTIsNjcxNjk0ODgx
-XX0=
+eyJoaXN0b3J5IjpbNzM3MzUyNDQyLC01OTc3OTUwODcsMzQ4MD
+UzOTY4LDYxODIzMTYyMCwxNjM4MTE2ODkyLDY3MTY5NDg4MV19
+
 -->
