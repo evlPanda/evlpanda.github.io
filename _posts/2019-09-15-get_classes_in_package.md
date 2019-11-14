@@ -10,13 +10,13 @@ blurb: This example code creates an array of all AppClasses in an AppPackage. Us
 This example code creates an array of all AppClasses in an AppPackage. Useful for some patterns that use multiple classes of the same type.
 
 The crux of this is some SQL:  
-```
+{% highlight sql %}
 select appclassid 
 from psappclassdefn 
 where packageroot = :1 
 and qualifypath = :2 
 and appclassid <> :3
-```
+{% endhighlight %}
 
 This all assumes an interface, and that all AppClasses in the AppPackage are of this type.  
 The Array is an array of the same interface.  
@@ -42,7 +42,7 @@ If your classes take parameters when creating you'll need to mod or extend or wh
 
 I've just slapped the above together, mainly so that I can recall the SQL involved in future. I haven't even tested it. Should be close though, and the main bit is really the SQL. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzM3MzUyNDQyLC01OTc3OTUwODcsMzQ4MD
-UzOTY4LDYxODIzMTYyMCwxNjM4MTE2ODkyLDY3MTY5NDg4MV19
-
+eyJoaXN0b3J5IjpbLTE3NzgzMjU0ODcsLTU5Nzc5NTA4NywzND
+gwNTM5NjgsNjE4MjMxNjIwLDE2MzgxMTY4OTIsNjcxNjk0ODgx
+XX0=
 -->
