@@ -20,7 +20,7 @@ and appclassid <> :3
 
 This all assumes an interface, and that all AppClasses in the AppPackage are of this type.  
 The Array is an array of the same interface.  
-The SQL filters out the interface itself.
+The SQL filters out the interface itself: ```and appclassid <> :3```
 
 {% highlight java %}
 class ArrayOfAppClasses
@@ -42,7 +42,7 @@ If your classes take parameters when creating you'll need to mod or extend or wh
 
 I've just slapped the above together, mainly so that I can recall the SQL involved in future. I haven't even tested it. Should be close though, and the main bit is really the SQL. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3NzgzMjU0ODcsLTU5Nzc5NTA4NywzND
+eyJoaXN0b3J5IjpbLTEyMDA1NzUzNzksLTU5Nzc5NTA4NywzND
 gwNTM5NjgsNjE4MjMxNjIwLDE2MzgxMTY4OTIsNjcxNjk0ODgx
 XX0=
 -->
