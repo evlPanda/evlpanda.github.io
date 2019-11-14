@@ -11,7 +11,7 @@ This example code creates an array of all AppClasses in an AppPackage. Useful fo
 
 In this example there is an interface and all AppClasses in the AppPackage are of this type; PRIOR_RECOGNITION:AutoAssess:Assessments:AssessmentInt. They all have a common method or two.
 
-The Array is an array of the same type. The SQL filters out the interface itself.
+The Array is an array of the same interface. The SQL filters out the interface itself.
 
 This is well handy to enforce the single responsibility principle; each class in the package does its own thing.
 
@@ -30,5 +30,5 @@ method createAssessments
 end-method;
 {% endhighlight %}
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzNTg0MDQ3NTJdfQ==
+eyJoaXN0b3J5IjpbLTE4MTEzMDU4MDddfQ==
 -->
