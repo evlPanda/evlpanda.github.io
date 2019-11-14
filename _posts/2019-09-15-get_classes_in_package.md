@@ -9,11 +9,9 @@ blurb: This example code creates an array of all AppClasses in an AppPackage. Us
 
 This example code creates an array of all AppClasses in an AppPackage. Useful for any pattern that uses multiple sub-classes of the same type.
 
-In this example we are populating an instance array of AppClasses.
+In this example there is an interface and all AppClasses in the AppPackage are of this type; PRIOR_RECOGNITION:AutoAssess:Assessments:AssessmentInt. They all have a common method or two.
 
-There is an interface class and all AppClasses in the AppPackage are of this type; PRIOR_RECOGNITION:AutoAssess:Assessments:AssessmentInt. They all have a common method or two.
-
-The instance array is an array of the interface class. The SQL filters out the interface class.
+The Array is an array of the same type. The SQL filters out the interface itself.
 
 This is well handy to enforce the single responsibility principle; each class in the package does its own thing.
 
@@ -32,5 +30,5 @@ method createAssessments
 end-method;
 {% endhighlight %}
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjU1MDc4NTI5XX0=
+eyJoaXN0b3J5IjpbLTEzNTg0MDQ3NTJdfQ==
 -->
