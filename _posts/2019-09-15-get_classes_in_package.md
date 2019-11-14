@@ -9,6 +9,9 @@ blurb: This example code creates an array of all AppClasses in an AppPackage. Us
 
 This example code creates an array of all AppClasses in an AppPackage. Useful for some patterns that use multiple classes of the same type.
 
+The crux of this is some SQL:
+```select appclassid from psappclassdefn where packageroot = :1 and qualifypath = :2 and appclassid <> :3```
+
 In this example there is an interface and all AppClasses in the AppPackage are of this type. The Array is an array of the same interface, and the SQL filters out the interface itself.
 
 {% highlight ruby %}
@@ -18,7 +21,7 @@ end-class;
    
 method get
    local Array of APIObject &AppClasses= CreateArrayRept(CreateObject(&packageRoot | ":" | &path | ":" | &interface), 0);
-   Local SQL &AppClassesSQL = CreateSQL("select appclassid from psappclassdefn where packageroot = :1 and qualifypath = :2 and appclassid  <> :3", &packageRoot, &path, &interface);
+   Local SQL &AppClassesSQL = CreateSQL("select appclassid from psappclassdefn where packageroot = :1 and qualifypath = :2 and appclassid <> :3", &packageRoot, &path, &interface);
    Local string &appClass;
    While &AppClassesSQL.Fetch(&appClass)
       &AppClasses.Push(CreateObject(&packageRoot | ":" | &path | ":" | &appClass));
@@ -31,7 +34,7 @@ If your classes take parameters when creating you'll need to mod or extend or wh
 
 I've just slapped the above together, mainly so that I can recall the SQL involved in the future. I haven't even tested it. Should be close though, and the main bit is really the SQL. 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyMjE1ODU5MjAsLTU5Nzc5NTA4NywzND
+eyJoaXN0b3J5IjpbLTE1OTcyNTcwMjgsLTU5Nzc5NTA4NywzND
 gwNTM5NjgsNjE4MjMxNjIwLDE2MzgxMTY4OTIsNjcxNjk0ODgx
 XX0=
 -->
