@@ -30,6 +30,8 @@ method getArrayOfAppClasses
    End-While;
 end-method;
 {% endhighlight %}
+
+I've just slapped the above together, really that I can recall the SQL involved in the future, but it could be refactored into a nice little method that takes the path to the interface and returns the array.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjcxNjk0ODgxXX0=
+eyJoaXN0b3J5IjpbLTE2MDQ2NTI2NTgsNjcxNjk0ODgxXX0=
 -->
