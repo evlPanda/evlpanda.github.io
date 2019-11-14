@@ -2,7 +2,6 @@
 layout: post
 title:  "Implementing Full Calendar in PeopleSoft"
 date:   2019-09-09 12:34:56 +1000
-blurb:  "Implementing FullCalendar"
 categories: PeopleCode
 blurb: FullCalendar is an open source jQuery plugin that I really wanted to use in an application I was building. I ended up creating a wrapper for it to be used in PeopleSoft.
 ---
