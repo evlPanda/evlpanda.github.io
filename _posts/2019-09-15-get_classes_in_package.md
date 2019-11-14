@@ -9,7 +9,7 @@ blurb: This example code creates an array of all AppClasses in an AppPackage. Us
 
 This example code creates an array of all AppClasses in an AppPackage. Useful for some patterns that use multiple classes of the same type.
 
-In this example there is an interface and all AppClasses in the AppPackage are of this type; ```YOUR_PACKAGE:Example:Interface```. The Array is an array of the same interface, and the SQL filters out the interface itself.
+In this example there is an interface and all AppClasses in the AppPackage are of this type. The Array is an array of the same interface, and the SQL filters out the interface itself.
 
 {% highlight ruby %}
 class ArrayOfAppClasses
@@ -27,9 +27,10 @@ method get
 end-method;
 {% endhighlight %}
 
-If your classes take parameters when creating you'll need to mod or extend or whatever the above to use [CreateObjectArray(*Class_Name, Array_of_Args)](https://docs.oracle.com/cd/E92519_02/pt856pbr3/eng/pt/tpcl/langref_PeopleCodeBuilt-inFunctionsAndLanguageConstructs_C.html#ub00fb66b-2299-4bb0-a977-e187ee7d0577)
-I've just slapped the above together, mainly so that I can recall the SQL involved in the future, but it could be refactored into a nice little helper class that takes a path to an interface and returns the array, or similar.
+If your classes take parameters when creating you'll need to mod or extend or whatever the above to use [CreateObjectArray(*Class_Name, Array_of_Args*)](https://docs.oracle.com/cd/E92519_02/pt856pbr3/eng/pt/tpcl/langref_PeopleCodeBuilt-inFunctionsAndLanguageConstructs_C.html#ub00fb66b-2299-4bb0-a977-e187ee7d0577) instead.
+
+I've just slapped the above together, mainly so that I can recall the SQL involved in the future. I haven't even tested it. Should be close though, and the main bit is really the SQL. :smiley:
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA3NDcwOTY5MiwzNDgwNTM5NjgsNjE4Mj
+eyJoaXN0b3J5IjpbLTU5Nzc5NTA4NywzNDgwNTM5NjgsNjE4Mj
 MxNjIwLDE2MzgxMTY4OTIsNjcxNjk0ODgxXX0=
 -->
