@@ -13,10 +13,6 @@ In this example there is an interface and all AppClasses in the AppPackage are o
 
 The Array is an array of the same interface. The SQL filters out the interface itself.
 
-This is well handy to enforce the single responsibility principle; each class in the package does its own thing.
-
-This method allows you to add more AppClasses to the AppPackage and they’ll all available to the client without changing any code.
-
 {% highlight java %}
 method createAssessments
    &Assessments = CreateArrayRept(create PRIOR_RECOGNITION:AutoAssess:Assessments:AssessmentInt(), 0);
@@ -30,5 +26,5 @@ method createAssessments
 end-method;
 {% endhighlight %}
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MTEzMDU4MDddfQ==
+eyJoaXN0b3J5IjpbLTE5MjY1NjMxODZdfQ==
 -->
