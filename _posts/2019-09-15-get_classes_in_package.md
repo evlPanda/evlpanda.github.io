@@ -21,9 +21,9 @@ method getArrayOfAppClasses() returns Array of YOUR_PACKAGE:Example:Interface;
 method getArrayOfAppClasses
    local Array of YOUR_PACKAGE:Example:Interface &AppClasses;
    &AppClasses= CreateArrayRept(create YOUR_PACKAGE:Example:Interface(), 0);
-   Local string &packageRoot = "PRIOR_RECOGNITION";
-   Local string &path = "AutoAssess:Assessments";
-   Local SQL &AssessmentsObjectsSQL = CreateSQL("select appclassid from psappclassdefn where packageroot = :1 and qualifypath = :2 and appclassid  'AssessmentInt'", &packageRoot, &path);
+   Local string &packageRoot = "YOUR_PACKAGE";
+   Local string &path = "Example";
+   Local SQL &AssessmentsObjectsSQL = CreateSQL("select appclassid from psappclassdefn where packageroot = :1 and qualifypath = :2 and appclassid  <> 'Interface'", &packageRoot, &path);
    Local string &appClass;
    While &AssessmentsObjectsSQL.Fetch(&appClass)
       &Assessments.Push(CreateObject(&packageRoot | ":" | &path | ":" | &appClass));
@@ -31,5 +31,5 @@ method getArrayOfAppClasses
 end-method;
 {% endhighlight %}
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2NTg0NDY0ODVdfQ==
+eyJoaXN0b3J5IjpbNjcxNjk0ODgxXX0=
 -->
