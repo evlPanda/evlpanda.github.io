@@ -2,6 +2,7 @@
 layout: post
 title:  "Implementing Full Calendar in PeopleSoft"
 date:   2019-09-09 12:34:56 +1000
+blurb:  "Implementing FullCalendar"
 categories: PeopleCode
 blurb: FullCalendar is an open source jQuery plugin that I really wanted to use in an application I was building. I ended up creating a wrapper for it to be used in PeopleSoft.
 ---
@@ -51,3 +52,6 @@ PS_SOME_RECORD.HTMLAREA.Value = &Calendar.Draw();
 
 There are some more examples in the [:Subclasses](https://github.com/evlPanda/PeopleSoftFullCalendar/tree/master/Subclasses) Package.
 The ```InstructorSchedule``` class will work out-of-the-box with the given instructor.
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTE2NDMxNDQxNzldfQ==
+-->
