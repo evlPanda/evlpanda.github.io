@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Using IN(:1) in SQL"
-date:   2018-08-20 12:34:56 +1000
+title:  "Using IN() in SQL"
+date:  2018-08-20 12:34:56 +1000
 categories: [PeopleCode, SQL]
 blurb: We can't combine bind variables and the "IN" clause, but there is another way.
 ---
@@ -32,5 +32,5 @@ and rolename in (
 )
 [% endhighlight %}
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTcyODg5ODM2N119
+eyJoaXN0b3J5IjpbLTg5MDE5MTQwMiwxNzI4ODk4MzY3XX0=
 -->
