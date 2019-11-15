@@ -15,7 +15,7 @@ select 1
 from psroleuser
 where roleuser = :1
 and rolename in (:2)
-[% endhighlight %}
+{% endhighlight %}
 
 ```rolename in (:2)``` just doesn't work : (
 
@@ -30,7 +30,7 @@ and rolename in (
    from dual
    connect by level <= length(:2) - length(replace(:2, ',', '')) + 1
 )
-[% endhighlight %}
+{% endhighlight %}
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg5MDE5MTQwMiwxNzI4ODk4MzY3XX0=
+eyJoaXN0b3J5IjpbLTMzNDg1NzcwNiwxNzI4ODk4MzY3XX0=
 -->
