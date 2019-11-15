@@ -12,8 +12,8 @@ There's no obvious way to *download* a file object that is in your code. The ```
 import PTFP_FEED:UTILITY:Utility;
 Local &Util = create PTFP_FEED:UTILITY:Utility();
 &Util.viewStringAsAttachment(&YourFile.GetString(), _"downloadName.txt"_, false)
-[% endhighlight %}
+{% endhighlight %}
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY5MDU3MjcyNSwtMTI2NjcxMjM5LC0xMj
-Q4OTA1Nzg3XX0=
+eyJoaXN0b3J5IjpbLTE1MTY3NjMwOSwtNjkwNTcyNzI1LC0xMj
+Y2NzEyMzksLTEyNDg5MDU3ODddfQ==
 -->
