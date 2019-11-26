@@ -9,3 +9,5 @@ permalink: /links/
 [Cedar Hills Group](https://www.cedarhillsgroup.com/)
 
 [Haki Benita](https://hakibenita.com/)
+
+[Integration Broker - The Missing Manual](https://ib.books.cedarhillsgroup.com/)
