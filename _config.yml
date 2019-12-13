@@ -32,8 +32,8 @@ plugins:
   - jekyll-seo-tag
 
 # Disqus Comments
-disqus:
-  shortname: thepeoplesoftexperience
+# disqus:
+#  shortname: thepeoplesoftexperience
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
