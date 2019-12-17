@@ -7,7 +7,7 @@ blurb: Oh no, my files have an extra blank line at the end!
 ---
 
 Situation: Files have an extra blank line at the end.
-This can be corrected by setting .SetRecTerminator() to line feed (char 13).
+This can be corrected by setting .SetRecTerminator() to carriage return (char 13).
 
 {% highlight java %}
    Local File &File;
