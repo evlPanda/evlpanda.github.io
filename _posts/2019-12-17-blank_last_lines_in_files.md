@@ -1,12 +1,12 @@
 ---
 layout: post
 title:  "Blank Lines at end of Files"
-date:   2019-17-26 13:50:56 +1000
+date:   2019-12-17 13:50:56 +1000
 categories: [PeopleCode, Files]
-blurb: Oh no, my files have an extra blank line at the end!
+blurb: By default, it seems, files created in PeopleCode have an extra blank line at the end.
 ---
 
-Situation: Files have an extra blank line at the end.
+By default, it seems, files created in PeopleCode have an extra blank line at the end.
 This can be corrected by setting .SetRecTerminator() to carriage return (char 13).
 
 {% highlight java %}
