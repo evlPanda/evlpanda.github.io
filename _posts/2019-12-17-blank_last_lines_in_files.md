@@ -17,9 +17,4 @@ This can be corrected by setting .SetRecTerminator() to carriage return (char 13
    &File.Close();
 {% endhighlight %}
 
-You can download the example file like this:
-
-{% highlight java %}
-   Local PTFP_FEED:UTILITY:Utility &Util = create PTFP_FEED:UTILITY:Utility();
-   &Util.viewStringAsAttachment(GetFile("newfile.txt", "R", %FilePath_Relative).GetString(), "newfile.txt", False);
-{% endhighlight %}
+By the way there is an easy way to [download files you are working with](https://evlpanda.github.io/peoplecode/files/2019/06/26/download_file_from_server.html).
