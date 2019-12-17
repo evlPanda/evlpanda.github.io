@@ -6,8 +6,9 @@ categories: [PeopleCode, Files]
 blurb: By default, it seems, files created in PeopleCode have an extra blank line at the end.
 ---
 
-By default, it seems, files created in PeopleCode have an extra blank line at the end.
-This can be corrected by setting .SetRecTerminator() to carriage return (char 13).
+By default, it seems, files created in PeopleCode have an extra blank line at the end. This is because it is using line feed (char 10) and carriage return (char 13).
+
+This can be corrected by setting .SetRecTerminator() to just carriage return (char 13).
 
 {% highlight java %}
    Local File &File;
