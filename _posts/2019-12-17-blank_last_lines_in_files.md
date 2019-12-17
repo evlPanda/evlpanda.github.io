@@ -3,7 +3,7 @@ layout: post
 title:  "Blank Lines at end of Files"
 date:   2019-17-26 13:50:56 +1000
 categories: [PeopleCode, Files]
-blurb: Situation: Files have an extra blank line at the end.
+blurb: Oh no, my files have an extra blank line at the end!
 ---
 
 Situation: Files have an extra blank line at the end.
