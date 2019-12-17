@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "Blank Last Lines in Files"
+title:  "How To Download a File From The Server Using PeopleCode"
 date:   2019-06-26 12:34:56 +1000
 categories: [PeopleCode, Files]
-blurb: Situation: Files have an extra blank line at the end.
+blurb: There's no obvious way to *download* a file object that is in your code. A PeopleSoft Utility class has a very handy function for doing exactly this,  viewStringAsAttachment.
 ---
 
 Situation: Files have an extra blank line at the end.
