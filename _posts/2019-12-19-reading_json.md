@@ -17,6 +17,11 @@ class Animal
    property string likesFoods;
    property string dislikesFoods;
 end-class;
+
+class Animals extends Array
+   method Animals(&jsonString_ As string);
+   method getByName(&name_ As string) Returns JSON_EXAMPLE:Animal;
+   ...
 ```
 
 Example use:
