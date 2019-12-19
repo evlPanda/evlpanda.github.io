@@ -31,3 +31,4 @@ Messagebox(0,"",0,0,"Barky is a " | &Animal.species);
 Messagebox(0,"",0,0,"Barky likes to eat " | &Animal.likesFoods);
 ```
 
+[Code is here at GitHub](https://github.com/evlPanda/JSON-Example)
