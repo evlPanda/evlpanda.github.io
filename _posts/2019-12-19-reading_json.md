@@ -9,6 +9,9 @@ blurb: This example reads JSON into an array of a complex data type.
 Building on the example at [Cedar Hills](https://www.cedarhillsgroup.com/knowledge-base/kbarticles/JSON-parsing-using-peopleTools/) 
 I refactored it into a complex data type of ```Animal```, contained in an ```Array of Animal```:
 
+[Code is here at GitHub](https://github.com/evlPanda/JSON-Example)
+
+
 ```
 class Animal
    property string name;
@@ -24,6 +27,39 @@ class Animals extends Array
    ...
 ```
 
+Example JSON:
+```
+[
+  {
+    "name": "Meowsy",
+    "species" : "cat",
+    "canBark": false,
+    "foods": {
+      "likes": ["tuna", "catnip"],
+      "dislikes": ["ham", "zucchini"]
+    }
+  },
+  {
+    "name": "Barky",
+    "species" : "dog",
+    "canBark": true,
+    "foods": {
+      "likes": ["bones", "carrots"],
+      "dislikes": ["tuna"]
+    }
+  },
+  {
+    "name": "Purrpaws",
+    "species" : "cat",
+    "canBark": false,
+    "foods": {
+      "likes": ["mice"],
+      "dislikes": ["cookies"]
+    }
+  }
+]
+```
+
 Example use:
 
 ```
@@ -36,4 +72,4 @@ Messagebox(0,"",0,0,"Barky is a " | &Animal.species);
 Messagebox(0,"",0,0,"Barky likes to eat " | &Animal.likesFoods);
 ```
 
-[Code is here at GitHub](https://github.com/evlPanda/JSON-Example)
+
