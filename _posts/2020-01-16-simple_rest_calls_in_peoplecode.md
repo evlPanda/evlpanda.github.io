@@ -33,7 +33,7 @@ Local Message &Request;
    
 Local boolean &b;
 &b = &Request.IBInfo.IBConnectorInfo.AddConnectorProperties("Method", "GET", %HttpProperty);
-&b = &Request.IBInfo.IBConnectorInfo.AddConnectorProperties("URL", "https://utility.stage.api.aws.uq.edu.au/v1/health", %HttpProperty);
+&b = &Request.IBInfo.IBConnectorInfo.AddConnectorProperties("URL", "https://api.example.com/v1/example", %HttpProperty);
 &b = &Request.IBInfo.IBConnectorInfo.AddConnectorProperties("accept", "application/json", %Header);
 &b = &Request.IBInfo.IBConnectorInfo.AddConnectorProperties("authorization", "Basic invalidlY2EtNWRjNS00ZTI1LWI5XWEtMTZiMzc0ZGM1OGJhOmVhZjQ1NDE5LTkyNTUtNDFlZi05NTdkLWVhNDlmNGI1MGRkMw==", %Header);
    
