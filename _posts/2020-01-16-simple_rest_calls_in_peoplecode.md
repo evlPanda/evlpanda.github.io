@@ -2,7 +2,7 @@
 layout: post
 title:  "A Simple REST Call"
 date:   2020-01-16 12:34:56 +1000
-categories: PeopleCode, REST
+categories: PeopleCode REST
 blurb: Two examples of a simple REST call in PeopleCode
 
 ---
