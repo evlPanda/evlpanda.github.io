@@ -13,3 +13,7 @@ permalink: /links/
 [Integration Broker - The Missing Manual](https://ib.books.cedarhillsgroup.com/)
 
 [SQL Murder Myster](https://mystery.knightlab.com/)
+
+[Joel on Software](https://www.joelonsoftware.com/)
+
+[PeopleSoft subReddit](https://www.reddit.com/r/peoplesoft)
