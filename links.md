@@ -17,3 +17,5 @@ permalink: /links/
 [Joel on Software](https://www.joelonsoftware.com/)
 
 [PeopleSoft subReddit](https://www.reddit.com/r/peoplesoft)
+
+[Barefoot PeopleSoft](https://www.barefootps.org)
