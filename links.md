@@ -19,3 +19,5 @@ permalink: /links/
 [PeopleSoft subReddit](https://www.reddit.com/r/peoplesoft)
 
 [Barefoot PeopleSoft](https://www.barefootps.org)
+
+[Ron Jeffries](https://ronjeffries.com)
