@@ -8,8 +8,6 @@ permalink: /links/
 
 [Cedar Hills Group](https://www.cedarhillsgroup.com/)
 
-[Haki Benita](https://hakibenita.com/)
-
 [Integration Broker - The Missing Manual](https://ib.books.cedarhillsgroup.com/)
 
 [SQL Murder Myster](https://mystery.knightlab.com/)
@@ -21,3 +19,5 @@ permalink: /links/
 [Barefoot PeopleSoft](https://www.barefootps.org)
 
 [Ron Jeffries](https://ronjeffries.com)
+
+[Use The Index, Luke](https://use-the-index-luke.com/)
