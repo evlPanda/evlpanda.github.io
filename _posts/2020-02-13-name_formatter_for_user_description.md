@@ -10,13 +10,14 @@ Example of formatting names, where we have a list of first names (sometimes many
 
 In this example we have a list of first names like "John Paul Ringo George" and a last name like "Moukhametzakirova", to fit into a 30 character field. This Class just formats it nicely.
 
+Nothing exciting, just a nice example of using Arrays. Might use again one day.
+
+
 **MN_CREATE_USER:Utils:Formatter**
 
 ```
 class Formatter
    method formatUserDescription(&firstNames_ As string, &lastName As string) Returns string;
-   method getFirstName(&names As string) Returns string;
-   method getMiddleName(&names As string) Returns string;
 private
    method fullName(&Names As array of string, &lastName As string) Returns string;
 end-class;
@@ -35,21 +36,6 @@ method formatUserDescription
       &FirstNames.Pop();
    End-For;
    Return Left(&lastName, &userDescriptionLength);
-end-method;
-
-method getFirstName
-   /+ &names as String +/
-   /+ Returns String +/
-   Return Split(&names, " ")[1];
-end-method;
-
-method getMiddleName
-   /+ &names as String +/
-   /+ Returns String +/
-   If Split(&names, " ").Len < 2 Then
-      Return "";
-   End-If;
-   Return Split(&names, " ")[2];
 end-method;
 
 
@@ -82,15 +68,6 @@ private
    method test_formatUserDescription_nameIsExactly30();
    method test_formatUserDescription_nameIsExactly29();
    method test_formatUserDescription_nameIsExactly31();
-   method test_getFirstName_oneName();
-   method test_getFirstName_twoNames();
-   method test_getFirstName_threeNames();
-   method test_getFirstName_hyphonated();
-   method test_getMiddleName_oneName();
-   method test_getMiddleName_twoNames();
-   method test_getMiddleName_threeNames();
-   method test_getMiddleName_hyphonated();
-   
 end-class;
 
 method test_Utils_Formatter
@@ -105,14 +82,6 @@ method run
    %This.test_formatUserDescription_nameIsExactly30();
    %This.test_formatUserDescription_nameIsExactly29();
    %This.test_formatUserDescription_nameIsExactly31();
-   %This.test_getFirstName_oneName();
-   %This.test_getFirstName_twoNames();
-   %This.test_getFirstName_threeNames();
-   %This.test_getFirstName_hyphonated();
-   %This.test_getMiddleName_oneName();
-   %This.test_getMiddleName_twoNames();
-   %This.test_getMiddleName_threeNames();
-   %This.test_getMiddleName_hyphonated();
    %This.passClass();
 end-method;
 
@@ -164,70 +133,6 @@ method test_formatUserDescription_nameIsExactly31
    %This.description = ".formatUserDescription() Last name is 31 chars.";
    %This.expectedResult = "John Paul Ringo Smitheey";
    %This.actualResult = &_Formatter.formatUserDescription("John Paul Ringo George", "Smitheey");
-   %This.test();
-end-method;
-
-method test_getFirstName_oneName
-   &_Formatter = create MN_CREATE_USER:Utils:Formatter();
-   %This.description = ".getFirstName() First name is one name.";
-   %This.expectedResult = "John";
-   %This.actualResult = &_Formatter.getFirstName("John");
-   %This.test();
-end-method;
-
-method test_getFirstName_twoNames
-   &_Formatter = create MN_CREATE_USER:Utils:Formatter();
-   %This.description = ".getFirstName() First name is two names.";
-   %This.expectedResult = "John";
-   %This.actualResult = &_Formatter.getFirstName("John Paul");
-   %This.test();
-end-method;
-
-method test_getFirstName_threeNames
-   &_Formatter = create MN_CREATE_USER:Utils:Formatter();
-   %This.description = ".getFirstName() First name is three names.";
-   %This.expectedResult = "John";
-   %This.actualResult = &_Formatter.getFirstName("John Paul Ringo");
-   %This.test();
-end-method;
-
-method test_getFirstName_hyphonated
-   &_Formatter = create MN_CREATE_USER:Utils:Formatter();
-   %This.description = ".getFirstName() First name is hyphonated.";
-   %This.expectedResult = "John-Paul";
-   %This.actualResult = &_Formatter.getFirstName("John-Paul Ringo");
-   %This.test();
-end-method;
-
-method test_getMiddleName_oneName
-   &_Formatter = create MN_CREATE_USER:Utils:Formatter();
-   %This.description = ".getMiddleName() First name is one name.";
-   %This.expectedResult = "";
-   %This.actualResult = &_Formatter.getMiddleName("John");
-   %This.test();
-end-method;
-
-method test_getMiddleName_twoNames
-   &_Formatter = create MN_CREATE_USER:Utils:Formatter();
-   %This.description = ".getMiddleName() First name is two names.";
-   %This.expectedResult = "Paul";
-   %This.actualResult = &_Formatter.getMiddleName("John Paul");
-   %This.test();
-end-method;
-
-method test_getMiddleName_threeNames
-   &_Formatter = create MN_CREATE_USER:Utils:Formatter();
-   %This.description = ".getMiddleName() First name is three names.";
-   %This.expectedResult = "Paul";
-   %This.actualResult = &_Formatter.getMiddleName("John Paul Ringo");
-   %This.test();
-end-method;
-
-method test_getMiddleName_hyphonated
-   &_Formatter = create MN_CREATE_USER:Utils:Formatter();
-   %This.description = ".getMiddleName() First name is hyphonated.";
-   %This.expectedResult = "Ringo";
-   %This.actualResult = &_Formatter.getMiddleName("John-Paul Ringo");
    %This.test();
 end-method;
 ```
