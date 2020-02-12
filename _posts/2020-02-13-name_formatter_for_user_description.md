@@ -6,7 +6,9 @@ categories: PeopleCode
 blurb: Example of Name Formatting.
 
 ---
-Example of formatting names, where we have a list of first names (sometimes many), a last name (sometimes long), and a short field tofit it all into.
+Example of formatting names, where we have a list of first names (sometimes many), a last name (sometimes long), and a short field to fit it all into.
+
+In this example we have a list of first names like "John Paul Ringo George" and a last name like "Moukhametzakirova", to fit into a 30 character field. This Class just formats it nicely.
 
 **MN_CREATE_USER:Utils:Formatter**
 
