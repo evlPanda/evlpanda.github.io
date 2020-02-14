@@ -12,12 +12,12 @@ This is kinda sneaky. I like it. It simply uses data in ```ps_names``` to return
 
 ```
 with formatted_name as(
-	select distinct last_name, count(*) as count
-	from ps_names
-	where upper(last_name) = 'MCDONALD'
-	group by last_name)
+   select distinct last_name, count(*) as count
+   from ps_names
+   where upper(last_name) = 'MCDONALD'
+   group by last_name)
 select min(last_name)
 from formatted_name
 where count =
-	(select max(count) from formatted_name)
+   (select max(count) from formatted_name)
 ```
