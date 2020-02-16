@@ -19,7 +19,7 @@ Local boolean &b;
 
 /* setHTTPProperties */
 &b = &Request.IBInfo.IBConnectorInfo.AddConnectorProperties("Method", "GET", %HttpProperty);
-&b = &Request.IBInfo.IBConnectorInfo.AddConnectorProperties("URL", &URI, %HttpProperty);
+&b = &Request.IBInfo.IBConnectorInfo.AddConnectorProperties("URL", "https://api.example.com/api", %HttpProperty);
 
 /* setHeaders */
 &b = &Request.IBInfo.IBConnectorInfo.AddConnectorProperties("accept", "application/json", %Header);
