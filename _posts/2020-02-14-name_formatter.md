@@ -10,7 +10,7 @@ You've got a list of names and they are all in upper or lower case. How do you f
 
 This is kinda sneaky. I like it. It simply uses data in ```ps_names``` to return the most often used formatting of a given name. 
 
-Update: repository for formatting names here: https://github.com/evlPanda/NameFormatter
+Update: repository for formatting names here: [NameFormatter](https://github.com/evlPanda/NameFormatter)
 
 ```
 with formatted_name as(
