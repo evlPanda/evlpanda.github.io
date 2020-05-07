@@ -6,7 +6,7 @@ categories: PeopleCode
 blurb: Copy Pasta.
 
 ---
-Copy Pasta:
+Copy Pasta.
 
 EFFSEQ.FieldDefault()
 
