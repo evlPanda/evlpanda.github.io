@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "PeopleCode to Default Effective Sequence EffSeq"
+title:  "PeopleCode to Default Effective Sequence"
 date:   2020-03-11 01:23:45 +1000
 categories: PeopleCode
 blurb: Copy Pasta.
