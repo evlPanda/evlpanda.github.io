@@ -20,3 +20,9 @@ For &i = 1 To &Rowset.ActiveRowCount
    End-If;
 End-For;
 ```
+
+Also need in EFFDT.FieldChange()
+
+```
+GetRecord().EFFSEQ.SetDefault();
+```
