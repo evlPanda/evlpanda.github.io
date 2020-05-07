@@ -8,6 +8,8 @@ blurb: Copy Pasta.
 ---
 Copy Pasta:
 
+EFFSEQ.FieldDefault()
+
 ```
 GetField().Value = 1;
 Local integer &i;
@@ -21,7 +23,7 @@ For &i = 1 To &Rowset.ActiveRowCount
 End-For;
 ```
 
-Also need in EFFDT.FieldChange()
+EFFDT.FieldChange()
 
 ```
 GetRecord().EFFSEQ.SetDefault();
