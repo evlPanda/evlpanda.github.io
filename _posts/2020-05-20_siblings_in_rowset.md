@@ -8,7 +8,7 @@ blurb: This is not often used, and rather difficult to find any information on.
 
 This is not often used, and rather difficult to find any information on.
 
-Of course it *is* right there in PeopleBooks, of you read carefully.
+Of course it *is* right there in PeopleBooks, if you read carefully.
 
 But here is a copy-paste example:
 
