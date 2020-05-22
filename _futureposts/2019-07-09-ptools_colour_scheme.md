@@ -34,4 +34,6 @@ PeoplecodeClassDefn=REG_SZ=ClassDefn,8533715,14939901,0,1
 PeoplecodeBuiltin=REG_SZ=Builtin,8533715,14939901,0,1
 ```
 
-Now import the above, solarised, configuration file.
+Save, and import the configuration file.
+
+That's *Solarised Light*, which I prefer because I work during the day, but mostly because so many of my other windows are *bright or pure white* that it is a bit much on the eyes going from *solarised dark* to a white page, and back.
