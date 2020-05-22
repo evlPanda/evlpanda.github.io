@@ -1,11 +1,11 @@
 ---
 layout: post
 title:  "How to Create Sibling Records in a Stand-alone Rowset"
-date:   2018-06-01 12:34:56 +1000
+date:   2020-05-20 12:34:56 +1000
 categories: PeopleCode, Rowset
-blurb: This is not often used, and rather difficult to find any information on.
----
+blurb: This is not often uses and rather difficult to find information on.
 
+---
 This is not often used, and rather difficult to find any information on.
 
 Of course it *is* right there in PeopleBooks, if you read carefully.
