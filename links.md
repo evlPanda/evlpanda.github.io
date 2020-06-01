@@ -24,6 +24,7 @@ permalink: /links/
 
 # Articles
 
-[Your balance is $0.30000000004](https://medium.com/selency-tech-product/your-balance-is-0-30000000004-b6f7870bd32e)
 [Joel on Hungarian Notation](https://www.joelonsoftware.com/2005/05/11/making-wrong-code-look-wrong/)
 [Microsoft on Hungarian Notation](https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-6.0/aa260976(v=vs.60))
+[Your balance is $0.30000000004](https://medium.com/selency-tech-product/your-balance-is-0-30000000004-b6f7870bd32e)
+
