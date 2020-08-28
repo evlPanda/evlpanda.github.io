@@ -11,7 +11,7 @@ Instructions and background on the Solarised colour scheme.
 
 [Solarized](https://ethanschoonover.com/solarized/) is one of the most loved IDE colour themes ever. *Wired* goes into it better than I can [in this article](https://www.wired.com/story/very-mathematical-history-perfect-color-combination/).
 
-There is now support for PeopleTool's Application Designer, of course, but you can use the configuration I manually setup myself by updating your Application Designer configuration. Note that Application Designer doesn't really have a very "rich" option of colours, and you wont' really get more than 3 or so at a time. But still, I've been using this for years now and can't go back.
+There is no support for PeopleTool's Application Designer, of course, but you can use the configuration I manually setup myself by updating your Application Designer configuration. Note that Application Designer doesn't really have a very "rich" option of colours, and you wont' really get more than 3 or so at a time. But still, I've been using this for years now and can't go back.
 
 Export your PeopleTools configuration file. Open it and edit the ``PSIDE`` values below:
 
