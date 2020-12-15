@@ -18,3 +18,4 @@ Click 'Add folder'
 Click the search button on 'Override Image' and you are presented with a well handy little page to view images. 
 
 
+[example](/images/images.png)
