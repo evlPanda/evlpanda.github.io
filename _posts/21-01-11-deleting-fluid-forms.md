@@ -10,7 +10,9 @@ Following is the SQL you can use to delete Fluid Form configuration, but first..
 
 ## The PeopleCode
 
-**Note** You'll also need to clear some Rowset cache. In the following AppClass method temporarily comment out the If statement so that the cache gets created again. You can trigger it by filling out any new form in the 'My Forms' tile/component.
+You'll also need to clear some Rowset cache. In the following AppClass method temporarily comment out the If statement so that the cache gets created again.
+
+You can trigger it by filling out any new form in the 'My Forms' tile/component.
 
 **FS_SD:Runtime:Utilities:SDCachedMetaDataReader._getComponentRowset()**
 ```
@@ -22,7 +24,7 @@ method _getComponentRowset
    &rowset = &cache.Get();
    /*   If &rowset = Null Then */
    
-   ...
+   ...recreates cache
    
    /*  End-If; */
    
