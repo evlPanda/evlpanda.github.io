@@ -2,7 +2,7 @@
 layout: post
 title:  "The Correct Way to Delete PeopleSoft Fluid Forms"
 date:   2021-01-11 12:34:56 +1000
-categories: "Fluid Forms"
+categories: Fluid Forms
 blurb: There is no easy way to delete Fluid Forms.
 
 ---
@@ -12,17 +12,19 @@ Following is the SQL you can use to delete Fluid Form configuration, but first..
 
 **Note** You'll also need to clear some Rowset cache. In the following AppClass method temporarily comment out the If statement so that the cache gets created again. You can trigger it by filling out any new form in the 'My Forms' tile/component.
 
-```
 **FS_SD:Runtime:Utilities:SDCachedMetaDataReader._getComponentRowset()**
-
+```
 method _getComponentRowset
    /+ Returns Rowset +/
    ...
+   
    &cache = GetRowsetCache(&strCacheName);
    &rowset = &cache.Get();
-   ~~/*   If &rowset = Null Then */~~
+   /*   If &rowset = Null Then */
+   
    ...
-   ~~/*  End-If; */~~
+   
+   /*  End-If; */
    
    Return &rowset;
 end-method;   
