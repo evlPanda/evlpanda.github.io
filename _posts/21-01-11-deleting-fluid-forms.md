@@ -2,11 +2,13 @@
 layout: post
 title:  "The Correct Way to Delete PeopleSoft Fluid Forms"
 date:   2021-01-11 12:34:56 +1000
-categories: Fluid Forms
+categories: [Fluid Forms] DMS
 blurb: There is no easy way to delete Fluid Forms.
 
 ---
 I've had immense difficulty tidying up and migrating Fluid Forms. This post is a living document on how to delete unwanted Forms, migrate Forms, and tidy up orphaned rows.
+
+Also see the next post, which as on migrating fluid forms.
 
 Below is the SQL you can use to delete/migrate Fluid Form configuration. 
 Following that is some PeopleCode that needs to be temporarily disabled post running the SQL/DMS.
