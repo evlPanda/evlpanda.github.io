@@ -8,7 +8,7 @@ blurb: The missing DMS, and further instructions.
 ---
 PeopleSoft doesn't really give up how to migrate Fluid Forms. There are some posts on Oracle support, but I've found some discrepencies. This is a living document on how to migrate them.
 
-Also see my previous post on Deleting Fluid Forms.
+Also see the previous post, which is on [The Correct Way to Delete Fluid Forms]({{ site.baseurl }}{% link _posts/2021-01-11-deleting-fluid-forms.md %}).
 
 # 1 The Export DMS
 
