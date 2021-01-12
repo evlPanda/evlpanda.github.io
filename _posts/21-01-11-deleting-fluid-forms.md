@@ -8,7 +8,8 @@ blurb: There is no easy way to delete Fluid Forms.
 ---
 I've had immense difficulty tidying up and migrating Fluid Forms. This post is a living document on how to delete unwanted Forms, migrate Forms, and tidy up orphaned rows.
 
-Below is the SQL you can use to delete/migrate Fluid Form configuration. Note that there is some PeopleCode that needs to be temporarily disabled post running the SQL/DMS too!
+Below is the SQL you can use to delete/migrate Fluid Form configuration. 
+Following that is some PeopleCode that needs to be temporarily disabled post running the SQL/DMS.
 
 ## 1. The SQL/DMS
 
