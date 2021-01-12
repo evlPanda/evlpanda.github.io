@@ -28,4 +28,4 @@ And more recently:
 I definitely do not have experience with Activity Manager, and I recommend you
 avoid it at all cost.
 
-Hobbies: Muay Thai, Windsurfing, Programming, Board Games.
+Hobbies: Muay Thai, windsurfing, programming, board games, boating.
