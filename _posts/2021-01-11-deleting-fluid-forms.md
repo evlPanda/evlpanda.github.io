@@ -2,7 +2,7 @@
 layout: post
 title:  "The Correct Way to Delete PeopleSoft Fluid Forms"
 date:   2021-01-11 12:34:56 +1000
-categories: [Fluid Forms] DMS
+categories: Fluid Forms DMS
 blurb: There is no easy way to delete Fluid Forms.
 
 ---
