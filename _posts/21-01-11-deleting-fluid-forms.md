@@ -6,35 +6,11 @@ categories: Fluid Forms
 blurb: There is no easy way to delete Fluid Forms.
 
 ---
-Following is the SQL you can use to delete Fluid Form configuration, but first...
+I've had immense difficulty tidying up and migrating Fluid Forms. This post is a living document on how to delete unwanted Forms, migrate Forms, and tidy up orphaned rows.
 
-## The PeopleCode
+Below is the SQL you can use to delete/migrate Fluid Form configuration. Note that there is some PeopleCode that needs to be temporarily disabled post running the SQL/DMS too!
 
-You'll also need to clear some Rowset cache. In the following AppClass method temporarily comment out the If statement so that the cache gets created again.
-
-You can trigger it by filling out any new form in the 'My Forms' tile/component.
-
-**FS_SD:Runtime:Utilities:SDCachedMetaDataReader._getComponentRowset()**
-```
-method _getComponentRowset
-   /+ Returns Rowset +/
-   ...
-   
-   &cache = GetRowsetCache(&strCacheName);
-   &rowset = &cache.Get();
-   /*   If &rowset = Null Then */
-   
-   ...recreates cache
-   
-   /*  End-If; */
-   
-   Return &rowset;
-end-method;   
-```
-
-After you've filled in a new form you can revert the PeopleCode back to delivered.
-
-## The SQL
+## 1. The SQL/DMS
 
 ```
 DELETE FROM PS_FORM_TYPE WHERE FORM_TYPE in ('FORMNAME');
@@ -110,3 +86,30 @@ AND NOT EXISTS
 ;
 
 ```
+
+## 2. The PeopleCode
+
+You'll also need to clear some Rowset cache. In the following AppClass method temporarily comment out the If statement so that the cache gets created again.
+
+You can trigger it by filling out any new form in the 'My Forms' tile/component.
+
+**FS_SD:Runtime:Utilities:SDCachedMetaDataReader._getComponentRowset()**
+```
+method _getComponentRowset
+   /+ Returns Rowset +/
+   ...
+   
+   &cache = GetRowsetCache(&strCacheName);
+   &rowset = &cache.Get();
+   /*   If &rowset = Null Then */
+   
+   ...recreates cache
+   
+   /*  End-If; */
+   
+   Return &rowset;
+end-method;   
+```
+
+After you've filled in a new form you can revert the PeopleCode back to delivered (optional in development, really).
+
