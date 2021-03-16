@@ -7,6 +7,8 @@ blurb: An example of recursive CTE SQL to query the Department Tree.
 
 ---
 
+An example of recursive CTE SQL to query the Department Tree.
+
 ```
 WITH TREE (TREE_NODE, TREE_LEVEL_NUM, PARENT_NODE_NAME, PATH_TO, DEPARTMENT, GRP, DIVISION, BRANCH, SECTION, UNIT) AS (
 
