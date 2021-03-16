@@ -1,13 +1,15 @@
 ---
 layout: post
-title:  "View of the Department Tree"
+title:  "Recursive CTE View of a Tree"
 date:   2021-03-15 12:34:56 +1000
 categories: PeopleCode SQL Trees
-blurb: An example of recursive CTE SQL to query the Department Tree.
+blurb: An example of recursive CTE SQL to query a Tree.
 
 ---
 
-An example of recursive CTE SQL to query the Department Tree.
+An example of recursive CTE SQL to query a Tree.
+
+Apologies for SQL Server syntax.
 
 ```
 WITH TREE (TREE_NODE, TREE_LEVEL_NUM, PARENT_NODE_NAME, PATH_TO, DEPARTMENT, GRP, DIVISION, BRANCH, SECTION, UNIT) AS (
@@ -24,8 +26,8 @@ WITH TREE (TREE_NODE, TREE_LEVEL_NUM, PARENT_NODE_NAME, PATH_TO, DEPARTMENT, GRP
 	, CONVERT(VARCHAR(20), ' ') SECTION
 	, CONVERT(VARCHAR(20), ' ') UNIT
 	FROM PSTREENODE
-	WHERE TREE_NAME = 'DEPT_SECURITY' 
-	AND EFFDT = '2021-03-01'
+	WHERE TREE_NAME = 'YOUR_TREE_NAME' 
+	AND EFFDT = '2021-01-01'
 	AND PARENT_NODE_NAME = ' '
 
 	UNION ALL
@@ -44,13 +46,13 @@ WITH TREE (TREE_NODE, TREE_LEVEL_NUM, PARENT_NODE_NAME, PATH_TO, DEPARTMENT, GRP
 	FROM PSTREENODE C2
 	INNER JOIN TREE 
 		ON TREE.TREE_NODE = C2.PARENT_NODE_NAME
-	WHERE C2.TREE_NAME = 'DEPT_SECURITY' 
-	AND C2.EFFDT = '2021-03-01'
+	WHERE C2.TREE_NAME = 'YOUR_TREE_NAME' 
+	AND C2.EFFDT = '2021-01-01'
 
 )
 
 SELECT *
 FROM TREE 
-WHERE TREE_NODE IN ('GOV', 'FRC', 'CHB', 'NAD')
+WHERE TREE_NODE = 'X'
 ;
 ```
