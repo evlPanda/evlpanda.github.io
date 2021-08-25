@@ -74,6 +74,18 @@ SELECT * FROM SHIFT_SCHED_DAY ORDER BY 1, 2, 3
 
 To get the correct row from PS_SCH_DEFN_DTL C you add arguments, almost passing in two parameters, for the Schedules EFFDT and the DUR.
 
+```
+...
+FROM PS_SCH_DEFN_DTL C
+...
+AND C.DAYNUM = 
+	(SELECT SSD.SCHED_DAYOFWEEK
+	FROM SHIFT_SCHED_DAY SSD
+	WHERE SSD.SCHED_DAY1 = DATEPART(DW, C.EFFDT)
+	AND SSD.DUR_DAY = DATEPART(DW, A.DUR) )
+...
+```
+
 ## SQL Results
 
 ```
