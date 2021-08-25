@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "Recursive CTE, Squared!"
+title:  "Recursive CTE Squared!"
 date:   2021-08-24 01:23:46 +1000
-categories: SQL
-blurb: Nested, recursive CTEs!.
+categories: SQL, Time and Labour
+blurb: Nested recursive CTEs!
 
 ---
 # The Issue
