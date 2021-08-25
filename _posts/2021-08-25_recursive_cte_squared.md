@@ -6,7 +6,7 @@ categories: SQL
 blurb: Nested, recursive CTEs!.
 
 ---
-#The Issue
+# The Issue
 
 This is a hard one to describe! 
 
@@ -35,13 +35,13 @@ etc. etc.
 
 The entire mapping table is generated below, in the SQL Results.
 
-#The Solution
+# The Solution
 
 This one was worth recording as it is a recursive CTE from *another* recursive CTE. Tricky. Loopy. Bit of a headache, really.
 
 
 
-##SQL
+## SQL
 
 ```
 WITH SHIFT_DAY_OF_WEEK (SCHED_DAY1, DUR_DAY, SCHED_DAYOFWEEK) AS (  
@@ -70,11 +70,11 @@ SELECT * FROM SHIFT_SCHED_DAY ORDER BY 1, 2, 3
 ;
 ```
 
-##Example Use
+## Example Use
 
 To get the correct row from PS_SCH_DEFN_DTL C you add arguments, almost passing in two parameters, for the Schedules EFFDT and the DUR.
 
-##SQL Results
+## SQL Results
 
 ```
 SCHED_DAY1	DUR_DAY	SCHED_DAYOFWEEK
