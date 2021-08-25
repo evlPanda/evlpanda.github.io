@@ -3,7 +3,7 @@ layout: post
 title:  "Recursive CTE, Squared!"
 date:   2021-08-24 01:23:46 +1000
 categories: SQL
-blurb: Nested, Recursive CTEs!.
+blurb: Nested, recursive CTEs!.
 
 ---
 #The Issue
