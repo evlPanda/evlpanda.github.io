@@ -6,6 +6,7 @@ categories: Navigation
 blurb: How to create a new navigation collection, and add it to a Homepage as a Tile.
 
 ---
+How to create a new navigation collection, and add it to a Homepage as a Tile.
 
 **Create a Navigation Collection**
 
