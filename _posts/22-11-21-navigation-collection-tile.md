@@ -7,17 +7,17 @@ blurb: How to create a new navigation collection, and add it to a Homepage as a 
 
 ---
 
-# Create a Navigation Collection
+**Create a Navigation Collection**
 
-   PeopleTools > Portal > Structure & Content
+   *PeopleTools > Portal > Structure & Content*
    Portal Objects/Navigation Collections
 
 Add a Folder, then add Content References inside the Folder. 
 These will appear as the left-hand-menu items.
 
-# Create a Tile for the Navigation Collection
+**Create a Tile for the Navigation Collection**
 
-   PeopleTools > Portal > Structure & Content
+   *PeopleTools > Portal > Structure & Content*
    Fluid Structure Content/Fluid Pages
 
 Create a Content Reference
@@ -29,18 +29,18 @@ Portal URL = 	c/NUI_FRAMEWORK.PT_AGSTARTPAGE_NUI.GBL
 		&PTPPB_GROUPLET_ID=GP_PROCESSING 	(not sure?)
 		&CRefName=THIS_CONTENT_REFERENCE_NAME 	(to return to?)
 
-# Add to HomePage
+**Add to HomePage**
 
-   PeopleTools > Portal > Structure & Content
+   *PeopleTools > Portal > Structure & Content*
    Fluid Structure Content/Fluid Homepages
 
 Add your content ref/tile on the 'Tile Content' tab.
 
-# Run Portal Security Sync
+**Run Portal Security Sync**
 
-   PeopleTools > Portal > Portal Security Sync
+   *PeopleTools > Portal > Portal Security Sync*
 
-# Add to Application Designer Project
+**Add to Application Designer Project**
 
    All the above are Portal Objects; you can add them by name into your Project and migrate.
    Be sure to run Portal Security Sync once again post migration.
