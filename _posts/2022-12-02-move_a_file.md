@@ -23,15 +23,15 @@ method move
          &toFilePath = "" Then
       throw CreateException(0, 0, "&fromFilePath and &toFilePath are required.")
    End-If;
-   If Not FileExists(&fromFilePath, %FilePath_Absolute) Then
-      throw CreateException(0, 0, "&fromFilePath does not exist.")
+   If Not FileExists(&fromFilePath, %fromPathType) Then
+      throw CreateException(0, 0, "&fromFilePath does not exist: " | &fromFilePath)
    End-If;
    Local JavaObject &Source, &Target, &Files, &Options, &StandardCopyOptions;
    &Files = GetJavaClass("java.nio.file.Files");
    &Source = CreateJavaObject("java.io.File", &fromFilePath).toPath();
    &Target = CreateJavaObject("java.io.File", &toFilePath).toPath();
    &Options = CreateJavaObject("java.nio.file.CopyOption[]");
-   If FileExists(&toFilePath, %FilePath_Absolute) Then
+   If FileExists(&toFilePath, %toPathType) Then
       &StandardCopyOptions = GetJavaClass("java.nio.file.StandardCopyOption");
       &Options = CreateJavaObject("java.nio.file.CopyOption[]", &StandardCopyOptions.REPLACE_EXISTING);
    End-If;
