@@ -31,7 +31,7 @@ local string &json;
 &Response = %IntBroker.ConnectorRequest(&Request, True);
 &json = &Response.GetContentString()
 ```
-There is a post [here]([https://evlpanda.github.io/peoplecode/json/2019/12/19/reading_json.html](https://evlpanda.github.io/peoplecode/json/2019/12/19/reading_json.html)) that covers reading the resulting json into an array.
+There is a post [here](https://evlpanda.github.io/peoplecode/json/2019/12/19/reading_json.html) that covers reading the resulting json into an array.
 
 This *should* work out-of-the-box, but sometimes servers are not configured correctly. If they aren't configured correctly you'll get *nothing* back from ```.GetContentString```. You will find the errors in a server's log file, somewhere.
 
