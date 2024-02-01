@@ -1,0 +1,18 @@
+---
+layout: post
+title:  "Getting Run Control and Operator ID in an Application Engine"
+date:   2020-01-17 12:34:56 +1000
+categories: AppEngine
+blurb: I always forget how to do this.
+
+---
+
+1. Add a State Record not unlike TL_RUNCNTL_AET to the AppEngine.
+2. Add a SQL Step:
+
+```
+%SelectInit(OPRID, RUN_CNTL_ID)
+SELECT OPRID, RUN_CNTL_ID
+FROM PS_AERUNCONTROL
+WHERE PROCESS_INSTANCE = %Bind(PROCESS_INSTANCE)
+```
