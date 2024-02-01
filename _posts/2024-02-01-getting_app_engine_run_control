@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Getting Run Control and Operator ID in an Application Engine"
-date:   2024-02-01 12:34:56 +1000
+title: "Getting Run Control and Operator ID in an Application Engine"
+date: 2024-02-01 12:34:56 +1000
 categories: AppEngine
 blurb: I always forget how to do this.
 ---
