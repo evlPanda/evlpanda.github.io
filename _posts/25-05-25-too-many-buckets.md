@@ -2,7 +2,7 @@
 layout: post
 title: "Insights Kibana - Too Many Buckets"
 date: 2025-05-25 00:00:00 +1000
-categories: Kibana, Insights
+categories: Kibana Insights
 blurb: How to increase bucket size.
 ---
 
