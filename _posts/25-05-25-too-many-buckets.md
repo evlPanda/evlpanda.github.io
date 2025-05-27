@@ -1,10 +1,9 @@
 ---
 layout: post
-title:  "Insights / Kibana : Too Many Buckets"
-date:   2025-05-25 00:00:00 +1000
+title: "Insights Kibana - Too Many Buckets"
+date: 2025-05-25 00:00:00 +1000
 categories: Kibana, Insights
 blurb: How to increase bucket size.
-
 ---
 
 So, you've run into a 'too_many_buckets_exception' error in one of your Kibana/Insights visualisations?
