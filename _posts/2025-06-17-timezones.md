@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "SQL for Time Zones"
-date: 2025-07-01 00:00:00 +1000
+date: 2025-06-17 00:00:00 +1000
 categories: SQL
 blurb: Avoid timezone hell with this SQL
 ---
