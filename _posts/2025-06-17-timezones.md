@@ -17,3 +17,11 @@ This will return 1st of July 2025, 5pm in New York
 in Sydney time; 2025-07-02 07:00.
 
 It considers daylight savings time and all.
+
+You can get a list of all timezones with:
+
+```
+SELECT name FROM sys.time_zone_info
+```
+
+This is SQL Server specific, might be slightly different for Oracle.
