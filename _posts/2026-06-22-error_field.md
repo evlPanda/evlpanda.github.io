@@ -8,7 +8,6 @@ blurb: Finally?
 
 ```
    &Field.Style = "PSEDITBOX";
-   Local Record &SubPlanFee = &Field.ParentRecord;
    If &someCondition = 1 Then
       &Field.Style = "PSERROR";
       &Field.SetCursorPos(%Page);
